@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'style.css' %}">
+</head>
+<body>
+<div class="container">
+    <div class="leftSide">
+        <div class="login" id="loginPage">
+            <div class="main" id = "loginArea">
+                <input type="checkbox" id="chk" aria-hidden="true">
+                <div class="signup">
+                    <form>
+                        <label for="chk" aria-hidden="true">Sign up</label>
+                        <input type="text" name="txt" placeholder="User name" required="">
+                        <input type="email" name="email" placeholder="Email" required="">
+                        <input type="password" name="pswd" placeholder="Password" required="">
+                        <button>Sign up</button>
+                    </form>
+                </div>
+
+                <div class="login">
+                    <form>
+                        <label for="chk" aria-hidden="true">Login</label>
+                        <input type="email" name="email" placeholder="Email" required="">
+                        <input type="password" name="pswd" placeholder="Password" required="">
+                        <button>Login</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="rightSide">
+        <section class="carouselBox">
+                    <div class="slider-wrapper">
+                        <div class="slider">
+                            <img id="slide1"
+                                 src="https://picsum.photos/1350/1920?random1" alt="">
+                            <img id="slide2"
+                                 src="https://picsum.photos/1350/1920?random2" alt="">
+                            <img id="slide3"
+                                 src="https://picsum.photos/1350/1920?random3" alt="">"
+                        </div>
+                        <div class="slider-nav">
+                            <a href="#slide1"></a>
+                            <a href="#slide2"></a>
+                            <a href="#slide3"></a>
+                        </div>
+                    </div>
+        </section>
+    </div>
+</div>
+</div>
+</body>
+</html>
