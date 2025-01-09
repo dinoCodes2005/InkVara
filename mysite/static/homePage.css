@@ -1,0 +1,280 @@
+
+
+
+.nav-item{
+    position: relative;
+    width: max-content;
+}
+.nav-item::after{
+    content: "";
+    background: white;
+    height: 4px;
+    width: 0;
+    border-radius: 2px;
+    position: absolute;
+    bottom: 0;
+    transition: width 0.3s ease;
+}
+
+.nav-item:hover::after{
+    width: 90%;
+}
+
+
+
+
+body {
+    padding-bottom: 100px;
+}
+
+.card {
+    max-width: 300px; /* Set a maximum width for the cards */
+    width: 100%; /* Make each card take the full width of its column */
+    height: 400px; /* Set a fixed height for the cards */
+    margin: 10px; /* Add space around each card */
+  }
+
+  .card-img-top {
+    width: 100%; /* Ensure the image covers the full width of the card */
+    height: 200px; /* Set a fixed height for the image */
+    object-fit: cover; /* Ensures the image is not stretched or distorted */
+  }
+
+  #createBlogDiv{
+    max-width: 1950px;
+    height: 70vh;
+    background-image: url("img.jpg");
+      overflow:hidden;
+
+  }
+
+  #perfectDesign{
+      max-width: 1950px;
+      height: 500px;
+      display: flex;
+      justify-content: space-around;
+      gap: 20px;
+      align-items: center;
+
+  }
+
+#creativeDesign{
+    max-width: 1950px;
+    height: 500px;
+    background-image: url("https://img.freepik.com/free-vector/v873-bb-1_53876-166692.jpg?t=st=1736428307~exp=1736431907~hmac=31d3a2be602c8a8beea30cfcdb5d763f2053375b376c064efac7d64d13269d2f&w=2000");
+    overflow: hidden;
+}
+
+  .createBlog {
+      position: relative;
+      top: 300px;
+      left: 50vw;
+      border-radius: 20px;
+      border: 2px solid #4DA1A9;
+      height: 50px;
+      font: 20px "sans-serif";
+      padding: 10px;
+
+  }
+
+.createBlogDark {
+    border-radius: 20px;
+    background-color: black;
+    color: white;
+    border: 2px solid gray;
+    height: 50px;
+    font: 20px "sans-serif";
+    padding: 10px;
+    margin-left: 100px;
+    margin-bottom: 100px;
+
+}
+
+  #laptopRight img{
+      height: 400px;
+      width: 600px;
+      object-fit: contain;
+      border-radius: 10%;
+      margin-left: 100px;
+      box-shadow: 4px 8px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  }
+
+  .paragraphPerfectDesign{
+      margin-left: 100px;
+      margin-bottom: 50px;
+  }
+
+.createBlogcreativeDesign{
+    border-radius: 20px;
+    background-color: white;
+    color: black;
+    border: 2px solid gray;
+    height: 50px;
+    font: 20px "sans-serif";
+    padding: 10px;
+    margin-left: 100px;
+    margin-top: 120px;
+}
+ #whyChoose{
+     background-color: #04042b;
+     height: 500px;
+     display: flex;
+     justify-content: center;
+     align-items: center;
+ }
+
+ #whyChoose img{
+     height: 400px;
+     width: 600px;
+     border-radius: 30px;
+     margin: 40px 10px 10px 30px;
+     box-shadow: 4px 8px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+ }
+
+ .textCol
+ {
+     display: flex;
+     padding: 50px;
+     justify-content: center;
+     flex-direction: column;
+     margin-right: 400px;
+ }
+
+ .collapsible{
+     max-width: 600px;
+     overflow: hidden;
+     font-weight: 500;
+     border-radius: 10px;
+ }
+.collapsible input{
+    display: none;
+}
+ .collapsible label{
+     position: relative;
+     font-weight: 600;
+     background: #04042b;
+     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+     color: WHITE;
+     display: block;
+     margin-bottom: 10px;
+     cursor: pointer;
+     border-radius: 4px;
+     z-index: 1;
+     margin-left: 5px;
+ }
+
+ .collapsible label:after{
+     content: "";
+     position: absolute;
+     right: 15px;
+     top: 20px;
+     width: 18px;
+     height: 18px;
+     background: url("reshot-icon-arrow-chevron-right-WDGHUKQ634.svg")no-repeat 0 0;
+     background-size: contain;
+     filter: invert(1);
+     transition: all 0.3s ease;
+
+ }
+
+ .collapsible input:checked+label:after{
+     transform: rotate(90deg);
+ }
+
+ .collapsible-text{
+     max-height: 1px;
+     overflow: hidden;
+     border-radius: 4px;
+     line-height: 1.4;
+     position: relative;
+     top: -100%;
+     opacity: 0.5;
+     transition: all 0.3s ease;
+ }
+
+ .collapsible input:checked~ .collapsible-text{
+     max-height: 300px;
+     padding-bottom: 25px;
+     background: #04042b;
+     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+     opacity: 1;
+     top: 0;
+
+ }
+
+ .collapsible-text p{
+     padding-left: 15px;
+     padding-right: 15px;
+     color: white;
+ }
+
+ hr{
+     color: white;
+     border-top: 2px solid white;
+ }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  /*mobile devices*/
+@media (max-width: 1120px) {
+    #perfectDesign{
+        display: flex;
+        gap:5px;
+        flex-wrap: wrap;
+    }
+
+    #laptopRight img{
+        height: 400px;
+        width: 600px;
+        object-fit: contain;
+        border-radius: 10%;
+        margin-left: 80px;
+        box-shadow: 4px 8px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    }
+
+    .paragraphPerfectDesign{
+        margin-left: 100px;
+        margin-bottom: 5px;
+    }
+
+    .createBlogDark {
+        border-radius: 20px;
+        background-color: black;
+        color: white;
+        border: 2px solid gray;
+        height: 50px;
+        font: 20px "sans-serif";
+        padding: 10px;
+        margin-left: 100px;
+        margin-bottom: 20px;
+        margin-top: 20px;
+
+    }
+
+    #creativeDesign{
+        margin-top: 200px;
+    }
+
+
+
+}
+
