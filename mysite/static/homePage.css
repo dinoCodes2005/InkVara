@@ -1,56 +1,77 @@
-
-
-
-.nav-item{
-    position: relative;
-    width: max-content;
+header{
+    background-color: transparent;
+    height: 5em;
+    display: flex;
+    align-items: center;
+    position: sticky;
+    top: 0;
+    z-index: 1;
+    transition: background-color .4s ease-in-out;
+    backdrop-filter: blur(2px);
 }
-.nav-item::after{
-    content: "";
+
+.headerSignUp{
+    margin-left: auto;
+    margin-right: 50px;
+    padding: 5px;
+    background: transparent;
+    font-family: Cambria;
+    border:none;
+    transition: .4s all ease-in-out;
+}
+header.scrolled .headerSignUp{
     background: white;
-    height: 4px;
-    width: 0;
-    border-radius: 2px;
-    position: absolute;
-    bottom: 0;
-    transition: width 0.3s ease;
+    border: 2px solid gray;
+    border-radius: 5px;
+    transition: .4s all ease-in-out;
+
+}
+nav{
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }
 
-.nav-item:hover::after{
-    width: 90%;
+header.scrolled{
+    background-color: black;
+    opacity: 0.9;
+}
+header nav{
+    padding: 1.5em 0 1.5em 5em;
 }
 
+header nav a{
+    text-decoration: none;
+    color: black;
+    font-size: 1.3em;
+    margin: 1em;
+    transition: color .4s ease-in-out;
+}
 
+header.scrolled nav a{
+    color: white;
+}
 
 
 body {
     padding-bottom: 100px;
+    overflow-x: hidden;
 }
-
-.card {
-    max-width: 300px; /* Set a maximum width for the cards */
-    width: 100%; /* Make each card take the full width of its column */
-    height: 400px; /* Set a fixed height for the cards */
-    margin: 10px; /* Add space around each card */
-  }
-
-  .card-img-top {
-    width: 100%; /* Ensure the image covers the full width of the card */
-    height: 200px; /* Set a fixed height for the image */
-    object-fit: cover; /* Ensures the image is not stretched or distorted */
-  }
 
   #createBlogDiv{
     max-width: 1950px;
-    height: 70vh;
-    background-image: url("img.jpg");
+    height: 100vh;
+    background-image: url("img1.jpg");
       overflow:hidden;
+    background-repeat: no-repeat;
+      margin: 0;
 
   }
 
   #perfectDesign{
       max-width: 1950px;
-      height: 500px;
+      height: 700px;
       display: flex;
       justify-content: space-around;
       gap: 20px;
@@ -60,14 +81,43 @@ body {
 
 #creativeDesign{
     max-width: 1950px;
-    height: 500px;
-    background-image: url("https://img.freepik.com/free-vector/v873-bb-1_53876-166692.jpg?t=st=1736428307~exp=1736431907~hmac=31d3a2be602c8a8beea30cfcdb5d763f2053375b376c064efac7d64d13269d2f&w=2000");
+    height: 700px;
+    background-repeat: no-repeat;
+    background-image: url("thirdImage.jpg");
     overflow: hidden;
+    background-size: cover;
+    background-position: center;
+    display: flex;
+    flex-direction: column;
+
+
 }
+
+#community{
+    max-width: 1950px;
+    height: 700px;
+    background: white;
+    display: flex;
+    justify-content: space-between;
+}
+
+.createBlogcreativeDesign{
+    margin-left: 100px;
+    border-radius: 20px;
+    background-color: white;
+    color: black;
+    border: 2px solid gray;
+    width:120px;
+    height: 50px;
+    font: 20px "sans-serif";
+    padding: 10px;
+}
+
+
 
   .createBlog {
       position: relative;
-      top: 300px;
+      top: 380px;
       left: 50vw;
       border-radius: 20px;
       border: 2px solid #4DA1A9;
@@ -96,6 +146,7 @@ body {
       object-fit: contain;
       border-radius: 10%;
       margin-left: 100px;
+      margin-right: 20px;
       box-shadow: 4px 8px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
   }
 
@@ -104,20 +155,10 @@ body {
       margin-bottom: 50px;
   }
 
-.createBlogcreativeDesign{
-    border-radius: 20px;
-    background-color: white;
-    color: black;
-    border: 2px solid gray;
-    height: 50px;
-    font: 20px "sans-serif";
-    padding: 10px;
-    margin-left: 100px;
-    margin-top: 120px;
-}
+
  #whyChoose{
      background-color: #04042b;
-     height: 500px;
+     height: 700px;
      display: flex;
      justify-content: center;
      align-items: center;
@@ -213,8 +254,47 @@ body {
      border-top: 2px solid white;
  }
 
+ /*scroll Transition code*/
 
+.hiddenLeft{
+    opacity: 0;
+    transform: translateX(-100%);
+    filter: blur(5px);
+    transition: 1s all ease-in-out;
 
+}
+
+.hiddenRight{
+    opacity: 0;
+    transform: translateX(100%);
+    filter: blur(5px);
+    transition: .5s all ease-in-out;
+}
+
+.showLeft{
+    opacity: 1;
+    transform: translateX(0%);
+    filter: blur(0px);
+    transition: .5s all ease-in-out;
+
+}
+
+.showRight{
+    opacity: 1;
+    filter: blur(0px);
+    transform: translateX(0%);
+    transition: 1s all ease-in-out;
+}
+
+@media(prefers-reduced-motion){
+    .hiddenLeft{
+        transition: none;
+    }
+
+    .hiddenRight{
+        transition: none;
+    }
+}
 
 
 

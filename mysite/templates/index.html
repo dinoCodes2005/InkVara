@@ -12,91 +12,20 @@
     />
     {% load static %}
     <link rel="stylesheet" href="{% static 'homePage.css' %}" />
+    <script defer src="{% static 'scrollTransition.js' %}"></script>
   </head>
   <body>
     <div class="fullContainer">
-      <nav
-        class="navbar navbar-expand-lg navbar-dark"
-        style="background-color:#001425 "
-      >
-        <div class="container-fluid">
-          <a class="navbar-brand" href="#"
-            ><img
-              src="https://png.pngtree.com/png-vector/20221010/ourmid/pngtree-phoenix-illustration-clipart-png-image_6277369.png"
-              alt="Logo"
-              width="30"
-              height="24"
-              class="d-inline-block align-text-top"
-              style="margin-right: 10px"
-            />Ink Vara</a
-          >
-          <button
-            class="navbar-toggler"
-            type="button"
-            data-bs-toggle="collapse"
-            data-bs-target="#navbarSupportedContent"
-            aria-controls="navbarSupportedContent"
-            aria-expanded="false"
-            aria-label="Toggle navigation"
-          >
-            <span class="navbar-toggler-icon"></span>
+      <header>
+        <nav>
+          <a href="">Home</a>
+          <a href="">About</a>
+          <a href="">Contact</a>
+          <button class = "headerSignUp">
+            Sign Up
           </button>
-          <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-              <li class="nav-item">
-                <a class="nav-link active" aria-current="page" href="#">Home</a>
-              </li>
-              <li class="nav-item dropdown">
-                <a
-                  class="nav-link dropdown-toggle"
-                  href="#"
-                  role="button"
-                  data-bs-toggle="dropdown"
-                  aria-expanded="false"
-                >
-                  Topics
-                </a>
-                <ul class="dropdown-menu">
-                  <li class="dropdown-header text-muted">Trending</li>
-                  <li><a class="dropdown-item" href="#">Technology</a></li>
-                  <li><a class="dropdown-item" href="#">Environment</a></li>
-                  <li><a class="dropdown-item" href="#">Biology</a></li>
-
-                  <li>
-                    <hr class="dropdown-divider" />
-                  </li>
-                  <li><a class="dropdown-item" href="#">Write for Us</a></li>
-                </ul>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="#">Contact Us</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="#">About Us</a>
-              </li>
-            </ul>
-            <div class="col-4 d-flex justify-content-end align-items-center">
-              <form action="/login" method="get">
-                <button
-                  type="submit"
-                  class="btn btn-sm btn-outline-light"
-                  style="margin-left: 20px"
-                >
-                  Sign Up
-                </button>
-
-                <button
-                        type="submit"
-                        class="btn btn-sm btn-outline-light"
-                        style="margin-left: 20px"
-                >
-                  Get Started
-                </button>
-              </form>
-            </div>
-          </div>
-        </div>
-      </nav>
+        </nav>
+      </header>
 
       <div id="createBlogDiv" style="position: relative">
         <h1 style="position: relative;top: 40%;left: 40vw;font-family: Cambria ">Ink your Ideas, in your ways</h1>
@@ -104,25 +33,29 @@
           <button class="createBlog">Create Blog</button>
       </div>
       <div id="perfectDesign">
-        <div class="col">
+        <div class="hiddenLeft">
             <p class="paragraphPerfectDesign">
             <span style="font-family: Cambria;font-size: xxx-large">Simple meet, flexible</span>
             <br>
             <span>Whatever you want to express, Ink Vara makes it a piece of cake.</span>
               <br>
-              <span>From sharing stories to crafting compelling ideas, our platform empowers your voice with ease and style. Discover the joy of blogging, your way, with Ink Vara!</span>
+              <span>From sharing stories to crafting compelling ideas, our platform empowers your voice with ease and style.</span>
+              <br>
+                <span>Discover the joy of blogging, your way, with Ink Vara!</span>
           </p>
           <button class="createBlogDark">Create Blog</button>
         </div>
-        <div class="col" id="laptopRight">
-          <img src="https://img.freepik.com/free-photo/aerial-view-computer-laptop-wooden-table-photography-hobby-concept_53876-24773.jpg?t=st=1736418744~exp=1736422344~hmac=32dc97d5b22f23308ef3e3d334ac4935bfa6c398ba6f3c1b26ffe1c14a135a02&w=1800">
+        <div class="hiddenRight">
+          <div id="laptopRight">
+            <img src="https://img.freepik.com/free-photo/aerial-view-computer-laptop-wooden-table-photography-hobby-concept_53876-24773.jpg?t=st=1736418744~exp=1736422344~hmac=32dc97d5b22f23308ef3e3d334ac4935bfa6c398ba6f3c1b26ffe1c14a135a02&w=1800">
+          </div>
         </div>
       </div>
 
       <div id="creativeDesign">
-        <h1 style="position: relative;top: 20%;left:5%;font-family: Cambria;font-size: xxx-large">Your Stories, Your Voice</h1>
-        <h1 style="position: relative;top: 20%;left:5%;font-family: Cambria;font-size: xx-large">Blog Beyond Limits</h1>
-        <p style="position: relative;top: 20%;left:5%;font-family: Cambria;font-size: large;">
+        <h1 style="margin-left:100px;margin-top:80px;font-family: Cambria;font-size: xxx-large">Your Stories, Your Voice</h1>
+        <h1 style="margin-left:100px;font-family: Cambria;font-size: xx-large">Blog Beyond Limits</h1>
+        <p class="paragraphPerfectDesign" style="font-family: Cambria;font-size: large;">
           <br>
           <span>Welcome to Ink Vara,</span>
           <br>
@@ -135,19 +68,18 @@
           <span>this is your home for crafting impactful content.</span>
 
         </p>
-
         <button class="createBlogcreativeDesign">Create Blog</button>
 
       </div>
 
       <div id="whyChoose">
-        <div class="col">
+        <div style="margin-left: 100px" class="col">
           <img src="https://img.freepik.com/free-photo/tulips-laptop-cactus-stationeries-with-smartphone-red-background_23-2147923409.jpg?t=st=1736441625~exp=1736445225~hmac=7370d4725bb2b89a37fd6e25f3ae7a42dd478dda25d015e2fe8602cdab2703a8&w=1480">
         </div>
         <div class="textCol">
           <div class="collapsible">
             <input type="radio" id="collapsible-head1" name="group">
-            <label for="collapsible-head1" style="font-size: xx-large;font-family: Cambria">Effortless Blogging Experience:</label>
+            <label for="collapsible-head1" style="font-size: xx-large;font-family: Cambria">Effortless Blogging Experience: </label>
             <div class="collapsible-text">
               <p>Our intuitive platform makes creating and managing your blog simple and enjoyable.</p>
             </div>
@@ -178,6 +110,30 @@
           </div>
           <hr>
         </div>
+      </div>
+      <div id="community">
+        <div class="hiddenPop">
+          <div style="margin-left: 100px;margin-top: 100px;">
+            <h1 style="font-family: Cambria;font-size: xxx-large">A Thriving Community Awaits</h1>
+          <p style="font-family: Cambria;font-size: large;">
+            <br>
+            <span>Connect with bloggers from around the globe, exchange ideas, and grow together. </span>
+            <br>
+            <span>
+              Our platform fosters collaboration and celebrates every writer’s journey
+              </span>
+            <br>
+            <span>Be a part of something bigger. Our blog offers not just articles but an opportunity to connect with passionate readers and
+              contributors who share your interests</span>
+          </p>
+          </div>
+        </div>
+        <div class="hiddenPop">
+          <div style="margin-right:200px;margin-top: 100px; margin-left: 25px">
+            <img src="{% static '4505357.jpg'%}" height="400" width="600" style="border-radius: 20px;box-shadow: 10px 10px 5px #cdcdcd;">
+          </div>
+        </div>
+
       </div>
     </div>
 
@@ -256,4 +212,15 @@
       <div id="Bottom-info-part"></div>
     </footer>
   </body>
+<script>
+  document.addEventListener('scroll', () => {
+    const header = document.querySelector('header');
+    if(window.scrollY>0) {
+      header.classList.add('scrolled');
+    }
+      else{
+        header.classList.remove('scrolled');
+      }
+    })
+</script>
 </html>
