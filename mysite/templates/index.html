@@ -19,10 +19,16 @@
       <header>
         <nav>
           <a href="">Home</a>
+          <a href="">Blogs</a>
           <a href="">About</a>
           <a href="">Contact</a>
+
           <button class = "headerSignUp">
             Sign Up
+          </button>
+
+          <button class="headerCreateBlog">
+            Create Your Blog
           </button>
         </nav>
       </header>
@@ -113,7 +119,7 @@
       </div>
       <div id="community">
         <div class="hiddenPop">
-          <div style="margin-left: 100px;margin-top: 100px;">
+          <div style="margin-left: 100px;margin-top: 100px;z-index: 0">
             <h1 style="font-family: Cambria;font-size: xxx-large">A Thriving Community Awaits</h1>
           <p style="font-family: Cambria;font-size: large;">
             <br>
@@ -134,6 +140,21 @@
           </div>
         </div>
 
+      </div>
+      <div id="earn">
+        <div class="hiddenRight" style="position: relative;top: 15%;">
+          <div style="position: absolute;top: 15%;left: 5%;">
+          <h1>Turn Your Passion into Profits:</h1>
+            <h3>Start Earning Today!</h3>
+            <span>Are you ready to transform your passion into a source of income? <br>
+              Whether you're into writing, photography, design, or any other hobby, <br>
+              the digital world offers endless opportunities to monetize your skills.<br>
+              From blogging and freelancing to creating digital products, you can start earning by sharing what you love.<br>
+              This blog is here to guide you with proven strategies and tips to help you build a sustainable income. <br>
+              Take the leap today, and let your passion pay the bills!</span>
+          </div>
+        </div>
+        <img src="{% static 'moneyimg.jpg'%}" style="z-index: 2;width: 100%;height: 700px">
       </div>
     </div>
 
@@ -209,7 +230,36 @@
     ></script>
 
     <footer>
-      <div id="Bottom-info-part"></div>
+      <div id="Bottom-info-part">
+        <div class="rows">
+          <div class="colRows">
+            <h1>Help</h1>
+            <hr>
+            <h5>Help Center</h5>
+            <h5>Help Forums</h5>
+            <h5>Video Tutorials</h5>
+          </div>
+          <div class="colRows">
+            <h1>Community</h1>
+            <hr>
+            <h5>Ink Vara Community</h5>
+          </div>
+          <div class="colRows">
+            <h1>Work With Us</h1>
+            <hr>
+            <h5>Instagram</h5>
+            <h5>Twitter</h5>
+            <h5>Facebook</h5>
+          </div>
+        </div>
+        <br>
+        <hr width="90%" style="margin-left: 50px;">
+        <div class="rows" style="display: flex;color:#dcdcdc; align-items: center; justify-content: space-evenly;">
+          <span>Terms of Service </span>
+          <span>Privacy Policy</span>
+          <span>Content Policy</span>
+        </div>
+      </div>
     </footer>
   </body>
 <script>

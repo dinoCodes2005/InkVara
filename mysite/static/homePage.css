@@ -5,25 +5,39 @@ header{
     align-items: center;
     position: sticky;
     top: 0;
-    z-index: 1;
+    z-index: 10;
     transition: background-color .4s ease-in-out;
     backdrop-filter: blur(2px);
 }
 
 .headerSignUp{
-    margin-left: auto;
-    margin-right: 50px;
+    margin-left:auto;
     padding: 5px;
     background: transparent;
     font-family: Cambria;
     border:none;
     transition: .4s all ease-in-out;
 }
+
+.headerCreateBlog{
+    transform: translateX(100%);
+    transition: .4s all ease-in-out;
+}
+header.scrolled .headerCreateBlog{
+    display: inline-block;
+    transition: .4s all ease-in-out;
+    transform: translateX(0%);
+    border: none;
+    height: 40px;
+    font-family: Cambria;
+    margin-right: 20px;
+    margin-left: 0;
+}
 header.scrolled .headerSignUp{
     background: white;
-    border: 2px solid gray;
-    border-radius: 5px;
+    transform: translateX(-50px);
     transition: .4s all ease-in-out;
+    margin-right: 0;
 
 }
 nav{
@@ -31,6 +45,7 @@ nav{
     display: flex;
     justify-content: space-between;
     align-items: center;
+    position: relative;
 }
 
 header.scrolled{
@@ -53,9 +68,31 @@ header.scrolled nav a{
     color: white;
 }
 
+a{
+    position: relative;
+    display: inline-block;
+}
+header nav a::before{
+    content: "";
+    position: absolute;
+    bottom: -5px;
+    width: 0%;
+    height: 3px;
+    background-color: black;
+    transition: .4s all ease-in-out;
+}
+
+header nav a:hover::before{
+    width: 100%;
+}
+
+header.scrolled nav a:hover::before{
+    width: 100%;
+    background-color: white;
+}
+
 
 body {
-    padding-bottom: 100px;
     overflow-x: hidden;
 }
 
@@ -99,6 +136,13 @@ body {
     background: white;
     display: flex;
     justify-content: space-between;
+}
+
+#earn{
+    max-width: 1950px;
+    height: 700px;
+    position: relative;
+    z-index: 1;
 }
 
 .createBlogcreativeDesign{
@@ -255,12 +299,24 @@ body {
  }
 
  /*scroll Transition code*/
+.hiddenPop{
+    z-index: 0;
+    filter: blur(5px);
+    transition: .5s ease-in-out;
+    transform: translateY(100%);
+}
 
+.showPop{
+    filter: blur(0px);
+    transition: .5s ease-in-out;
+    transform: translateY(0%);
+    z-index: 1;
+}
 .hiddenLeft{
     opacity: 0;
     transform: translateX(-100%);
     filter: blur(5px);
-    transition: 1s all ease-in-out;
+    transition: .5s all ease-in-out;
 
 }
 
@@ -286,6 +342,23 @@ body {
     transition: 1s all ease-in-out;
 }
 
+#Bottom-info-part{
+    width: 100%;
+    background: #191919;
+    height: 700px;
+    display: flex;
+    flex-direction: column;
+}
+
+footer .rows{
+    margin-top: 150px;
+    display: flex;
+    justify-content: space-evenly;
+}
+
+footer .colRows{
+    color: #d1d1d1;
+}
 @media(prefers-reduced-motion){
     .hiddenLeft{
         transition: none;
@@ -295,7 +368,6 @@ body {
         transition: none;
     }
 }
-
 
 
 
