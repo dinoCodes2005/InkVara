@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  {% load static %}
+  <link rel="stylesheet" href="{%static 'signUpPage.css'%}" />
+  <title>Document</title>
+</head>
+<body>
+<header style="position:sticky; top:0;height:30px; width:100%;">
+  <form action="login" method="POST">
+    {% csrf_token %}
+    <button class="rightSide"style="position:absolute;top: 0;right: 0;width:100px;margin-right: 100px;margin-top: 20px">Login</button>
+  </form>
+
+<!--  <form action="index" method="post">-->
+<!--    {% csrf_token %}-->
+<!--    <button class="backHome"style="border:none;background-color: transparent;margin: 0 auto auto 40px;backdrop-filter: blur(20px);font-size: x-large">-->
+<!--      Home-->
+<!--    </button>-->
+<!--  </form>-->
+</header>
+<div class="container">
+  <h1 style="font-family: Cambria;font-weight: normal">Welcome to Ink Vara</h1>
+  <div class="horizontalLine" style="width: 100%;height: 1px;background-color:#b6b6b6;"></div>
+  <br>
+  <div class="innerContainer" >
+    <div class="textArea" >
+      <label for="username">USERNAME:</label>
+      <input type="text" placeholder="JohnDoe_123" name="username" id="username" style="font-family: Cambria;font-size: medium"/>
+      <label for="email">EMAIL ADDRESS</label>
+      <input type="text" placeholder="example@domain.com" name="email" id="email" style="font-family: Cambria;font-size: medium"/>
+      <label for="password">PASSWORD:</label>
+      <input type="password" placeholder="Password" name="password" id="password" style="font-family: Cambria;font-size: medium"/>
+      <label for="confirmpassword">CONFIRM PASSWORD</label>
+      <input type="confirmpassword" placeholder="Verify Password" name="password" id="confirmpassword" style="font-family: Cambria;font-size: medium"/>
+      <label for="DOB">Date of Birth</label>
+      <input type="date" name="DOB" id="DOB" style="font-family: Cambria;font-size: medium"/>
+    </div>
+    <div class="verticalLine "style="width: 1px;height: 500px;background-color: #b6b6b6;"></div>
+    <div class="rightButtonGroup">
+      <form action="" method="POST">
+        {% csrf_token %}
+        <button class = "rightSide" type="submit" style="margin: 10px"> <img src="{%static 'google.svg'%}" height="20px" width="20px"><span>&nbsp;&nbsp;&nbsp;Continue With Google </span></button>
+      </form>
+      <br>
+      <form action="" method="POST">
+        {% csrf_token %}
+        <button class = "rightSide" type="submit" style="margin: 10px"> <img src="{%static 'twitter.svg'%}" height="20px" width="20px" style="filter: brightness(0)"><span>&nbsp;&nbsp;&nbsp;Continue With Twitter</span></button>
+      </form>
+      <br>
+      <form action="" method="POST">
+        {% csrf_token %}
+        <button class = "rightSide" type="submit" style="margin: 10px"> <img src="{%static 'facebook.svg'%}" height="20px" width="20px " style="filter: brightness(0)"><span>&nbsp;&nbsp;&nbsp;Continue With Facebook</span></button>
+      </form>
+      <br>
+
+    </div>
+  </div>
+  <br>
+  <form action="" method="POST">
+    {% csrf_token %}
+    <button class="create">Create Account </button>
+  </form>
+</div>
+</body>
+</html>

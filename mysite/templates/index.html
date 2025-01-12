@@ -18,210 +18,301 @@
     <div class="fullContainer">
       <header>
         <nav>
+          <a href=""
+            ><img
+              class="headerLogo"
+              src="{% static '1to1 invictus logo.png'%}"
+              height="50px"
+              width="50px"
+          /></a>
           <a href="">Home</a>
           <a href="">Blogs</a>
           <a href="">About</a>
           <a href="">Contact</a>
-
-          <button class = "headerSignUp">
-            Sign Up
-          </button>
-
-          <button class="headerCreateBlog">
-            Create Your Blog
-          </button>
+          <form action="login" method="post">
+            {% csrf_token %}
+            <button class="headerSignUp">Sign In</button>
+          </form>
+          <button class="headerCreateBlog">Create Your Blog</button>
         </nav>
       </header>
 
       <div id="createBlogDiv" style="position: relative">
-        <h1 style="position: relative;top: 40%;left: 40vw;font-family: Cambria ">Ink your Ideas, in your ways</h1>
-        <h3 style="position: relative;top: 40%;left: 40vw;font-family: Cambria ">Present your Ideas easily.</h3>
-          <button class="createBlog">Create Blog</button>
+        <h1
+          style="position: relative; top: 40%; left: 40vw; font-family: Cambria"
+        >
+          Ink your Ideas, in your ways
+        </h1>
+        <h3
+          style="position: relative; top: 40%; left: 40vw; font-family: Cambria"
+        >
+          Present your Ideas easily.
+        </h3>
+        <button class="createBlog">Create Blog</button>
       </div>
       <div id="perfectDesign">
         <div class="hiddenLeft">
-            <p class="paragraphPerfectDesign">
-            <span style="font-family: Cambria;font-size: xxx-large">Simple meet, flexible</span>
-            <br>
-            <span>Whatever you want to express, Ink Vara makes it a piece of cake.</span>
-              <br>
-              <span>From sharing stories to crafting compelling ideas, our platform empowers your voice with ease and style.</span>
-              <br>
-                <span>Discover the joy of blogging, your way, with Ink Vara!</span>
+          <p class="paragraphPerfectDesign">
+            <span style="font-family: Cambria; font-size: xxx-large"
+              >Simple meet, flexible</span
+            >
+            <br />
+            <span
+              >Whatever you want to express, Ink Vara makes it a piece of
+              cake.</span
+            >
+            <br />
+            <span
+              >From sharing stories to crafting compelling ideas, our platform
+              empowers your voice with ease and style.</span
+            >
+            <br />
+            <span>Discover the joy of blogging, your way, with Ink Vara!</span>
           </p>
           <button class="createBlogDark">Create Blog</button>
         </div>
         <div class="hiddenRight">
           <div id="laptopRight">
-            <img src="https://img.freepik.com/free-photo/aerial-view-computer-laptop-wooden-table-photography-hobby-concept_53876-24773.jpg?t=st=1736418744~exp=1736422344~hmac=32dc97d5b22f23308ef3e3d334ac4935bfa6c398ba6f3c1b26ffe1c14a135a02&w=1800">
+            <img
+              src="https://img.freepik.com/free-photo/aerial-view-computer-laptop-wooden-table-photography-hobby-concept_53876-24773.jpg?t=st=1736418744~exp=1736422344~hmac=32dc97d5b22f23308ef3e3d334ac4935bfa6c398ba6f3c1b26ffe1c14a135a02&w=1800"
+            />
           </div>
         </div>
       </div>
 
       <div id="creativeDesign">
-        <h1 style="margin-left:100px;margin-top:80px;font-family: Cambria;font-size: xxx-large">Your Stories, Your Voice</h1>
-        <h1 style="margin-left:100px;font-family: Cambria;font-size: xx-large">Blog Beyond Limits</h1>
-        <p class="paragraphPerfectDesign" style="font-family: Cambria;font-size: large;">
-          <br>
+        <h1
+          style="
+            margin-left: 100px;
+            margin-top: 80px;
+            font-family: Cambria;
+            font-size: xxx-large;
+          "
+        >
+          Your Stories, Your Voice
+        </h1>
+        <h1
+          style="margin-left: 100px; font-family: Cambria; font-size: xx-large"
+        >
+          Blog Beyond Limits
+        </h1>
+        <p
+          class="paragraphPerfectDesign"
+          style="font-family: Cambria; font-size: large"
+        >
+          <br />
           <span>Welcome to Ink Vara,</span>
-          <br>
+          <br />
           <span>the ultimate space for writers, creators, and thinkers</span>
-          <br>
+          <br />
           <span>to share their ideas with the world.</span>
-          <br>
+          <br />
           <span>Whether you're a seasoned blogger or just starting out,</span>
-          <br>
+          <br />
           <span>this is your home for crafting impactful content.</span>
-
         </p>
         <button class="createBlogcreativeDesign">Create Blog</button>
-
       </div>
 
       <div id="whyChoose">
         <div style="margin-left: 100px" class="col">
-          <img src="https://img.freepik.com/free-photo/tulips-laptop-cactus-stationeries-with-smartphone-red-background_23-2147923409.jpg?t=st=1736441625~exp=1736445225~hmac=7370d4725bb2b89a37fd6e25f3ae7a42dd478dda25d015e2fe8602cdab2703a8&w=1480">
+          <img
+            src="https://img.freepik.com/free-photo/tulips-laptop-cactus-stationeries-with-smartphone-red-background_23-2147923409.jpg?t=st=1736441625~exp=1736445225~hmac=7370d4725bb2b89a37fd6e25f3ae7a42dd478dda25d015e2fe8602cdab2703a8&w=1480"
+          />
         </div>
         <div class="textCol">
           <div class="collapsible">
-            <input type="radio" id="collapsible-head1" name="group">
-            <label for="collapsible-head1" style="font-size: xx-large;font-family: Cambria">Effortless Blogging Experience: </label>
+            <input type="radio" id="collapsible-head1" name="group" />
+            <label
+              for="collapsible-head1"
+              style="font-size: xx-large; font-family: Cambria"
+              >Effortless Blogging Experience:
+            </label>
             <div class="collapsible-text">
-              <p>Our intuitive platform makes creating and managing your blog simple and enjoyable.</p>
+              <p>
+                Our intuitive platform makes creating and managing your blog
+                simple and enjoyable.
+              </p>
             </div>
           </div>
-          <hr>
+          <hr />
           <div class="collapsible">
-            <input type="radio" id="collapsible-head2" name="group">
-            <label for="collapsible-head2" style="font-size: xx-large;font-family: Cambria">Engage with Readers:</label>
+            <input type="radio" id="collapsible-head2" name="group" />
+            <label
+              for="collapsible-head2"
+              style="font-size: xx-large; font-family: Cambria"
+              >Engage with Readers:</label
+            >
             <div class="collapsible-text">
-              <p>Build your audience with real-time feedback and interactive features.</p>
+              <p>
+                Build your audience with real-time feedback and interactive
+                features.
+              </p>
             </div>
           </div>
-          <hr>
+          <hr />
           <div class="collapsible">
-            <input type="radio" id="collapsible-head3" name="group">
-            <label for="collapsible-head3" style="font-size: xx-large;font-family: Cambria">Customized for You:</label>
+            <input type="radio" id="collapsible-head3" name="group" />
+            <label
+              for="collapsible-head3"
+              style="font-size: xx-large; font-family: Cambria"
+              >Customized for You:</label
+            >
             <div class="collapsible-text">
-              <p>Personalize your blog to reflect your unique voice with customizable themes and layouts.</p>
+              <p>
+                Personalize your blog to reflect your unique voice with
+                customizable themes and layouts.
+              </p>
             </div>
           </div>
-          <hr>
+          <hr />
           <div class="collapsible">
-            <input type="radio" id="collapsible-head4" name="group">
-            <label for="collapsible-head4" style="font-size: xx-large;font-family: Cambria">Grow with Analytics:</label>
+            <input type="radio" id="collapsible-head4" name="group" />
+            <label
+              for="collapsible-head4"
+              style="font-size: xx-large; font-family: Cambria"
+              >Grow with Analytics:</label
+            >
             <div class="collapsible-text">
-              <p>Track your blog's performance and fine-tune your content to engage better.</p>
+              <p>
+                Track your blog's performance and fine-tune your content to
+                engage better.
+              </p>
             </div>
           </div>
-          <hr>
+          <hr />
         </div>
       </div>
       <div id="community">
         <div class="hiddenPop">
-          <div style="margin-left: 100px;margin-top: 100px;z-index: 0">
-            <h1 style="font-family: Cambria;font-size: xxx-large">A Thriving Community Awaits</h1>
-          <p style="font-family: Cambria;font-size: large;">
-            <br>
-            <span>Connect with bloggers from around the globe, exchange ideas, and grow together. </span>
-            <br>
-            <span>
-              Our platform fosters collaboration and celebrates every writer’s journey
+          <div style="margin-left: 100px; margin-top: 100px; z-index: 0">
+            <h1 style="font-family: Cambria; font-size: xxx-large">
+              A Thriving Community Awaits
+            </h1>
+            <p style="font-family: Cambria; font-size: large">
+              <br />
+              <span
+                >Connect with bloggers from around the globe, exchange ideas,
+                and grow together.
               </span>
-            <br>
-            <span>Be a part of something bigger. Our blog offers not just articles but an opportunity to connect with passionate readers and
-              contributors who share your interests</span>
-          </p>
+              <br />
+              <span>
+                Our platform fosters collaboration and celebrates every writer’s
+                journey
+              </span>
+              <br />
+              <span
+                >Be a part of something bigger. Our blog offers not just
+                articles but an opportunity to connect with passionate readers
+                and contributors who share your interests</span
+              >
+            </p>
           </div>
         </div>
         <div class="hiddenPop">
-          <div style="margin-right:200px;margin-top: 100px; margin-left: 25px">
-            <img src="{% static '4505357.jpg'%}" height="400" width="600" style="border-radius: 20px;box-shadow: 10px 10px 5px #cdcdcd;">
+          <div
+            style="margin-right: 200px; margin-top: 100px; margin-left: 25px"
+          >
+            <img
+              src="{% static '4505357.jpg'%}"
+              height="400"
+              width="600"
+              style="border-radius: 20px; box-shadow: 10px 10px 5px #cdcdcd"
+            />
           </div>
         </div>
-
       </div>
       <div id="earn">
-        <div class="hiddenRight" style="position: relative;top: 15%;">
-          <div style="position: absolute;top: 15%;left: 5%;">
-          <h1>Turn Your Passion into Profits:</h1>
+        <div class="hiddenRight" style="position: relative; top: 15%">
+          <div style="position: absolute; top: 15%; left: 5%">
+            <h1>Turn Your Passion into Profits:</h1>
             <h3>Start Earning Today!</h3>
-            <span>Are you ready to transform your passion into a source of income? <br>
-              Whether you're into writing, photography, design, or any other hobby, <br>
-              the digital world offers endless opportunities to monetize your skills.<br>
-              From blogging and freelancing to creating digital products, you can start earning by sharing what you love.<br>
-              This blog is here to guide you with proven strategies and tips to help you build a sustainable income. <br>
-              Take the leap today, and let your passion pay the bills!</span>
+            <span
+              >Are you ready to transform your passion into a source of income?
+              <br />
+              Whether you're into writing, photography, design, or any other
+              hobby, <br />
+              the digital world offers endless opportunities to monetize your
+              skills.<br />
+              From blogging and freelancing to creating digital products, you
+              can start earning by sharing what you love.<br />
+              This blog is here to guide you with proven strategies and tips to
+              help you build a sustainable income. <br />
+              Take the leap today, and let your passion pay the bills!</span
+            >
           </div>
         </div>
-        <img src="{% static 'moneyimg.jpg'%}" style="z-index: 2;width: 100%;height: 700px">
+        <img
+          src="{% static 'moneyimg.jpg'%}"
+          style="z-index: 2; width: 100%; height: 700px"
+        />
       </div>
     </div>
 
-<!--    <div>-->
-<!--      <form action="/analyze" method="post">-->
-<!--        {% csrf_token %}-->
-<!--        <div-->
-<!--          class="mb-3"-->
-<!--          style="margin-left: 20px; margin-top: 20px; margin-right: 20px"-->
-<!--        >-->
-<!--          <label for="exampleFormControlInput1" class="form-label"-->
-<!--            >Email address</label-->
-<!--          >-->
-<!--          <input-->
-<!--            type="email"-->
-<!--            class="form-control"-->
-<!--            id="exampleFormControlInput1"-->
-<!--            placeholder="name@example.com"-->
-<!--          />-->
-<!--        </div>-->
+    <!--    <div>-->
+    <!--      <form action="/analyze" method="post">-->
+    <!--        {% csrf_token %}-->
+    <!--        <div-->
+    <!--          class="mb-3"-->
+    <!--          style="margin-left: 20px; margin-top: 20px; margin-right: 20px"-->
+    <!--        >-->
+    <!--          <label for="exampleFormControlInput1" class="form-label"-->
+    <!--            >Email address</label-->
+    <!--          >-->
+    <!--          <input-->
+    <!--            type="email"-->
+    <!--            class="form-control"-->
+    <!--            id="exampleFormControlInput1"-->
+    <!--            placeholder="name@example.com"-->
+    <!--          />-->
+    <!--        </div>-->
 
-<!--        <div class="mb-3" style="margin-left: 20px; margin-right: 20px">-->
-<!--          <label for="exampleFormControlTextarea1" class="form-label"-->
-<!--            >Your Thoughts</label-->
-<!--          >-->
-<!--          <textarea-->
-<!--            class="form-control"-->
-<!--            id="exampleFormControlTextarea1"-->
-<!--            name="text"-->
-<!--            rows="3"-->
-<!--            style="height: 225px"-->
-<!--            placeholder="Enter your Thoughts"-->
-<!--          ></textarea>-->
-<!--        </div>-->
+    <!--        <div class="mb-3" style="margin-left: 20px; margin-right: 20px">-->
+    <!--          <label for="exampleFormControlTextarea1" class="form-label"-->
+    <!--            >Your Thoughts</label-->
+    <!--          >-->
+    <!--          <textarea-->
+    <!--            class="form-control"-->
+    <!--            id="exampleFormControlTextarea1"-->
+    <!--            name="text"-->
+    <!--            rows="3"-->
+    <!--            style="height: 225px"-->
+    <!--            placeholder="Enter your Thoughts"-->
+    <!--          ></textarea>-->
+    <!--        </div>-->
 
-<!--        <div class="form-check form-switch" style="margin-left: 20px">-->
-<!--          <input-->
-<!--            class="form-check-input"-->
-<!--            name="capitalize"-->
-<!--            type="checkbox"-->
-<!--            role="switch"-->
-<!--            id="capitalizeBtn"-->
-<!--          />-->
-<!--          <label class="form-check-label" for="capitalizeBtn">Capitalize</label>-->
-<!--        </div>-->
+    <!--        <div class="form-check form-switch" style="margin-left: 20px">-->
+    <!--          <input-->
+    <!--            class="form-check-input"-->
+    <!--            name="capitalize"-->
+    <!--            type="checkbox"-->
+    <!--            role="switch"-->
+    <!--            id="capitalizeBtn"-->
+    <!--          />-->
+    <!--          <label class="form-check-label" for="capitalizeBtn">Capitalize</label>-->
+    <!--        </div>-->
 
-<!--        <div-->
-<!--          class="form-check form-switch"-->
-<!--          style="margin-left: 20px; margin-bottom: 20px"-->
-<!--        >-->
-<!--          <input-->
-<!--            class="form-check-input"-->
-<!--            name="removepunc"-->
-<!--            type="checkbox"-->
-<!--            role="switch"-->
-<!--            id="removepuncBtn"-->
-<!--          />-->
-<!--          <label class="form-check-label" for="removepuncBtn"-->
-<!--            >Remove Punctuations</label-->
-<!--          >-->
-<!--        </div>-->
+    <!--        <div-->
+    <!--          class="form-check form-switch"-->
+    <!--          style="margin-left: 20px; margin-bottom: 20px"-->
+    <!--        >-->
+    <!--          <input-->
+    <!--            class="form-check-input"-->
+    <!--            name="removepunc"-->
+    <!--            type="checkbox"-->
+    <!--            role="switch"-->
+    <!--            id="removepuncBtn"-->
+    <!--          />-->
+    <!--          <label class="form-check-label" for="removepuncBtn"-->
+    <!--            >Remove Punctuations</label-->
+    <!--          >-->
+    <!--        </div>-->
 
-<!--        <button type="submit" class="btn btn-primary" style="margin-left: 20px">-->
-<!--          Analyze-->
-<!--        </button>-->
-<!--      </form>-->
-<!--    </div>-->
+    <!--        <button type="submit" class="btn btn-primary" style="margin-left: 20px">-->
+    <!--          Analyze-->
+    <!--        </button>-->
+    <!--      </form>-->
+    <!--    </div>-->
 
     <script
       src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
@@ -234,43 +325,91 @@
         <div class="rows">
           <div class="colRows">
             <h1>Help</h1>
-            <hr>
-            <h5>Help Center</h5>
-            <h5>Help Forums</h5>
-            <h5>Video Tutorials</h5>
+            <hr />
+            <a href="" style="text-decoration: none; color: whitesmoke"
+              >Help Center</a
+            >
+            <br />
+            <a href="" style="text-decoration: none; color: whitesmoke"
+              >Help Forums</a
+            >
+            <br />
+            <a href="" style="text-decoration: none; color: whitesmoke"
+              >Video Tutorials</a
+            >
+            <br />
           </div>
           <div class="colRows">
             <h1>Community</h1>
-            <hr>
-            <h5>Ink Vara Community</h5>
+            <hr />
+            <a href="" style="text-decoration: none; color: whitesmoke"
+              >Ink Vara</a
+            >
           </div>
           <div class="colRows">
             <h1>Work With Us</h1>
-            <hr>
-            <h5>Instagram</h5>
-            <h5>Twitter</h5>
-            <h5>Facebook</h5>
+            <hr />
+            <a style="text-decoration: none; color: white" href=""
+              >Instagram&nbsp;&nbsp;<img
+                src="{%static 'instagram.svg'%}"
+                width="25px"
+                height="25px"
+                style="filter: invert(); margin-bottom: 10px"
+            /></a>
+            <br />
+            <a style="text-decoration: none; color: white" href=""
+              >Twitter&nbsp;&nbsp;<img
+                src="{%static 'twitter.svg'%}"
+                width="25px"
+                height="25px"
+                style="filter: brightness(0) invert(1); margin-bottom: 10px"
+            /></a>
+            <br />
+            <a style="text-decoration: none; color: white" href=""
+              >Facebook&nbsp;&nbsp;<img
+                src="{%static 'facebook.svg'%}"
+                width="25px"
+                height="25px"
+                style="filter: brightness(0) invert(1); margin-bottom: 10px"
+            /></a>
+            <br />
           </div>
         </div>
-        <br>
-        <hr width="90%" style="margin-left: 50px;">
-        <div class="rows" style="display: flex;color:#dcdcdc; align-items: center; justify-content: space-evenly;">
-          <span>Terms of Service </span>
-          <span>Privacy Policy</span>
-          <span>Content Policy</span>
+        <br />
+        <hr width="90%" style="margin-left: 50px" />
+        <div
+          class="rows"
+          style="
+            display: flex;
+            color: #dcdcdc;
+            align-items: center;
+            justify-content: space-evenly;
+          "
+        >
+          <a href="" style="text-decoration: none; color: whitesmoke"
+            >Terms of Service</a
+          >
+          <br />
+          <a href="" style="text-decoration: none; color: whitesmoke"
+            >Privacy Policy</a
+          >
+          <br />
+          <a href="" style="text-decoration: none; color: whitesmoke"
+            >Content Policy</a
+          >
+          <br />
         </div>
       </div>
     </footer>
   </body>
-<script>
-  document.addEventListener('scroll', () => {
-    const header = document.querySelector('header');
-    if(window.scrollY>0) {
-      header.classList.add('scrolled');
-    }
-      else{
-        header.classList.remove('scrolled');
+  <script>
+    document.addEventListener("scroll", () => {
+      const header = document.querySelector("header");
+      if (window.scrollY > 0) {
+        header.classList.add("scrolled");
+      } else {
+        header.classList.remove("scrolled");
       }
-    })
-</script>
+    });
+  </script>
 </html>

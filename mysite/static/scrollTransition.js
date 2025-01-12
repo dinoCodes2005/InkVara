@@ -4,9 +4,6 @@ const observer = new IntersectionObserver((entries) => {
         if(entry.isIntersecting) {
             entry.target.classList.add('showLeft');
         }
-        else{
-            entry.target.classList.remove('showLeft');
-        }
 
     })
 })
@@ -19,9 +16,6 @@ const observer2 = new IntersectionObserver((entries) => {
         if(entry.isIntersecting) {
             entry.target.classList.add('showRight');
         }
-        else{
-            entry.target.classList.remove('showRight');
-        }
     })
 })
 const hiddenElements2 = document.querySelectorAll('.hiddenRight');
@@ -33,9 +27,6 @@ const observer3 = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
         if(entry.isIntersecting) {
             entry.target.classList.add('showPop');
-        }
-        else{
-            entry.target.classList.remove('showPop');
         }
     })
 })

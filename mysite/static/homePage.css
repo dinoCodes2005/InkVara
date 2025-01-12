@@ -2,12 +2,22 @@ header{
     background-color: transparent;
     height: 5em;
     display: flex;
+    justify-content: center;
     align-items: center;
     position: sticky;
     top: 0;
     z-index: 10;
     transition: background-color .4s ease-in-out;
     backdrop-filter: blur(2px);
+}
+
+header .headerLogo{
+    filter: brightness(0);
+    transition: filter .4s ease-in-out;
+}
+
+header.scrolled .headerLogo{
+    filter: brightness(0) invert(1);
 }
 
 .headerSignUp{
@@ -19,27 +29,32 @@ header{
     transition: .4s all ease-in-out;
 }
 
-.headerCreateBlog{
-    transform: translateX(100%);
-    transition: .4s all ease-in-out;
-}
-header.scrolled .headerCreateBlog{
-    display: inline-block;
-    transition: .4s all ease-in-out;
-    transform: translateX(0%);
-    border: none;
-    height: 40px;
-    font-family: Cambria;
-    margin-right: 20px;
-    margin-left: 0;
-}
 header.scrolled .headerSignUp{
     background: white;
+    padding: 10px;
     transform: translateX(-50px);
     transition: .4s all ease-in-out;
     margin-right: 0;
 
 }
+.headerCreateBlog{
+    transform: translateX(100%);
+    transition: .4s all ease-in-out;
+}
+header.scrolled .headerCreateBlog{
+    transition: .4s all ease-in-out;
+    transform: translateX(0%);
+    border: none;
+    height: 40px;
+    font-family: Cambria;
+    margin: 0 20px 0 0;
+    padding: 10px;
+}
+
+form {
+    display: contents; /* Makes the form behave like its child elements */
+}
+
 nav{
     width: 100%;
     display: flex;
