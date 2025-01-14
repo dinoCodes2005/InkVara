@@ -9,7 +9,7 @@
 </head>
 <body>
 <header style="position:sticky; top:0;height:30px; width:100%;">
-  <form action="login" method="POST">
+  <form action="{% url 'login'%}" method="POST">
     {% csrf_token %}
     <button class="rightSide"style="position:absolute;top: 0;right: 0;width:100px;margin-right: 100px;margin-top: 20px">Login</button>
   </form>

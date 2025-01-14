@@ -8,7 +8,7 @@
     <title>Document</title>
   </head>
   <body>
-  <form action="signUp" method="post">
+  <form action="{% url 'signUp'%}" method="post">
     {% csrf_token %}
     <button class="createAccount">Create Account</button>
     <button class="plus"></button>

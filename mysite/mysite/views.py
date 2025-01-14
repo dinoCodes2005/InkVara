@@ -1,7 +1,8 @@
+from functools import reduce
 from os import remove
 
 from django.http import HttpResponse
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 
 
 def index(request):
@@ -10,7 +11,7 @@ def index(request):
 
 
 def login(request):
-    return render(request,'login.html')
+    return redirect('login')
 
 def signUp(request):
     return render(request,'signUp.html')
