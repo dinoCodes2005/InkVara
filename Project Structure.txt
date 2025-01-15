@@ -1,0 +1,72 @@
+mysite/ <-- Root DIR
+	app1/
+		templates/
+		static/
+		urls.py
+		views.py
+	app2/
+		templates/
+		static/
+		urls.py
+		views.py
+	mysite/
+		settings.py
+		urls.py
+		views.py
+
+
+
+
+
+mysite/settings.py   :
+
+INSTALLED_APPS = ['authentication','core']
+
+TEMPLATES = [ 'DIRS':[], 'APP_DIRS':True]     #making the directly app specific , DIRS is empty to remove the global templates
+
+STATIC_URL = '/static/'
+STATICFILES_DIRS = []				#removing the global static files
+
+
+mysite/urls.py	:
+
+urlpatterns = [
+    path('admin/',admin.site.urls),
+    path('',include('core.urls')),		#homePage structure
+    path('authentication/',include('authentication.urls')),	#loginPage structure
+]
+
+
+app1/urls.py	:
+urlpatterns = [
+    path('',views.home,name='home'),
+]
+
+
+app1/views.py	:
+def home(request):
+    return render(request,'home.html')
+
+app1/home.html	:
+<form action="{% url 'login'%}" method="post">		
+            {% csrf_token %}
+            <button class="headerSignUp">Sign In</button>
+          </form>
+
+#looks for /login part in the URLS -- finds it in the urls.py of app2 : authentication/login/
+
+app2/urls.py	:
+urlpatterns = [
+    path('login/',views.login_user,name="login"),
+    path('signUp/',views.signUp_user,name='signUp'),
+]
+gets the URL part and function from here 
+
+app2/views.py	:
+def login_user(request):
+    return render(request,'login.html')
+
+def signUp_user(request):
+    return render(request,'signUp.html')
+renders the HTML page from this function
+

@@ -1,0 +1,111 @@
+header{
+    background-color: transparent;
+    height: 5em;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    transition: background-color .4s ease-in-out;
+    backdrop-filter: blur(2px);
+}
+
+header .headerLogo{
+    filter: brightness(0);
+    transition: filter .4s ease-in-out;
+}
+
+header.scrolled .headerLogo{
+    filter: brightness(0) invert(1);
+}
+
+.headerSignUp{
+    margin-left:auto;
+    padding: 5px;
+    background: transparent;
+    font-family: Cambria;
+    border:none;
+    transition: .4s all ease-in-out;
+    margin-right: 30px;
+    font-size: large;
+    cursor: pointer;
+}
+
+header.scrolled .headerSignUp{
+    background: white;
+    padding: 10px;
+    transform: translateX(-50px);
+    transition: .4s all ease-in-out;
+    margin-right: 0;
+
+}
+.headerCreateBlog{
+    transform: translateX(100%);
+    transition: .4s all ease-in-out;
+}
+header.scrolled .headerCreateBlog{
+    transition: .4s all ease-in-out;
+    transform: translateX(0%);
+    border: none;
+    height: 40px;
+    font-family: Cambria;
+    margin: 0 20px 0 0;
+    padding: 10px;
+}
+
+
+form {
+    display: contents; /* Makes the form behave like its child elements */
+}
+
+nav{
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: relative;
+}
+
+header.scrolled{
+    background-color: black;
+    opacity: 0.9;
+}
+header nav{
+    padding: 1.5em 0 1.5em 5em;
+}
+
+header nav a{
+    text-decoration: none;
+    color: black;
+    font-size: 1.3em;
+    margin: 1em;
+    transition: color .4s ease-in-out;
+}
+
+header.scrolled nav a{
+    color: white;
+}
+
+a{
+    position: relative;
+    display: inline-block;
+}
+header nav a::before{
+    content: "";
+    position: absolute;
+    bottom: -5px;
+    width: 0%;
+    height: 3px;
+    background-color: black;
+    transition: .4s all ease-in-out;
+}
+
+header nav a:hover::before{
+    width: 100%;
+}
+
+header.scrolled nav a:hover::before{
+    width: 100%;
+    background-color: white;
+}

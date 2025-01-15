@@ -9,6 +9,7 @@ body{
     background: url("loginPageBackground.jpg");
     background-size: cover;
     position: relative;
+    padding: 50px;
 }
 .textArea{
     display: flex;
@@ -20,23 +21,6 @@ body{
 .innerContainer{
     display: flex;
     position: relative;
-}
-
-.plus{display: none;}
-
-.container{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
-    padding: 30px;
-    backdrop-filter: blur(20px);
-    position: relative;
-    border-radius: 20px;
-}
-
-hr{
-    width: 100%;
 }
 
 form{
@@ -60,9 +44,7 @@ button:hover{
 }
 
 .createAccount{
-    position: absolute;
-    top: 0;
-    right:0;
+
     font-family: Cambria;
     font-size: 15px;
     background-color: white;
@@ -70,13 +52,15 @@ button:hover{
     padding:20px;
     margin: 20px;
     margin-right: 50px;
+    width: 150px;
+    border: 1px solid gray;
 }
 label{
     font-family: Cambria;
     margin-bottom: 10px;
 }
 
-input {
+input{
     margin-bottom: 10px;
     width: 285px;
     height: 30px;
@@ -84,28 +68,29 @@ input {
     border: none;border-bottom: 1px solid gray;
 }
 
-.login{
-    width: 200px;
-    height: 50px;
-    font-family: Cambria;
-    font-size: large;
-}
+/*.login{*/
+/*    width: 200px;*/
+/*    height: 50px;*/
+/*    font-family: Cambria;*/
+/*    font-size: large;*/
+/*}*/
 
 .rightButtonGroup{
-    margin-top: 40px;
     margin-left: 20px;
+    margin-bottom: 80px;
 }
 
-span{
-    font-family: "Cambria Math";
-}
+/*span{*/
+/*    font-family: "Cambria Math";*/
+/*}*/
 
-.create{
-    position: relative;
-    margin-right: 75%;
-    width: 120px;
-    height: 50px;
-}
+/*.create{*/
+/*    position: relative;*/
+/*    margin-right: 75%;*/
+/*    width: 120px;*/
+/*    height: 50px;*/
+/*    margin-top: 10px;*/
+/*}*/
 
 
 @media(max-width: 681px)
@@ -137,6 +122,8 @@ span{
 
     .rightButtonGroup{
         margin-top: 10px;
+        margin-left: 0;
+        margin-right: 40px;
     }
 
     .create{
@@ -150,5 +137,22 @@ span{
     .innerContainer{
         justify-content: center;
     }
+}
+
+
+.container{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    padding: 30px;
+    backdrop-filter: blur(10px);
+    border-radius: 20px;
+}
+
+.innerContainer{
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 

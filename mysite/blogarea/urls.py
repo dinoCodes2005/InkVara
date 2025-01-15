@@ -21,8 +21,6 @@ from . import views
 
 
 urlpatterns = [
-    path('login/',views.login_home,name="login"),
-    path('signUp/',views.signUp_user,name='signUp'),
-    path('loginUser/',views.loginUser,name='loginUser'),
-    path('blogarea/', views.blogarea, name='blogarea'),
+    path("blogarea/",views.blogarea,name="blogarea"),
+    path('home/',views.logout_user,name='logout'),
 ]
