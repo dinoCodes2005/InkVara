@@ -121,8 +121,8 @@ SITE_ID = 1
 LOGIN_REDIRECT_URL = '/'  # Change this to your desired redirect URL after successful login
 
 # Google OAuth2 settings (will be configured later in Google Cloud Console)
-SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = '588807524026-u1trdt3lvl0akknkg0iale8bdb3l6u84.apps.googleusercontent.com'
-SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = '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'
+SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = ''
+SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = ''
 
 # Internationalization
 # https://docs.djangoproject.com/en/5.1/topics/i18n/
