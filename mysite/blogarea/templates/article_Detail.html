@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{{ post.title }}</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'article_Detail.css' %}">
+</head>
+<body>
+<header>
+    <nav>
+        <a href=""
+        ><img
+                class="headerLogo"
+                src="{% static '1to1 invictus logo.png'%}"
+                height="50px"
+                width="50px"
+        /></a>
+        <a href="">Home</a>
+        <a href="">My Blogs</a>
+        <a href="">About</a>
+        <a href="">Contact</a>
+        <form action="{% url 'home' %}" method="post">
+            {% csrf_token %}
+            <button class="headerSignUp">Logout</button>
+        </form>
+    </nav>
+</header>
+<div>
+    <h1>{{ post.title }}</h1>
+    <h3>Written by : {{ post.author }} - {{ post.author.email }}</h3>
+    <hr>
+    <p>{{ post.body }}</p>
+</div>
+</body>
+</html>

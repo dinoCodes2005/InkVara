@@ -18,9 +18,17 @@ from tkinter.font import names
 
 from django.urls import path
 from . import views
-
+from .views import BlogHome, ArticleDetailView, AddPostView
+from django.conf import settings
+from django.conf.urls.static import static
 
 urlpatterns = [
-    path("blogarea/",views.blogarea,name="blogarea"),
-    path('home/',views.logout_user,name='logout'),
+    # path("blogarea/", views.blogarea, name="blogarea"),
+    path("blogarea/", BlogHome.as_view(), name="blogarea"),
+    path('home/', views.logout_user, name='logout'),
+    path('article/<int:pk>',ArticleDetailView.as_view(),name="ArticleDetailView"),
+    path('writeYourBlog/',AddPostView.as_view(),name="writeYourBlog"),
 ]
+
+# if settings.DEBUG:
+#     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

@@ -2,9 +2,9 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Write Your Blog</title>
     {% load static %}
-    <link rel="stylesheet" href="{% static 'blogHome.css' %}"/>
+    <link rel="stylesheet" href="{% static 'writeBlog.css' %}">
 </head>
 <body>
 <header>
@@ -24,20 +24,19 @@
             {% csrf_token %}
             <button class="headerSignUp">Logout</button>
         </form>
-        <form action="{% url 'writeYourBlog'%}">
-            {% csrf_token %}
-            <button class="headerCreateBlog">Create Blog</button>
-        </form>
     </nav>
 </header>
-<div class="BlogPostCards">
-    {% for post in object_list %}
-    <a style="text-decoration: none" href="{% url 'ArticleDetailView' post.pk %}">
-        <h1>{{ post.title }} - {{ post.author }}</h1>
-        <img src="{{ post.thumbnail.url }}" alt="{{ post.title }}">
-    </a>
-    {% endfor %}
+<div class="mainContainer">
+    <div class="innerContainer">
+        <form method="POST">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button class="Post">Post</button>
+        </form>
+    </div>
 </div>
+
+
 </body>
 <script>
     document.addEventListener("scroll", () => {

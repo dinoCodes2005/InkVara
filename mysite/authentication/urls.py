@@ -19,7 +19,6 @@ from tkinter.font import names
 from django.urls import path,include
 from . import views
 
-
 urlpatterns = [
     path('login/',views.login_home,name="login"),
     path('signUp/',views.signUp_user,name='signUp'),
