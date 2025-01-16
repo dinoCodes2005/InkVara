@@ -16,7 +16,7 @@
                 height="50px"
                 width="50px"
         /></a>
-        <a href="">Home</a>
+        <a href="{% url 'blogarea'%}">Home</a>
         <a href="">My Blogs</a>
         <a href="">About</a>
         <a href="">Contact</a>
@@ -33,8 +33,9 @@
 <div class="BlogPostCards">
     {% for post in object_list %}
     <a style="text-decoration: none" href="{% url 'ArticleDetailView' post.pk %}">
-        <h1>{{ post.title }} - {{ post.author }}</h1>
-        <img src="{{ post.thumbnail.url }}" alt="{{ post.title }}">
+        <h1>{{ post.title }} - by {{ post.author }} - {{ post.post_date}} <a href="{% url 'updateBlog' post.pk %}">(Edit)</a><a
+                href="{% url 'deleteBlog' post.pk %}">(Delete)</a></h1>
+        <!--        <img src="{{ post.thumbnail.url }}" alt="{{ post.title }}">-->
     </a>
     {% endfor %}
 </div>

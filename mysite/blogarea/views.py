@@ -1,12 +1,14 @@
 from django.shortcuts import render,redirect
 from django.contrib.auth import logout,authenticate
 from django.contrib import messages
-from django.views.generic import ListView, DetailView, CreateView
+from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 from .models import Post
+from django.urls import reverse_lazy
 # Create your views here.
 class BlogHome(ListView):
     model = Post
     template_name = 'blogHome.html'
+    ordering = ['-post_date']
 
 class ArticleDetailView(DetailView):
     model = Post
@@ -16,6 +18,16 @@ class AddPostView(CreateView):
     model = Post
     template_name = 'writeBlog.html'
     fields = '__all__'
+
+class UpdatePostView(UpdateView):
+    model = Post
+    template_name = 'updateBlog.html'
+    fields = ['title','body']
+
+class DeletePostView(DeleteView):
+    model = Post
+    template_name = 'deleteBlog.html'
+    success_url = reverse_lazy('blogarea')
 
 def logout_user(request):
     logout(request)

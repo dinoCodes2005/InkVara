@@ -2,11 +2,10 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Write Your Blog</title>
-    {% load static %}
-    <link rel="stylesheet" href="{% static 'writeBlog.css' %}">
+    <title>Title</title>
+  {% load static %}
+    <link rel="stylesheet" href="{% static 'updateBlog.css' %}">
 </head>
-<body>
 <header>
     <nav>
         <a href=""
@@ -31,7 +30,7 @@
         <form method="POST">
             {% csrf_token %}
             {{ form.as_p }}
-            <button class="Post">Post</button>
+            <button class="Post">Edit Post</button>
         </form>
     </div>
 </div>
@@ -48,4 +47,5 @@
         }
     });
 </script>
+</body>
 </html>

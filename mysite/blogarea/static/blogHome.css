@@ -11,6 +11,9 @@ header{
     backdrop-filter: blur(2px);
 }
 
+body{
+    margin: 0;
+}
 header .headerLogo{
     filter: brightness(0);
     transition: filter .4s ease-in-out;
@@ -110,6 +113,7 @@ header.scrolled nav a:hover::before{
     display: flex;
     justify-content: center;
     align-items: center;
+    flex-direction: column;
     flex-wrap: wrap;
     gap: 20px;
 }

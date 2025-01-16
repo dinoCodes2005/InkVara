@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+  {% load static %}
+  <link rel="stylesheet" href="{% static 'deleteBlog.css' %}">
+</head>
+<header>
+  <nav>
+    <a href=""
+    ><img
+            class="headerLogo"
+            src="{% static '1to1 invictus logo.png'%}"
+            height="50px"
+            width="50px"
+    /></a>
+    <a href="{% url 'blogarea'%}">Home</a>
+    <a href="">My Blogs</a>
+    <a href="">About</a>
+    <a href="">Contact</a>
+    <form action="{% url 'home' %}" method="post">
+      {% csrf_token %}
+      <button class="headerSignUp">Logout</button>
+    </form>
+  </nav>
+</header>
+<div class="mainContainer">
+  <div class="innerContainer">
+    <form action = "" method="POST">
+      {% csrf_token %}
+      <h1>Are You sure ?</h1>
+      <button class="Post">Delete Post</button>
+    </form>
+  </div>
+</div>
+
+
+</body>
+<script>
+  document.addEventListener("scroll", () => {
+    const header = document.querySelector("header");
+    if (window.scrollY > 0) {
+      header.classList.add("scrolled");
+    } else {
+      header.classList.remove("scrolled");
+    }
+  });
+</script>
+</body>
+</html>

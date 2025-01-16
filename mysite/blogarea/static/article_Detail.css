@@ -44,15 +44,7 @@ header.scrolled .headerSignUp{
     transform: translateX(100%);
     transition: .4s all ease-in-out;
 }
-header.scrolled .headerCreateBlog{
-    transition: .4s all ease-in-out;
-    transform: translateX(0%);
-    border: none;
-    height: 40px;
-    font-family: Cambria;
-    margin: 0 20px 0 0;
-    padding: 10px;
-}
+
 
 
 form {
@@ -113,10 +105,23 @@ header.scrolled nav a:hover::before{
 
 
 body{
-    padding: 30px;
-    padding-top: 0;
+    /*padding-top: 0;*/
+    margin: 0;
 }
 
 h1,h3{
     font-family: Cambria;
+    margin-left: 50px;
+}
+
+div img {
+    margin-left: 50px;
+    height: 500px;
+    width: 800px;
+    border-radius: 20px;
+    box-shadow: 10px 10px 10px #979797;
+}
+
+p{
+    margin-left: 50px;
 }
