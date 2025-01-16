@@ -46,8 +46,11 @@
         <div class="rightButtonGroup">
             <form action="" method="POST">
                 {% csrf_token %}
-                <button class="rightSide" type="submit" style="margin: 10px"><img src="{%static 'google.svg'%}"
-                                                                                  height="20px" width="20px"><span>&nbsp;&nbsp;&nbsp;Continue With Google </span>
+                {% load socialaccount %}
+                <button class="rightSide" type="submit" style="margin: 10px"
+                        onclick="window.location.href='{% provider_login_url 'google' %}'"><img
+                        src="{%static 'google.svg'%}"
+                        height="20px" width="20px"><span>&nbsp;&nbsp;&nbsp;Continue With Google </span>
                 </button>
                 <br>
                 <button class="rightSide" type="submit" style="margin: 10px"><img src="{%static 'twitter.svg'%}"

@@ -39,6 +39,10 @@ INSTALLED_APPS = [
     'core',
     'blogarea',
     'widget_tweaks',
+    'allauth',  # For social authentication
+    'allauth.account',
+    'allauth.socialaccount',
+    'allauth.socialaccount.providers.google',
 ]
 
 MIDDLEWARE = [
@@ -49,6 +53,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'allauth.account.middleware.AccountMiddleware',
 ]
 
 # this gives the project's URL location where the ROOT_URLCONF will look for the urls.py
@@ -102,6 +107,21 @@ AUTH_PASSWORD_VALIDATORS = [
         'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
     },
 ]
+
+AUTHENTICATION_BACKENDS = (
+    'django.contrib.auth.backends.ModelBackend',  # Keep the default backend for the regular login
+    'allauth.account.auth_backends.AuthenticationBackend',  # Use allauth backend for social auth
+)
+
+# Site ID for Django sites framework
+SITE_ID = 1
+
+# Redirect URL after login
+LOGIN_REDIRECT_URL = '/'  # Change this to your desired redirect URL after successful login
+
+# Google OAuth2 settings (will be configured later in Google Cloud Console)
+SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = '588807524026-u1trdt3lvl0akknkg0iale8bdb3l6u84.apps.googleusercontent.com'
+SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = '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'
 
 # Internationalization
 # https://docs.djangoproject.com/en/5.1/topics/i18n/

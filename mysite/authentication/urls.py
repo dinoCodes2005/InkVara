@@ -16,7 +16,7 @@ Including another URLconf
 """
 from tkinter.font import names
 
-from django.urls import path
+from django.urls import path,include
 from . import views
 
 
@@ -25,4 +25,5 @@ urlpatterns = [
     path('signUp/',views.signUp_user,name='signUp'),
     path('loginUser/',views.loginUser,name='loginUser'),
     path('blogarea/', views.blogarea, name='blogarea'),
+    path('accounts/', include('allauth.urls')),
 ]
