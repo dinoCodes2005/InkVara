@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <title>Title</title>
   {% load static %}
+  <link rel="stylesheet" href="{% static 'header.css' %}" />
     <link rel="stylesheet" href="{% static 'updateBlog.css' %}">
 </head>
 <header>
@@ -19,7 +20,7 @@
         <a href="">My Blogs</a>
         <a href="">About</a>
         <a href="">Contact</a>
-        <form action="{% url 'home' %}" method="post">
+        <form action="{% url 'logout' %}" method="post">
             {% csrf_token %}
             <button class="headerSignUp">Logout</button>
         </form>
@@ -27,10 +28,10 @@
 </header>
 <div class="mainContainer">
     <div class="innerContainer">
-        <form method="POST">
+        <form action = "{% url 'updateBlog' post.pk %}" method="POST">
             {% csrf_token %}
             {{ form.as_p }}
-            <button class="Post">Edit Post</button>
+            <button class="Post">Save Changes</button>
         </form>
     </div>
 </div>

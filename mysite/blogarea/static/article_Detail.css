@@ -1,108 +1,3 @@
-header{
-    background-color: transparent;
-    height: 5em;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    position: sticky;
-    top: 0;
-    z-index: 10;
-    transition: background-color .4s ease-in-out;
-    backdrop-filter: blur(2px);
-}
-
-header .headerLogo{
-    filter: brightness(0);
-    transition: filter .4s ease-in-out;
-}
-
-header.scrolled .headerLogo{
-    filter: brightness(0) invert(1);
-}
-
-.headerSignUp{
-    margin-left:auto;
-    padding: 5px;
-    background: transparent;
-    font-family: Cambria;
-    border:none;
-    transition: .4s all ease-in-out;
-    margin-right: 30px;
-    font-size: large;
-    cursor: pointer;
-}
-
-header.scrolled .headerSignUp{
-    background: white;
-    padding: 10px;
-    transform: translateX(-50px);
-    transition: .4s all ease-in-out;
-    margin-right: 0;
-
-}
-.headerCreateBlog{
-    transform: translateX(100%);
-    transition: .4s all ease-in-out;
-}
-
-
-
-form {
-    display: contents; /* Makes the form behave like its child elements */
-}
-
-nav{
-    width: 100%;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    position: relative;
-}
-
-header.scrolled{
-    background-color: black;
-    opacity: 0.9;
-}
-header nav{
-    padding: 1.5em 0 1.5em 5em;
-}
-
-header nav a{
-    text-decoration: none;
-    color: black;
-    font-size: 1.3em;
-    margin: 1em;
-    transition: color .4s ease-in-out;
-}
-
-header.scrolled nav a{
-    color: white;
-}
-
-a{
-    position: relative;
-    display: inline-block;
-}
-header nav a::before{
-    content: "";
-    position: absolute;
-    bottom: -5px;
-    width: 0%;
-    height: 3px;
-    background-color: black;
-    transition: .4s all ease-in-out;
-}
-
-header nav a:hover::before{
-    width: 100%;
-}
-
-header.scrolled nav a:hover::before{
-    width: 100%;
-    background-color: white;
-}
-
-
 
 body{
     /*padding-top: 0;*/
@@ -124,4 +19,24 @@ div img {
 
 p{
     margin-left: 50px;
+    margin-right: 50px;
+    white-space: pre-wrap;
+}
+
+a>button{
+    width: 150px;
+    height: 50px;
+    background-color: white;
+    padding: 10px;
+    margin-bottom: 50px ;
+    margin-left: 50px;
+    font-family: Cambria;
+    font-size: large;
+    border: 1px solid gray;
+    border-radius: 10px;
+}
+
+a>button:hover{
+    filter: invert();
+    transition: all 0.2s ease-in-out;
 }

@@ -29,14 +29,13 @@
           <a href="">Blogs</a>
           <a href="">About</a>
           <a href="">Contact</a>
-          <form action="{% url 'login'%}" method="post">
+          <form action="{% url 'loginHome'%}" method="post">
             {% csrf_token %}
             <button class="headerSignUp">Sign In</button>
             <button class="headerCreateBlog">Create Your Blog</button>
           </form>
         </nav>
       </header>
-
 
       <div id="createBlogDiv" style="position: relative">
         <h1

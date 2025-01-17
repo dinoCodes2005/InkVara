@@ -4,6 +4,7 @@
   <meta charset="UTF-8">
   <title>Title</title>
   {% load static %}
+  <link rel="stylesheet" href="{% static 'header.css' %}" />
   <link rel="stylesheet" href="{% static 'deleteBlog.css' %}">
 </head>
 <header>
@@ -19,7 +20,7 @@
     <a href="">My Blogs</a>
     <a href="">About</a>
     <a href="">Contact</a>
-    <form action="{% url 'home' %}" method="post">
+    <form action="{% url 'logout' %}" method="post">
       {% csrf_token %}
       <button class="headerSignUp">Logout</button>
     </form>

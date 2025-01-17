@@ -1,3 +1,4 @@
+from unicodedata import category
 from django.shortcuts import render,redirect
 from django.contrib.auth import logout,authenticate
 from django.contrib import messages
@@ -9,7 +10,7 @@ class BlogHome(ListView):
     model = Post
     template_name = 'blogHome.html'
     ordering = ['-post_date']
-
+    
 class ArticleDetailView(DetailView):
     model = Post
     template_name = 'article_Detail.html'
@@ -22,7 +23,7 @@ class AddPostView(CreateView):
 class UpdatePostView(UpdateView):
     model = Post
     template_name = 'updateBlog.html'
-    fields = ['title','body']
+    fields = ['title','category','body']
 
 class DeletePostView(DeleteView):
     model = Post
@@ -33,4 +34,9 @@ def logout_user(request):
     logout(request)
     messages.success(request,"You have logged out")
     return redirect('home')
+
+def CategoryView(request,cats):
+    category_name = cats.replace('-',' ').title()
+    category_posts = Post.objects.filter(category=category_name)
+    return render(request,'categories.html',{'category_posts':category_posts})
 

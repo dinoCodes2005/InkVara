@@ -11,7 +11,10 @@ https://docs.djangoproject.com/en/5.1/ref/settings/
 """
 
 from pathlib import Path
+from django.urls import reverse_lazy
 import os
+
+from django.conf.global_settings import LOGOUT_REDIRECT_URL
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -118,7 +121,8 @@ AUTHENTICATION_BACKENDS = (
 SITE_ID = 1
 
 # Redirect URL after login
-LOGIN_REDIRECT_URL = '/'  # Change this to your desired redirect URL after successful login
+LOGIN_REDIRECT_URL = reverse_lazy('blogarea') 
+LOGOUT_REDIRECT_URL = reverse_lazy('home')# Change this to your desired redirect URL after successful login
 
 # Internationalization
 # https://docs.djangoproject.com/en/5.1/topics/i18n/

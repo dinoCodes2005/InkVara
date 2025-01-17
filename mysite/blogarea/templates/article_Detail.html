@@ -1,47 +1,57 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
+  <head>
+    <meta charset="UTF-8" />
     <title>{{ post.title }}</title>
     {% load static %}
-    <link rel="stylesheet" href="{% static 'article_Detail.css' %}">
-</head>
-<body>
-<header>
-    <nav>
+    <link rel="stylesheet" href="{% static 'header.css' %}" />
+    <link rel="stylesheet" href="{% static 'article_Detail.css' %}" />
+  </head>
+  <body>
+    <header>
+      <nav>
         <a href=""
-        ><img
-                class="headerLogo"
-                src="{% static '1to1 invictus logo.png'%}"
-                height="50px"
-                width="50px"
+          ><img
+            class="headerLogo"
+            src="{% static '1to1 invictus logo.png'%}"
+            height="50px"
+            width="50px"
         /></a>
         <a href="{% url 'blogarea'%}">Home</a>
         <a href="">My Blogs</a>
         <a href="">About</a>
         <a href="">Contact</a>
-        <form action="{% url 'home' %}" method="post">
-            {% csrf_token %}
-            <button class="headerSignUp">Logout</button>
+        <form action="{% url 'logout' %}" method="post">
+          {% csrf_token %}
+          <button class="headerSignUp">Logout</button>
         </form>
-    </nav>
-</header>
-<div>
-    <h1>{{ post.title }}</h1>
-    <h3>Written by : {{ post.author }} - {{ post.author.email }}</h3>
-    <hr>
-<!--    <img src="{{ post.image.url }}" alt="{{ post.title }}">-->
-    <p>{{ post.body }}</p>
-</div>
-</body>
-<script>
+      </nav>
+    </header>
+    <div>
+      <h1>{{ post.title }} / {{ post.category }}</h1>
+      <h3>Written by : {{ post.author }} - {{ post.author.email }}</h3>
+      <hr />
+      <!--    <img src="{{ post.image.url }}" alt="{{ post.title }}">-->
+      <p>{{ post.body|safe }}</p>
+      <!-- <form action="{% url 'updateBlog' post.pk %}" method="POST">
+        {% csrf_token %}
+        <button>Edit Post</button>
+      </form> -->
+      <a
+        href="{% url 'updateBlog' post.pk %}"
+        style="text-decoration: none; color: black"
+        ><button>Edit Post</button></a
+      >
+    </div>
+  </body>
+  <script>
     document.addEventListener("scroll", () => {
-        const header = document.querySelector("header");
-        if (window.scrollY > 0) {
-            header.classList.add("scrolled");
-        } else {
-            header.classList.remove("scrolled");
-        }
+      const header = document.querySelector("header");
+      if (window.scrollY > 0) {
+        header.classList.add("scrolled");
+      } else {
+        header.classList.remove("scrolled");
+      }
     });
-</script>
+  </script>
 </html>

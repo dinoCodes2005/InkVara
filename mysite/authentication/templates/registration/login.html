@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    {% load static %}
+    <link rel="stylesheet" href="{%static 'loginPage.css'%}" />
+    <title>Document</title>
+  </head>
+  <body>
+    <form action="{% url 'register'%}" method="post">
+      {% csrf_token %}
+      <button class="createAccount">Create Account</button>
+      <button class="plus"></button>
+    </form>
+
+    <div class="container">
+      <h1 style="font-family: Cambria; font-weight: normal">
+        Log into Ink Vara
+      </h1>
+      <div
+        class="horizontalLine"
+        style="width: 100%; height: 1px; background-color: #b6b6b6"
+      ></div>
+      <br />
+      <div class="innerContainer">
+        <div class="textArea">
+          <form action="{% url 'login'%}" method="post">
+            {% csrf_token %}
+            <label for="username">USERNAME</label>
+            <input
+              type="text"
+              placeholder="JohnDoe_123"
+              name="username"
+              id="username"
+              style="font-family: Cambria; font-size: medium"
+            />
+            <label for="password">PASSWORD:</label>
+            <input
+              type="password"
+              placeholder="Password"
+              name="password"
+              id="password"
+              style="font-family: Cambria; font-size: medium"
+            />
+            <button class="login">Login</button>
+          </form>
+          {% if messages %}
+          <div
+            style="
+              background-color: #ffe1e1;
+              margin-top: 20px;
+              padding: 10px;
+              border-radius: 10px;
+            "
+          >
+            {% for message in messages%}
+            <h5 style="all: unset; color: #c60000; font-family: Cambria">
+              {{message}}
+            </h5>
+            {% endfor %}
+            <br />
+            {% if hasFailedAuthentication %}
+            <a href="" style="color: #c60000; font-family: Cambria"
+              >Reset your Password</a
+            >
+            {% endif %}
+          </div>
+          {% endif %}
+        </div>
+        <div
+          class="verticalLine"
+          style="width: 1px; height: 250px; background-color: #b6b6b6"
+        ></div>
+        <div class="rightButtonGroup">
+          <form action="" method="POST">
+            {% csrf_token %} {% load socialaccount %}
+            <button
+              class="rightSide"
+              type="submit"
+              style="margin: 10px"
+              onclick="window.location.href='{% provider_login_url 'google' %}'"
+            >
+              <img
+                src="{%static 'google.svg'%}"
+                height="20px"
+                width="20px"
+              /><span>&nbsp;&nbsp;&nbsp;Continue With Google </span>
+            </button>
+            <br />
+            <button class="rightSide" type="submit" style="margin: 10px">
+              <img
+                src="{%static 'twitter.svg'%}"
+                height="20px"
+                width="20px"
+                style="filter: brightness(0)"
+              /><span>&nbsp;&nbsp;&nbsp;Continue With Twitter</span>
+            </button>
+            <br />
+            <button class="rightSide" type="submit" style="margin: 10px">
+              <img
+                src="{%static 'facebook.svg'%}"
+                height="20px"
+                width="20px "
+                style="filter: brightness(0)"
+              /><span>&nbsp;&nbsp;&nbsp;Continue With Facebook</span>
+            </button>
+            <br />
+          </form>
+        </div>
+      </div>
+      <br />
+    </div>
+  </body>
+</html>

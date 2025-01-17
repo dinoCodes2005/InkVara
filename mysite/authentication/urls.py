@@ -15,14 +15,16 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from tkinter.font import names
-
 from django.urls import path,include
 from . import views
+from .views import UserRegisterView
 
 urlpatterns = [
-    path('login/',views.login_home,name="login"),
-    path('signUp/',views.signUp_user,name='signUp'),
+    path('loginHome/',views.login_home,name="loginHome"),
+    path('signUp/',UserRegisterView.as_view(),name='signUp'),
     path('loginUser/',views.loginUser,name='loginUser'),
     path('blogarea/', views.blogarea, name='blogarea'),
+    # path('blogarea/',User)
+    path('register/',UserRegisterView.as_view(),name='register'),
     path('accounts/', include('allauth.urls')),
 ]

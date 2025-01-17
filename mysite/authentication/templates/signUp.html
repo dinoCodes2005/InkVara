@@ -1,97 +1,147 @@
 <!DOCTYPE html>
 <html>
-<head>
+  <head>
     {% load static %}
-    <link rel="stylesheet" href="{% static 'signUpPage.css' %}">
+    <link rel="stylesheet" href="{% static 'signUpPage.css' %}" />
     {% load widget_tweaks %}
-</head>
-<body>
-<header style="position:sticky; top:0;height:30px; width:100%;">
-    <form action="{% url 'login'%}" method="POST">
+  </head>
+  <body>
+    <header
+      style="
+        position: sticky;
+        top: 0;
+        height: 50px;
+        width: 100%;
+        background: transparent;
+        z-index: 12;
+      "
+    >
+      <form action="{% url 'login'%}" method="POST">
         {% csrf_token %}
-        <button style="position: absolute;right: 0;margin-right: 100px;margin-top:50px;padding: 15px;width: 100px">Login
+        <button
+          style="position: absolute; right: 0; padding: 15px; width: 100px"
+        >
+          Login
         </button>
-    </form>
-</header>
-<div class="container">
-    <h1 style="font-family: Cambria;font-weight: normal">Welcome to Ink Vara</h1>
-    <div class="horizontalLine" style="width: 100%;height: 1px;background-color:#b6b6b6;"></div>
-    <br>
-    <div class="innerContainer">
+      </form>
+    </header>
+    <div class="container">
+      <h1 style="font-family: Cambria; font-weight: normal; margin-top: 250px">
+        Welcome to Ink Vara
+      </h1>
+      <div
+        class="horizontalLine"
+        style="width: 100%; height: 1px; background-color: #b6b6b6"
+      ></div>
+      <div class="innerContainer">
         <div class="textArea">
-            {% load widget_tweaks %}
-            <form method="POST">
-                {% csrf_token %}
-                <div>
-                    {{ form.username.label_tag }}
-                    <br>
-                    {{ form.username }}
-                </div>
-                <div>
-                    {{ form.email.label_tag }}
-                    <br>
-                    {{ form.email }}
-                </div>
-                <div>
-                    {{ form.first_name.label_tag }}
-                    <br>
-                    {{ form.first_name }}
-                </div>
-                <div>
-                    {{ form.last_name.label_tag }}
-                    <br>
-                    {{ form.last_name }}
-                </div>
-                <div>
-                    {{ form.password1.label_tag }}
-                    <br>
-                    {{ form.password1 }}
-                </div>
-                <div>
-                    {{ form.password2.label_tag }}
-                    <br>
-                    {{ form.password2 }}
-                </div>
-                <button class="createAccount" type="submit">Sign Up</button>
+          {% load widget_tweaks %}
+          <form method="POST">
+            {% csrf_token %}
+            <div>
+              {{ form.username.label_tag }}
+              <br />
+              {{ form.username }}
+            </div>
+            <div>
+              {{ form.email.label_tag }}
+              <br />
+              {{ form.email }}
+            </div>
+            <div>
+              {{ form.first_name.label_tag }}
+              <br />
+              {{ form.first_name }}
+            </div>
+            <div>
+              {{ form.last_name.label_tag }}
+              <br />
+              {{ form.last_name }}
+            </div>
+            <div>
+              {{ form.password1.label_tag }}
+              <br />
+              {{ form.password1 }}
+            </div>
+            <div>
+              {{ form.password2.label_tag }}
+              <br />
+              {{ form.password2 }}
+            </div>
+            <button class="createAccount" type="submit">Sign Up</button>
 
-                {% if form.errors %}
-                <div class="errors" style="background-color:#ffe1e1;margin-top: 20px;padding:10px;border-radius: 10px ">
-                    {% for field in form %}
-                    {% for error in field.errors %}
-                    <p style="color: #c60000;font-family: Cambria">{{ error }}</p>
-                    {% endfor %}
-                    {% endfor %}
-                </div>
-                {% endif %}
-
-
-            </form>
+            {% if form.password1.errors %}
+            <div
+              class="errors"
+              style="
+                background-color: #ffe1e1;
+                margin-top: 20px;
+                padding: 10px;
+                border-radius: 10px;
+              "
+            >
+              {% for error in form.password1.errors %}
+              <p style="color: #c60000; font-family: Cambria">{{ error }}</p>
+              {% endfor %}
+            </div>
+            {% endif %} {% if form.password2.errors %}
+            <div
+              class="errors"
+              style="
+                background-color: #ffe1e1;
+                margin-top: 20px;
+                padding: 10px;
+                border-radius: 10px;
+              "
+            >
+              {% for error in form.password2.errors %}
+              <p style="color: #c60000; font-family: Cambria">{{ error }}</p>
+              {% endfor %}
+            </div>
+            {% endif %}
+          </form>
         </div>
-        <div class="verticalLine "
-             style="width: 1px;height: 90%;transform:translateY(-20px);background-color: #b6b6b6;"></div>
+        <div
+          class="verticalLine"
+          style="
+            width: 1px;
+            height: 90%;
+            transform: translateY(-20px);
+            background-color: #b6b6b6;
+          "
+        ></div>
         <div class="rightButtonGroup">
-            <form action="" method="POST">
-                {% csrf_token %}
-                <button class="rightSide" type="submit" style="margin: 10px"><img src="{%static 'google.svg'%}"
-                                                                                  height="20px" width="20px"><span>&nbsp;&nbsp;&nbsp;Continue With Google </span>
-                </button>
-                <br>
-                <button class="rightSide" type="submit" style="margin: 10px"><img src="{%static 'twitter.svg'%}"
-                                                                                  height="20px" width="20px"
-                                                                                  style="filter: brightness(0)"><span>&nbsp;&nbsp;&nbsp;Continue With Twitter</span>
-                </button>
-                <br>
-                <button class="rightSide" type="submit" style="margin: 10px"><img src="{%static 'facebook.svg'%}"
-                                                                                  height="20px" width="20px "
-                                                                                  style="filter: brightness(0)"><span>&nbsp;&nbsp;&nbsp;Continue With Facebook</span>
-                </button>
-                <br>
-            </form>
+          <form action="" method="POST">
+            {% csrf_token %}
+            <button class="rightSide" type="submit" style="margin: 10px">
+              <img
+                src="{%static 'google.svg'%}"
+                height="20px"
+                width="20px"
+              /><span>&nbsp;&nbsp;&nbsp;Continue With Google </span>
+            </button>
+            <br />
+            <button class="rightSide" type="submit" style="margin: 10px">
+              <img
+                src="{%static 'twitter.svg'%}"
+                height="20px"
+                width="20px"
+                style="filter: brightness(0)"
+              /><span>&nbsp;&nbsp;&nbsp;Continue With Twitter</span>
+            </button>
+            <br />
+            <button class="rightSide" type="submit" style="margin: 10px">
+              <img
+                src="{%static 'facebook.svg'%}"
+                height="20px"
+                width="20px "
+                style="filter: brightness(0)"
+              /><span>&nbsp;&nbsp;&nbsp;Continue With Facebook</span>
+            </button>
+            <br />
+          </form>
         </div>
-
+      </div>
     </div>
-
-
-</div>
-</body>
+  </body>
 </html>

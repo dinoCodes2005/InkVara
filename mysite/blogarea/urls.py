@@ -30,6 +30,7 @@ urlpatterns = [
     path('writeYourBlog/',AddPostView.as_view(),name="writeYourBlog"),
     path('article/updateBlog/<int:pk>',UpdatePostView.as_view(),name="updateBlog"),
     path('article/deleteBlog/<int:pk>', DeletePostView.as_view(), name="deleteBlog"),
+    path('category/<str:cats>',views.CategoryView,name='category'),
 
 ]
 

@@ -1,20 +1,22 @@
 from django.shortcuts import render, redirect
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
-from django.contrib.auth.decorators import login_required
-from django.contrib.auth.forms import AuthenticationForm
+from django.urls import reverse_lazy
+
 from .forms import UserRegisterForm
-from django.core.mail import send_mail
-from django.core.mail import EmailMultiAlternatives
-from django.template.loader import get_template
-from django.template import Context
 from django.contrib.auth.models import User
-from .models import *
+from django.views import generic
+from django.contrib.auth.forms import UserCreationForm
+from .models import *\
 
 # Create your views here.
+class UserRegisterView(generic.CreateView):
+    form_class = UserRegisterForm
+    template_name = 'signUp.html'
+    success_url = reverse_lazy('login')
 
 def login_home(request):
-    return render(request,'login.html')
+    return render(request,'registration/login.html')
 
 def loginUser(request):
     if request.method == "POST":
@@ -43,6 +45,7 @@ def signUp_user(request):
             form.save()
             username = form.cleaned_data.get('username')
             email = form.cleaned_data.get('email')
+            
             messages.success(request, f'Your account has been created ! You are now able to log in')
             return render(request,'login.html',{'hasFailedAuthentication':False})
     else:

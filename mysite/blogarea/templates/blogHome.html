@@ -1,53 +1,80 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
+  <head>
+    <meta charset="UTF-8" />
     <title>Title</title>
     {% load static %}
-    <link rel="stylesheet" href="{% static 'blogHome.css' %}"/>
-</head>
-<body>
-<header>
-    <nav>
+    <link rel="stylesheet" href="{% static 'header.css' %}" />
+    <link rel="stylesheet" href="{% static 'blogHome.css'%}" />
+  </head>
+  <body>
+    <header>
+      <nav>
         <a href=""
-        ><img
-                class="headerLogo"
-                src="{% static '1to1 invictus logo.png'%}"
-                height="50px"
-                width="50px"
+          ><img
+            class="headerLogo"
+            src="{% static '1to1 invictus logo.png'%}"
+            height="50px"
+            width="50px"
         /></a>
         <a href="{% url 'blogarea'%}">Home</a>
         <a href="">My Blogs</a>
+        <a href="">Category</a>
         <a href="">About</a>
         <a href="">Contact</a>
-        <form action="{% url 'home' %}" method="post">
-            {% csrf_token %}
-            <button class="headerSignUp">Logout</button>
+        <form action="{% url 'logout' %}" method="post">
+          {% csrf_token %}
+          <button class="headerSignUp">Logout</button>
         </form>
         <form action="{% url 'writeYourBlog'%}">
-            {% csrf_token %}
-            <button class="headerCreateBlog">Create Blog</button>
+          {% csrf_token %}
+          <button class="headerCreateBlog">Create Blog</button>
         </form>
-    </nav>
-</header>
-<div class="BlogPostCards">
-    {% for post in object_list %}
-    <a style="text-decoration: none" href="{% url 'ArticleDetailView' post.pk %}">
-        <h1>{{ post.title }} - by {{ post.author }} - {{ post.post_date}} <a href="{% url 'updateBlog' post.pk %}">(Edit)</a><a
-                href="{% url 'deleteBlog' post.pk %}">(Delete)</a></h1>
-        <!--        <img src="{{ post.thumbnail.url }}" alt="{{ post.title }}">-->
-    </a>
-    {% endfor %}
-</div>
-</body>
-<script>
+      </nav>
+    </header>
+    <h1>Recent Blogs</h1>
+    <div class="CardContainer">
+      {% for post in object_list %}
+      <a
+        style="text-decoration: none"
+        href="{% url 'ArticleDetailView' post.pk %}"
+      >
+        <div class="Cards">
+          <img
+            class="CardImages"
+            style="height: 300px"
+            src="{% if post.thumbnail %}{{ post.thumbnail.url }}{% else %}/media/thumbnail/thumbnail.jpg{% endif %}"
+            alt="{{ post.title }}"
+          />
+          <br />
+          <p>
+            <span class="cardTitle">{{ post.title }}</span>
+            <span class="cardAuthor_Date"
+              >- by {{ post.author }} - {{ post.post_date}}</span
+            >
+            <br />
+            <span class="cardCategory"
+              ><a href="{% url 'category' post.category|slugify %}">
+                {{ post.category }}</a
+              ></span
+            >
+            <br />
+            <a href="{% url 'updateBlog' post.pk %}">(Edit)</a
+            ><a href="{% url 'deleteBlog' post.pk %}">(Delete)</a>
+          </p>
+        </div>
+      </a>
+      {% endfor %}
+    </div>
+  </body>
+  <script>
     document.addEventListener("scroll", () => {
-        const header = document.querySelector("header");
-        if (window.scrollY > 0) {
-            header.classList.add("scrolled");
-        } else {
-            header.classList.remove("scrolled");
-        }
+      const header = document.querySelector("header");
+      if (window.scrollY > 0) {
+        header.classList.add("scrolled");
+      } else {
+        header.classList.remove("scrolled");
+      }
     });
-</script>
+  </script>
 </html>
