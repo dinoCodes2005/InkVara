@@ -1,3 +1,4 @@
+from ast import mod
 from os import name
 from tabnanny import verbose
 from django.db import models
@@ -7,6 +8,15 @@ from django.urls import reverse
 from datetime import datetime,date
 
 # Create your models here.
+class Hashtag(models.Model):
+    name = models.CharField(max_length=50,unique=True)
+    
+    def __str__(self):
+         return self.name
+     
+    
+    
+    
 class Category(models.Model):
     name = models.CharField(max_length=255,default="Uncategorized")
     
@@ -30,6 +40,7 @@ class Post(models.Model):
     category = models.CharField(choices=choices,max_length=255,default="Uncategorized")
     image = models.ImageField(upload_to='blogPostImages/',null=True,blank=True)
     thumbnail = models.ImageField(upload_to='thumbnail/',null=True,blank=True)
+    hashtags = models.ManyToManyField(Hashtag,related_name='post',blank=True)
     body = models.TextField()
 
     def __str__(self):

@@ -1,11 +1,13 @@
 
+body{
+}
 .CardContainer{
     display: flex;
     justify-content: center;
     align-items: center;
-    flex-wrap: wrap-reverse;
-    gap: 20px;
-    padding: 20px;
+    flex-wrap: wrap;
+    gap: 50px;
+    padding: 50px;
 }
 
 span{
@@ -15,7 +17,7 @@ span{
     margin-right: 20px;
 }
 
-.Cards{
+.item, .Cards{
     flex: 1 1 30%;
     display: flex;
     flex-direction: column;
@@ -86,4 +88,38 @@ span{
    background-color:  #00308F;
    color: white;
    transition: all 0.3s ease-in-out;
+ }
+
+
+ /* ShowMore Logic */
+ .item{
+   display: none;
+ }
+
+ .item.visible{
+   display: flex;
+ }
+
+ #show-more{
+   padding: 20px;
+   font-family: Cambria;
+   font-size: large;
+   border-radius: 10px;
+   border: 1px solid gray;
+   margin-left: 50%;
+   margin-right: 50%;
+   width: 150px;
+   margin-bottom: 50px;
+ }
+
+ #show-more::after{
+   display: inline-block;
+   background: url("{% static 'reshot-icon-arrow-chevron-right-WDGHUKQ634.svg' %}");
+   width: 20px;
+   height: 20px;
+   background-size: contain;
+ }
+
+ #show-more:hover{
+   filter: invert();
  }
