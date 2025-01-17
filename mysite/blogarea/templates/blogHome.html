@@ -6,6 +6,7 @@
     {% load static %}
     <link rel="stylesheet" href="{% static 'header.css' %}" />
     <link rel="stylesheet" href="{% static 'blogHome.css'%}" />
+    <link rel="stylesheet" href="{% static 'footer.css'%}" />
   </head>
   <body>
     <header>
@@ -50,22 +51,119 @@
           <p>
             <span class="cardTitle">{{ post.title }}</span>
             <span class="cardAuthor_Date"
-              >- by {{ post.author }} - {{ post.post_date}}</span
+              >&larr; by {{ post.author }} &bull; {{ post.post_date}}</span
             >
-            <br />
-            <span class="cardCategory"
-              ><a href="{% url 'category' post.category|slugify %}">
-                {{ post.category }}</a
-              ></span
-            >
-            <br />
-            <a href="{% url 'updateBlog' post.pk %}">(Edit)</a
-            ><a href="{% url 'deleteBlog' post.pk %}">(Delete)</a>
           </p>
+          <div style="display: flex">
+            <div style="display: flex; flex-direction: column">
+              <a
+                style="margin-left: 10px; margin-bottom: 0; color: #828282"
+                class="cardCategory"
+                href="{% url 'category' post.category|slugify %}"
+              >
+                # {{ post.category|lower|slugify }}</a
+              >
+              <br />
+              <a style="margin-left: 10px" href="{% url 'updateBlog' post.pk %}"
+                >(Edit)</a
+              ><br /><a
+                style="margin-left: 10px; margin-bottom: 20px"
+                href="{% url 'deleteBlog' post.pk %}"
+                >(Delete)</a
+              >
+            </div>
+            <a
+              style="margin: auto 50px auto auto"
+              href="{% url 'ArticleDetailView' post.pk %}"
+            >
+              <button class="ReadMore">Read More</button>
+            </a>
+          </div>
         </div>
       </a>
       {% endfor %}
     </div>
+    <footer>
+      <div id="Bottom-info-part">
+        <div class="rows">
+          <div class="colRows">
+            <h1>Help</h1>
+            <hr />
+            <a href="" style="text-decoration: none; color: whitesmoke"
+              >Help Center</a
+            >
+            <br />
+            <a href="" style="text-decoration: none; color: whitesmoke"
+              >Help Forums</a
+            >
+            <br />
+            <a href="" style="text-decoration: none; color: whitesmoke"
+              >Video Tutorials</a
+            >
+            <br />
+          </div>
+          <div class="colRows">
+            <h1>Community</h1>
+            <hr />
+            <a href="" style="text-decoration: none; color: whitesmoke"
+              >Ink Vara</a
+            >
+          </div>
+          <div class="colRows">
+            <h1>Work With Us</h1>
+            <hr />
+            <a style="text-decoration: none; color: white" href=""
+              >Instagram&nbsp;&nbsp;<img
+                src="{%static 'instagram.svg'%}"
+                width="25px"
+                height="25px"
+                style="filter: invert(); margin-bottom: 10px"
+            /></a>
+            <br />
+            <a style="text-decoration: none; color: white" href=""
+              >Twitter&nbsp;&nbsp;<img
+                src="{%static 'twitter.svg'%}"
+                width="25px"
+                height="25px"
+                style="filter: brightness(0) invert(1); margin-bottom: 10px"
+            /></a>
+            <br />
+            <a style="text-decoration: none; color: white" href=""
+              >Facebook&nbsp;&nbsp;<img
+                src="{%static 'facebook.svg'%}"
+                width="25px"
+                height="25px"
+                style="filter: brightness(0) invert(1); margin-bottom: 10px"
+            /></a>
+            <br />
+          </div>
+        </div>
+        <br />
+        <hr width="90%" style="margin-left: 50px" />
+        <div
+          class="rows"
+          style="
+            display: flex;
+            color: #dcdcdc;
+            align-items: center;
+            justify-content: space-evenly;
+          "
+        >
+          <a href="" style="text-decoration: none; color: whitesmoke"
+            >Terms of Service</a
+          >
+          <br />
+          <a href="" style="text-decoration: none; color: whitesmoke"
+            >Privacy Policy</a
+          >
+          <br />
+          <a href="" style="text-decoration: none; color: whitesmoke"
+            >Content Policy</a
+          >
+          <br />
+        </div>
+      </div>
+    </footer>
   </body>
   <script>
     document.addEventListener("scroll", () => {

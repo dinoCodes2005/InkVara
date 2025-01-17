@@ -28,7 +28,7 @@
 </header>
 <div class="mainContainer">
     <div class="innerContainer">
-        <form action = "{% url 'updateBlog' post.pk %}" method="POST">
+        <form action = "{% url 'updateBlog' post.pk %}" method="POST" enctype="multipart/form-data">
             {% csrf_token %}
             {{ form.as_p }}
             <button class="Post">Save Changes</button>

@@ -9,7 +9,7 @@ from django.urls import reverse_lazy
 class BlogHome(ListView):
     model = Post
     template_name = 'blogHome.html'
-    ordering = ['-post_date']
+    ordering = ['post_date']
     
 class ArticleDetailView(DetailView):
     model = Post
@@ -23,7 +23,7 @@ class AddPostView(CreateView):
 class UpdatePostView(UpdateView):
     model = Post
     template_name = 'updateBlog.html'
-    fields = ['title','category','body']
+    fields = ['title','category','thumbnail','body']
 
 class DeletePostView(DeleteView):
     model = Post

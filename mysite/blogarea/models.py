@@ -28,7 +28,7 @@ class Post(models.Model):
     author = models.ForeignKey(User,on_delete=models.CASCADE)
     post_date = models.DateField(auto_now_add=True)
     category = models.CharField(choices=choices,max_length=255,default="Uncategorized")
-    # image = models.ImageField(upload_to='blogPostImages/',null=True,blank=True)
+    image = models.ImageField(upload_to='blogPostImages/',null=True,blank=True)
     thumbnail = models.ImageField(upload_to='thumbnail/',null=True,blank=True)
     body = models.TextField()
 

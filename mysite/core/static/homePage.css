@@ -374,6 +374,13 @@ footer .rows{
 footer .colRows{
     color: #d1d1d1;
 }
+
+
+
+
+
+
+
 @media(prefers-reduced-motion){
     .hiddenLeft{
         transition: none;

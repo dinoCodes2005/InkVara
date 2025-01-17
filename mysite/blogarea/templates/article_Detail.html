@@ -31,7 +31,11 @@
       <h1>{{ post.title }} / {{ post.category }}</h1>
       <h3>Written by : {{ post.author }} - {{ post.author.email }}</h3>
       <hr />
-      <!--    <img src="{{ post.image.url }}" alt="{{ post.title }}">-->
+      <img
+        src="{% if post.image %}{{ post.image.url }}{% else %}/media/thumbnail/thumbnail.jpg{% endif %}"
+        alt="{{ post.title }}"
+        style="float: right; margin: 20px"
+      />
       <p>{{ post.body|safe }}</p>
       <!-- <form action="{% url 'updateBlog' post.pk %}" method="POST">
         {% csrf_token %}
