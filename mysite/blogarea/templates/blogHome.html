@@ -18,11 +18,22 @@
             height="50px"
             width="50px"
         /></a>
-        <a href="{% url 'blogarea'%}">Home</a>
-        <a href="">My Blogs</a>
-        <a href="">Category</a>
-        <a href="">About</a>
-        <a href="">Contact</a>
+        <a href="{% url 'blogarea'%}" class="nav-items">Home</a>
+        <a href="" class="nav-items">My Blogs</a>
+        <a href="#" style="text-decoration: none">
+          Category
+          <!-- <label for="check" id="categoryHeader">Category</label> -->
+          <!-- <input id="check" type="checkbox" />
+          <div id="dropDown" class="invisibleList">
+            <div class="items">1</div>
+            <div class="items">2</div>
+            <div class="items">3</div>
+            <div class="items">4</div>
+            <div class="items">5</div>
+          </div> -->
+        </a>
+        <a href="" class="nav-items">About</a>
+        <a href="" class="nav-items">Contact</a>
         <form action="{% url 'logout' %}" method="post">
           {% csrf_token %}
           <button class="headerSignUp">Logout</button>
@@ -37,58 +48,78 @@
     <div class="CardContainer">
       {% for post in object_list %}
       <div class="item">
-        <a
-          style="text-decoration: none"
-          href="{% url 'ArticleDetailView' post.pk %}"
-        >
-          <div class="Cards">
+        <div class="Cards">
+          <a
+            href="{% url 'ArticleDetailView' post.pk %}"
+            style="text-decoration: none; margin-bottom: 0"
+          >
             <img
               class="CardImages"
               style="height: 300px"
               src="{% if post.thumbnail %}{{ post.thumbnail.url }}{% else %}/media/thumbnail/thumbnail.jpg{% endif %}"
               alt="{{ post.title }}"
             />
-            <br />
-            <p>
-              <span class="cardTitle">{{ post.title }}</span>
-              <span class="cardAuthor_Date"
-                >&larr; by {{ post.author }} &bull; {{ post.post_date}}</span
+          </a>
+          <p>
+            <span class="cardTitle">{{ post.title }}</span>
+            <span class="cardAuthor_Date"
+              >&larr; by {{ post.author }} &bull; {{ post.post_date }}</span
+            >
+          </p>
+          <div style="display: flex">
+            <div style="display: flex; flex-direction: column; gap: 5px">
+              <a
+                class="cardCategory"
+                href="{% url 'category' post.category|slugify %}"
+                style="
+                  margin-left: 20px;
+                  margin-bottom: 0;
+                  margin-top: 0;
+                  color: #828282;
+                "
               >
-            </p>
-            <div style="display: flex">
-              <div style="display: flex; flex-direction: column">
+                /{{ post.category|lower|slugify }}</a
+              >
+              {% if post.author.id == user.id %}
+              <div style="display: flex">
                 <a
-                  style="margin-left: 10px; margin-bottom: 0; color: #828282"
-                  class="cardCategory"
-                  href="{% url 'category' post.category|slugify %}"
-                >
-                  / {{ post.category|lower|slugify }}</a
-                >
-                <br />
-                <span>{{ hashtags.name }}</span>
-                <a
-                  style="margin-left: 10px"
                   href="{% url 'updateBlog' post.pk %}"
+                  style="
+                    margin-left: 20px;
+                    margin-bottom: 20px;
+                    margin-top: 5px;
+                  "
                   >(Edit)</a
-                ><br /><a
-                  style="margin-left: 10px; margin-bottom: 20px"
+                >
+                <a
                   href="{% url 'deleteBlog' post.pk %}"
+                  style="
+                    margin-left: 20px;
+                    margin-bottom: 20px;
+                    margin-top: 5px;
+                  "
                   >(Delete)</a
                 >
               </div>
-              <a
-                style="margin: auto 50px auto auto"
-                href="{% url 'ArticleDetailView' post.pk %}"
-              >
-                <button class="ReadMore">Read More</button>
-              </a>
+              {% endif %}
             </div>
+            <a
+              href="{% url 'ArticleDetailView' post.pk %}"
+              style="margin: auto 50px auto auto"
+            >
+              <button
+                class="ReadMore"
+                style="margin-bottom: 30px; margin-top: 20px"
+              >
+                Read More
+              </button>
+            </a>
           </div>
-        </a>
+        </div>
       </div>
-
       {% endfor %}
     </div>
+
     <button id="show-more">Show More</button>
     <footer>
       <div id="Bottom-info-part">
@@ -172,6 +203,7 @@
       </div>
     </footer>
     <script>
+      //scroll logic
       document.addEventListener("scroll", () => {
         const header = document.querySelector("header");
         if (window.scrollY > 0) {
@@ -181,10 +213,11 @@
         }
       });
 
+      //show More Logic
       document.addEventListener("DOMContentLoaded", function () {
         const items = document.querySelectorAll(".CardContainer .item");
         const showMoreButton = document.getElementById("show-more");
-        let visibleCount = 4;
+        let visibleCount = 5;
 
         // Initially show the first 7 items
         for (let i = 0; i < visibleCount; i++) {
@@ -195,7 +228,7 @@
 
         showMoreButton.addEventListener("click", function () {
           // Show 7 more items each time the button is clicked
-          const nextVisibleCount = visibleCount + 4;
+          const nextVisibleCount = visibleCount + 5;
           for (let i = visibleCount; i < nextVisibleCount; i++) {
             if (items[i]) {
               items[i].classList.add("visible");

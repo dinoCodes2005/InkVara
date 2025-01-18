@@ -66,14 +66,14 @@ nav{
 }
 
 header.scrolled{
-    background-color: black;
-    opacity: 0.9;
+    background-color:#09122C;
+    /* opacity: 0.9; */
 }
 header nav{
     padding: 1.5em 0 1.5em 5em;
 }
 
-header nav a{
+a{
     text-decoration: none;
     color: black;
     font-size: 1.3em;
@@ -89,7 +89,7 @@ a{
     position: relative;
     display: inline-block;
 }
-header nav a::before{
+nav a::before{
     content: "";
     position: absolute;
     bottom: -5px;
@@ -99,14 +99,117 @@ header nav a::before{
     transition: .4s all ease-in-out;
 }
 
-header nav a:hover::before{
+nav a:hover::before{
+    width: 100%;
+    /* background-color: white; */
+}
+
+header.scrolled a::before{
+    background-color: white;
+}
+
+
+/* header dropdown logic
+/* .dropdownContainer{
+    position:relative;
+}
+#categoryHeader{
+    position: relative;
+    text-decoration: none;
+    color: black;
+    font-size: 1.3em;
+    margin: 1em;
+    transition: all 0.4s ease-in-out;
+    transform: translateY(10px);
+}
+#categoryHeader::after{
+    content: '';
+    position: absolute;
+    height: 10px;
+    width: 10px;
+    background: url('reshot-icon-arrow-chevron-right-WDGHUKQ634.svg ');
+    transform: rotate(90deg);
+    background-size: contain;
+    top:30%;
+    margin-left:7px;
+}
+
+header.scrolled #categoryHeader{
+    filter: invert();
+    transition: color .4s ease-in-out;
+}
+
+#check{
+    display: none;
+}
+#check:checked+.invisibleList{
+    display: block;
+    position: absolute;
+    transition: all 0.4s ease-in-out;
+    max-height:fit-content;
+    z-index: 2;
+    overflow: hidden;
+    width: 100%;
+}
+.invisibleList{
+    position: absolute;
+    max-height: 0px;
+    overflow: hidden;
+    z-index: 2;
+    margin-top: 10px;
+}
+
+.items{
+    margin-left: 50%;
+    margin-top: 20px;
+} */
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+#categoryHeader::before{
+    content: "";
+    position: absolute;
+    bottom: -5px;
+    width: 0%;
+    height: 3px;
+    background-color: black;
+    transition: .4s all ease-in-out;
+}
+
+#categoryHeader:hover::before{
     width: 100%;
 }
 
-header.scrolled nav a:hover::before{
-    width: 100%;
-    background-color: white;
-}
+
+
+
 
 
 

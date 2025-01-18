@@ -24,7 +24,6 @@ urlpatterns = [
     path('signUp/',UserRegisterView.as_view(),name='signUp'),
     path('loginUser/',views.loginUser,name='loginUser'),
     path('blogarea/', views.blogarea, name='blogarea'),
-    # path('blogarea/',User)
     path('register/',UserRegisterView.as_view(),name='register'),
     path('accounts/', include('allauth.urls')),
 ]

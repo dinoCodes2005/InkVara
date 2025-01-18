@@ -1,11 +1,14 @@
+from multiprocessing import context
 from unicodedata import category
 from urllib import response
-from django.shortcuts import render,redirect
+from django.shortcuts import get_object_or_404, render,redirect
 from django.contrib.auth import logout,authenticate
 from django.contrib import messages
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
-from .models import Hashtag, Post
-from django.urls import reverse_lazy
+from .models import Post
+from django.urls import reverse_lazy,reverse
+from django.http import HttpResponseRedirect
+
 # Create your views here.
 class BlogHome(ListView):
     model = Post
@@ -15,24 +18,32 @@ class BlogHome(ListView):
 class ArticleDetailView(DetailView):
     model = Post
     template_name = 'article_Detail.html'
-
+    
+    def get_context_data(self, *args, **kwargs):
+        context = super(ArticleDetailView, self).get_context_data(*args, **kwargs)
+        stuff = get_object_or_404(Post,id=self.kwargs['pk'])
+        total_likes = stuff.total_likes()
+        context['total_likes'] = total_likes
+        return context       
+        
 class AddPostView(CreateView):
     model = Post
     template_name = 'writeBlog.html'
     fields = '__all__'
-    
     def form_valid(self, form):
-        response =  super().form_valid(form)
-        
-        hashtags_str = self.request.POST.get('hashtags','')
-        hashtags = [tag.strip() for tag in hashtags_str.split(',') if tag.strip()]
-        tag_objects = []
-        for tag in hashtags:
-            tag_object ,created = Hashtag.objects.get_or_create(name=tag)
-            tag_objects.append(tag_object)
-        
-        self.object.hashtags.set(tag_objects)
+        form.instance.author = self.request.user
+        response = super().form_valid(form)
+        return redirect(self.object.get_absolute_url())
 
+def LikeView(request,pk):
+    post = get_object_or_404(Post,id=pk)
+    if request.user in post.like.all():
+        post.like.remove(request.user)  # Unlike the post
+        
+    else:
+        post.like.add(request.user) 
+    return HttpResponseRedirect(reverse('ArticleDetailView',args=[pk]))
+    
 class UpdatePostView(UpdateView):
     model = Post
     template_name = 'updateBlog.html'

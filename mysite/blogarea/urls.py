@@ -26,11 +26,13 @@ urlpatterns = [
     # path("blogarea/", views.blogarea, name="blogarea"),
     path("blogarea/", BlogHome.as_view(), name="blogarea"),
     path('home/', views.logout_user, name='logout'),
-    path('article/<int:pk>',ArticleDetailView.as_view(),name="ArticleDetailView"),
+    path('article/<int:pk>', ArticleDetailView.as_view(), name="ArticleDetailView"),
     path('writeYourBlog/',AddPostView.as_view(),name="writeYourBlog"),
     path('article/updateBlog/<int:pk>',UpdatePostView.as_view(),name="updateBlog"),
     path('article/deleteBlog/<int:pk>', DeletePostView.as_view(), name="deleteBlog"),
     path('category/<str:cats>',views.CategoryView,name='category'),
+    path('likes/<int:pk>',views.LikeView,name='like_post'),
+    
 
 ]
 

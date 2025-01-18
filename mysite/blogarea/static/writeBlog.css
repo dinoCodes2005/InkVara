@@ -109,6 +109,10 @@ header.scrolled nav a:hover::before{
 body{
     padding-bottom: 50px;
     margin: 0;
+    background: url("blogAreaBackground.jpg");
+    background-size: contain;
+    background-repeat: repeat-y;
+    height: 100vh;
 }
 
 

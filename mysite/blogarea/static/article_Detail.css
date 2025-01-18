@@ -40,3 +40,40 @@ a>button:hover{
     filter: invert();
     transition: all 0.2s ease-in-out;
 }
+
+.like-button.unliked{
+    background: url('like.png');
+    width: 40px;
+    height: 40px;
+    background-repeat: no-repeat;
+    background-position: center;
+    margin-left: 50px;
+    margin-bottom: 50px;
+    border: 1px solid gray;
+    border-radius: 10px;
+    background-color: white;
+  }
+
+  .like-button.unliked:hover{
+    
+  }
+
+  .like-button.liked{
+    background: url('like.png');
+    width: 40px;
+    height: 40px;
+    background-repeat: no-repeat;
+    background-position: center;
+    margin-left: 50px;
+    margin-bottom: 50px;
+    border: 1px solid gray;
+    border-radius: 10px;
+    background-color:#FFCF70 ;
+    filter: invert();
+  }
+  
+  .like:hover{
+    background-color:#00308F ;
+    filter: invert();
+  }
+  

@@ -28,11 +28,27 @@
 </header>
 <div class="mainContainer">
     <div class="innerContainer">
+        {% if user.id == post.author.id %}
         <form action = "{% url 'updateBlog' post.pk %}" method="POST" enctype="multipart/form-data">
             {% csrf_token %}
-            {{ form.as_p }}
+            <p>{{ form.title.label_tag}}</p>
+          <p>{{ form.title}}</p>
+          <p>{{ form.category.label_tag}}</p>
+          <p>{{ form.category}}</p>
+          <p>{{ form.image.label_tag}}</p>
+          <p>{{ form.image}}</p>
+          <p>{{ form.thumbnail.label_tag}}</p>
+          <p>{{ form.thumbnail}}</p>
+          <label for="hashtagField">Hashtags:</label>
+          <input type="text" id="hashtagField" name="hashtags" />
+          <p>{{ form.body.label_tag}}</p>
+          <p> {{ form.media}}</p>
+          <p>{{ form.body}}</p>
             <button class="Post">Save Changes</button>
         </form>
+        {% else %}
+        <h1>You are not allowed to edit this Post</h1>
+        {% endif %}
     </div>
 </div>
 
@@ -47,6 +63,11 @@
             header.classList.remove("scrolled");
         }
     });
+
+    var clearButton = document.getElementById("thumbnail-clear_id")
+    clearButton.addEventListener('onclick',()=>{
+
+    })
 </script>
 </body>
 </html>

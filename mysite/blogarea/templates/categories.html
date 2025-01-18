@@ -5,7 +5,7 @@
     <title>Title</title>
     {% load static %}
     <link rel="stylesheet" href="{% static 'header.css' %}" />
-    <link rel="stylesheet" href="{% static 'blogHome.css' %}" />
+    <link rel="stylesheet" href="{% static 'categories.css' %}" />
   </head>
   <body>
     <header>
@@ -31,26 +31,139 @@
         </form>
       </nav>
     </header>
-    <div class="BlogPostCards">
-      {% if category_posts %}
-      <h1>{{ cats }}</h1>
-      {% for post in category_posts %}
-      <a
-        style="text-decoration: none"
-        href="{% url 'ArticleDetailView' post.pk %}"
-      >
-        <h1>
-          {{ post.title }} - by {{ post.author }} - {{ post.post_date}}
-          <a href="{% url 'updateBlog' post.pk %}">(Edit)</a
-          ><a href="{% url 'deleteBlog' post.pk %}">(Delete)</a>
-        </h1>
-        <!--        <img src="{{ post.thumbnail.url }}" alt="{{ post.title }}">-->
-      </a>
-      {% endfor %} {% else %}
-      <h1>Sorry this category does not exist</h1>
+    <div class="CardContainer">
+      <h1>{{category_name}}</h1>
+      {% if category_posts %}{% for post in category_posts %}
+      <div class="item">
+        <a
+          style="text-decoration: none"
+          href="{% url 'ArticleDetailView' post.pk %}"
+        >
+          <div class="Cards">
+            <img
+              class="CardImages"
+              style="height: 300px"
+              src="{% if post.thumbnail %}{{ post.thumbnail.url }}{% else %}/media/thumbnail/thumbnail.jpg{% endif %}"
+              alt="{{ post.title }}"
+            />
+            <br />
+            <p>
+              <span class="cardTitle">{{ post.title }}</span>
+              <span class="cardAuthor_Date"
+                >&larr; by {{ post.author }} &bull; {{ post.post_date}}</span
+              >
+            </p>
+            <div style="display: flex">
+              <div style="display: flex; flex-direction: column">
+                <br />
+                <a
+                  style="margin-left: 10px"
+                  href="{% url 'updateBlog' post.pk %}"
+                  >(Edit)</a
+                ><br /><a
+                  style="margin-left: 10px; margin-bottom: 20px"
+                  href="{% url 'deleteBlog' post.pk %}"
+                  >(Delete)</a
+                >
+              </div>
+              <a
+                style="margin: auto 50px auto auto"
+                href="{% url 'ArticleDetailView' post.pk %}"
+              >
+                <button class="ReadMore">Read More</button>
+              </a>
+            </div>
+          </div>
+        </a>
+        {% endfor %}
+      </div>
+      <button class="show-more" id="showMore">Show More</button>
+      {% else %}
+      <h1>No Posts related</h1>
       {% endif %}
     </div>
   </body>
+  <footer>
+    <div id="Bottom-info-part">
+      <div class="rows">
+        <div class="colRows">
+          <h1>Help</h1>
+          <hr />
+          <a href="" style="text-decoration: none; color: whitesmoke"
+            >Help Center</a
+          >
+          <br />
+          <a href="" style="text-decoration: none; color: whitesmoke"
+            >Help Forums</a
+          >
+          <br />
+          <a href="" style="text-decoration: none; color: whitesmoke"
+            >Video Tutorials</a
+          >
+          <br />
+        </div>
+        <div class="colRows">
+          <h1>Community</h1>
+          <hr />
+          <a href="" style="text-decoration: none; color: whitesmoke"
+            >Ink Vara</a
+          >
+        </div>
+        <div class="colRows">
+          <h1>Work With Us</h1>
+          <hr />
+          <a style="text-decoration: none; color: white" href=""
+            >Instagram&nbsp;&nbsp;<img
+              src="{%static 'instagram.svg'%}"
+              width="25px"
+              height="25px"
+              style="filter: invert(); margin-bottom: 10px"
+          /></a>
+          <br />
+          <a style="text-decoration: none; color: white" href=""
+            >Twitter&nbsp;&nbsp;<img
+              src="{%static 'twitter.svg'%}"
+              width="25px"
+              height="25px"
+              style="filter: brightness(0) invert(1); margin-bottom: 10px"
+          /></a>
+          <br />
+          <a style="text-decoration: none; color: white" href=""
+            >Facebook&nbsp;&nbsp;<img
+              src="{%static 'facebook.svg'%}"
+              width="25px"
+              height="25px"
+              style="filter: brightness(0) invert(1); margin-bottom: 10px"
+          /></a>
+          <br />
+        </div>
+      </div>
+      <br />
+      <hr width="90%" style="margin-left: 50px" />
+      <div
+        class="rows"
+        style="
+          display: flex;
+          color: #dcdcdc;
+          align-items: center;
+          justify-content: space-evenly;
+        "
+      >
+        <a href="" style="text-decoration: none; color: whitesmoke"
+          >Terms of Service</a
+        >
+        <br />
+        <a href="" style="text-decoration: none; color: whitesmoke"
+          >Privacy Policy</a
+        >
+        <br />
+        <a href="" style="text-decoration: none; color: whitesmoke"
+          >Content Policy</a
+        >
+        <br />
+      </div>
+    </div>
+  </footer>
   <script>
     document.addEventListener("scroll", () => {
       const header = document.querySelector("header");
@@ -59,6 +172,31 @@
       } else {
         header.classList.remove("scrolled");
       }
+    });
+
+    document.addEventListener("DOMContentLoaded", function () {
+      const items = document.querySelectorAll(".CardContainer .item");
+      const showMoreButton = document.getElementById("show-more");
+      let visibleCount = 4;
+
+      for (let i = 0; i < visibleCount; i++) {
+        if (items[i]) {
+          items[i].classList.add("visible");
+        }
+      }
+
+      showMoreButton.addEventListener("click", function () {
+        const nextVisibleCount = visibleCount + 4;
+        for (let i = visibleCount; i < nextVisibleCount; i++) {
+          if (items[i]) {
+            items[i].classList.add("visible");
+          }
+        }
+        visibleCount = nextVisibleCount;
+        if (visibleCount >= items.length) {
+          showMoreButton.style.display = "none";
+        }
+      });
     });
   </script>
 </html>

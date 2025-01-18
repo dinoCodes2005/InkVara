@@ -1,5 +1,6 @@
 
 body{
+  overflow-x: hidden;
 }
 .CardContainer{
     display: flex;
@@ -17,8 +18,17 @@ span{
     margin-right: 20px;
 }
 
-.item, .Cards{
+.item{
     flex: 1 1 30%;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    /* box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px; */
+    border-radius: 20px;
+}
+
+.Cards{
+  flex: 1 1 30%;
     display: flex;
     flex-direction: column;
     flex-wrap: wrap;
@@ -44,7 +54,7 @@ span{
 
  .cardTitle{
     all: unset;
-    margin-left: 10px;
+    margin-left: 20px;
     text-decoration: none;
     font-family: "Crimson Text", serif;
     font-size: larger;
@@ -66,6 +76,8 @@ span{
     font-size: medium;
     color: black;
     cursor: pointer;
+    margin-left: 20px;
+
  }
 
  p{
@@ -85,10 +97,23 @@ span{
  }
 
  .ReadMore:hover{
-   background-color:  #00308F;
+   background-color:  #092b9a;
    color: white;
    transition: all 0.3s ease-in-out;
  }
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
  /* ShowMore Logic */
