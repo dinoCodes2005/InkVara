@@ -29,6 +29,37 @@
     </header>
     <div class="mainContainer">
       <div class="innerContainer">
+        <div
+          style="
+            display: flex;
+            align-items: center;
+            flex-direction: column;
+            font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman',
+              serif;
+          "
+        >
+          <img
+            style="width: 35px; height: 35px"
+            src="{% static 'icons8-pencil-48.png'%}"
+            alt=""
+          />
+          <h1 style="margin-top: 10px; color: #122459; margin-bottom: 0">
+            Create Your Post
+          </h1>
+          <h4 style="margin-top: 5px; color: #122459">
+            Use the form below to Create your Blog
+          </h4>
+          <a
+            style="
+              all: unset;
+              color: #122e59;
+              cursor: pointer;
+              margin-bottom: 20px;
+            "
+            href="{% url 'blogarea'%}"
+            >Go back to Home Page</a
+          >
+        </div>
         <form method="POST" enctype="multipart/form-data">
           {% csrf_token %}
           <p>{{ form.title.label_tag}}</p>

@@ -29,6 +29,12 @@
 <div class="mainContainer">
     <div class="innerContainer">
         {% if user.id == post.author.id %}
+        <div style="display: flex;align-items: center;       flex-direction: column;        font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;">
+            <img style="width: 35px;height: 35px;"  src="{% static 'icons8-pencil-48.png'%}" alt="">
+            <h1 style="margin-top: 10px;color: #122459;margin-bottom: 0;">Edit Your Post</h1>
+            <h4 style="margin-top: 5px;color: #122459;">Use the form below to Edit your Blog</h4>
+            <a style="all: unset;color: #122e59;cursor: pointer;margin-bottom: 20px;"   href="{% url 'blogarea'%}">Go back to Home Page</a>
+        </div>
         <form action = "{% url 'updateBlog' post.pk %}" method="POST" enctype="multipart/form-data">
             {% csrf_token %}
             <p>{{ form.title.label_tag}}</p>
@@ -39,8 +45,8 @@
           <p>{{ form.image}}</p>
           <p>{{ form.thumbnail.label_tag}}</p>
           <p>{{ form.thumbnail}}</p>
-          <label for="hashtagField">Hashtags:</label>
-          <input type="text" id="hashtagField" name="hashtags" />
+          <!-- <label for="hashtagField">Hashtags:</label>
+          <input type="text" id="hashtagField" name="hashtags" /> -->
           <p>{{ form.body.label_tag}}</p>
           <p> {{ form.media}}</p>
           <p>{{ form.body}}</p>

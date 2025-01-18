@@ -18,23 +18,31 @@ form{
 body{
     padding-bottom: 50px;
     margin: 0;
-    background: url("blogAreaBackground.jpg");
+    background: rgb(240, 240, 240);
+    /* background: url("blogAreaBackground.jpg");
     background-size: contain;
     background-repeat: repeat-y;
-    height: 100vh;
+    height: 100vh; */
 }
 
+div a {
+    background-color: white;
+    padding: 5px;
+    border-radius: 10px;
+}
 
 label{
     display: block;
     font-family: Cambria;
     font-size: large;
+    /* font-weight:500; */
     margin-bottom: 15px;
 }
 input{
-    width: 400px;
+    width: 750px;
     height: 30px;
     padding: 10px;
+    font-size: medium;
 }
 
 #thumbnail-clear_id{
