@@ -25,7 +25,8 @@ body{
     align-items: center;
     flex-wrap: wrap;
     gap: 100px;
-    padding: 50px;
+    padding: 50px 250px 50px 250px;
+
 }
 
 span{
@@ -33,6 +34,13 @@ span{
     color: black;
     margin-left: 10px;
     margin-right: 20px;
+}
+
+.articleSnippet{
+  margin-left: 20px;
+  margin-right: 20px;
+  margin-bottom: 20px;
+  text-align:justify;
 }
 
 .item{
@@ -51,7 +59,7 @@ span{
     flex-direction: column;
     flex-wrap: wrap;
     box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
-    border-radius: 20px;
+    border-radius: 10px;
 }
 
 .Cards:hover{

@@ -34,6 +34,28 @@
         </a>
         <a href="" class="nav-items">About</a>
         <a href="" class="nav-items">Contact</a>
+        {% if user.is_authenticated %}
+        <a
+          class="profilePic"
+          href="{% url 'editProfile' %}"
+          style="
+            margin: 0;
+            margin-left: auto;
+            margin-bottom: 20px;
+            margin-right: 10px;
+          "
+        >
+          <img
+            style="
+              width: 50px;
+              height: 50px;
+              transform: translateY(15px);
+              border-radius: 50%;
+            "
+            src="{% static 'blue-circle-with-white-user_78370-4707.jpg'%}"
+            alt=""
+        /></a>
+        {% endif %}
         <form action="{% url 'logout' %}" method="post">
           {% csrf_token %}
           <button class="headerSignUp">Logout</button>
@@ -51,7 +73,7 @@
         <div class="Cards">
           <a
             href="{% url 'ArticleDetailView' post.pk %}"
-            style="text-decoration: none; margin-bottom: 0"
+            style="text-decoration: none; margin: 0"
           >
             <img
               class="CardImages"
@@ -60,11 +82,11 @@
               alt="{{ post.title }}"
             />
           </a>
-          <p>
+          <p style="text-align: justify">
             <span class="cardTitle">{{ post.title }}</span>
             <span class="cardAuthor_Date"
-              >&larr; by {{ post.author }} &bull; {{ post.post_date }}</span
-            >
+              >&larr; by {{ post.author }} &bull; {{ post.post_date }}
+            </span>
           </p>
           <div style="display: flex">
             <div style="display: flex; flex-direction: column; gap: 5px">
@@ -80,6 +102,7 @@
               >
                 /{{ post.category|lower|slugify }}</a
               >
+              <p class="articleSnippet">{{post.articleSnippet}}</p>
               {% if post.author.id == user.id %}
               <div style="display: flex">
                 <a

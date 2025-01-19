@@ -47,7 +47,7 @@ def LikeView(request,pk):
 class UpdatePostView(UpdateView):
     model = Post
     template_name = 'updateBlog.html'
-    fields = ['title','category','thumbnail','body']
+    fields = ['title','articleSnippet','category','thumbnail','body']
 
 class DeletePostView(DeleteView):
     model = Post

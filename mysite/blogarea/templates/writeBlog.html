@@ -21,6 +21,28 @@
         <a href="">My Blogs</a>
         <a href="">About</a>
         <a href="">Contact</a>
+        {% if user.is_authenticated %}
+        <a
+          class="profilePic"
+          href="{% url 'editProfile' %}"
+          style="
+            margin: 0;
+            margin-left: auto;
+            margin-bottom: 20px;
+            margin-right: 10px;
+          "
+        >
+          <img
+            style="
+              width: 50px;
+              height: 50px;
+              transform: translateY(15px);
+              border-radius: 50%;
+            "
+            src="{% static 'blue-circle-with-white-user_78370-4707.jpg'%}"
+            alt=""
+        /></a>
+        {% endif %}
         <form action="{% url 'logout' %}" method="post">
           {% csrf_token %}
           <button class="headerSignUp">Logout</button>
@@ -64,6 +86,8 @@
           {% csrf_token %}
           <p>{{ form.title.label_tag}}</p>
           <p>{{ form.title}}</p>
+          <p>{{ form.articleSnippet.label_tag}}</p>
+          <p>{{ form.articleSnippet}}</p>
           <p>{{ form.category.label_tag}}</p>
           <p>{{ form.category}}</p>
           <p>{{ form.image.label_tag}}</p>

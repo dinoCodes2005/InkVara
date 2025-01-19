@@ -31,13 +31,20 @@ div a {
     border-radius: 10px;
 }
 
-label{
+p{
     display: block;
     font-family: Cambria;
     font-size: large;
     /* font-weight:500; */
     margin-bottom: 15px;
 }
+
+p>a{
+    font-size: medium;
+}
+/* p{
+    color: blue;
+} */
 input{
     width: 750px;
     height: 30px;

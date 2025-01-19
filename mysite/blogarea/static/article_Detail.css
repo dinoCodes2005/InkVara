@@ -2,11 +2,22 @@
 body{
     /*padding-top: 0;*/
     margin: 0;
+    background: rgb(240, 240, 240);
+}
+
+p{
+    font-size: x-large;
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
 }
 
 h1,h3{
     font-family: Cambria;
     margin-left: 50px;
+}
+
+h1{
+    font-size: xxx-large;
+    font-weight: light;
 }
 
 div img {

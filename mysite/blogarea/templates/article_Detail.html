@@ -27,47 +27,39 @@
         </form>
       </nav>
     </header>
-    <div style="padding: 100px">
-      <h1>{{ post.title }} / {{ post.category }}</h1>
-      <h3>Written by : {{ post.author }} - {{ post.author.email }}</h3>
-      <hr />
-      <!-- <img
-        src="{% if post.image %}{{ post.image.url }}{% else %}/media/thumbnail/thumbnail.jpg{% endif %}"
-        alt="{{ post.title }}"
-        style="
-          float: right;
-          margin: 20px;
-          margin-left: 50px;
-          margin-bottom: 50px;
-        "
-      /> -->
-      <p>{{ post.body|safe }}</p>
-      <!-- <form action="{% url 'updateBlog' post.pk %}" method="POST">
-        {% csrf_token %}
-        <button>Edit Post</button>
-      </form> -->
-      {% if user.id == post.author.id %}
-      <a
-        href="{% url 'updateBlog' post.pk %}"
-        style="text-decoration: none; color: black"
-        ><button>Edit Post</button></a
-      >
-      {% endif%}
-      <div style="display: flex">
-        <form action="{% url 'like_post' post.pk %}" method="post">
-          {% csrf_token %}
-          <button
-            type="submit"
-            name="post_id"
-            value="{{ post.id }}"
-            class="like-button {% if request.user in post.like.all %}liked{% else %}unliked{% endif %}"
-            id="LikeButton"
-          ></button>
-          <label style="margin-top: 10px" for="LikeButton"
-            >&nbsp;- {{ total_likes }} Likes</label
-          >
-        </form>
+    <div class="mainContainer" style="display: flex">
+      <div class="left">
+        <h1>{{ post.title }} / {{ post.category }}</h1>
+        <h3>Written by : {{ post.author }} - {{ post.author.email }}</h3>
+        <hr />
+        <p>{{ post.body|safe }}</p>
+        {% if user.id == post.author.id %}
+        <a
+          href="{% url 'updateBlog' post.pk %}"
+          style="text-decoration: none; color: black"
+          ><button>Edit Post</button></a
+        >
+        {% endif%}
+        <div style="display: flex">
+          <form action="{% url 'like_post' post.pk %}" method="post">
+            {% csrf_token %}
+            <button
+              type="submit"
+              name="post_id"
+              value="{{ post.id }}"
+              class="like-button {% if request.user in post.like.all %}liked{% else %}unliked{% endif %}"
+              id="LikeButton"
+            ></button>
+            <label style="margin-top: 10px" for="LikeButton"
+              >&nbsp;- {{ total_likes }} Likes</label
+            >
+          </form>
+        </div>
       </div>
+      <div
+        class="right"
+        style="min-width: 20%; min-height: 100%; background-color: blue"
+      ></div>
     </div>
   </body>
   <script>

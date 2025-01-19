@@ -5,10 +5,10 @@
     <title>Title</title>
   {% load static %}
   <link rel="stylesheet" href="{% static 'header.css' %}" />
-    <link rel="stylesheet" href="{% static 'updateBlog.css' %}">
+    <link rel="stylesheet" href="{% static 'editProfile.css' %}">
 </head>
 <header>
-    <nav style="justify-content: center;">
+    <nav style="justify-content: space-between;">
         <a href=""
         ><img
                 class="headerLogo"
@@ -45,38 +45,39 @@
         {% endif %}
         <form action="{% url 'logout' %}" method="post">
             {% csrf_token %}
-            <button class="headerSignUp" style="margin-left: auto;margin-right: 60px;">Logout</button>
+            <button class="headerSignUp" style="margin-left: 20px;margin-right: 60px;">Logout</button>
         </form>
     </nav>
 </header>
 <div class="mainContainer">
-    <div class="innerContainer">
-        {% if user.id == post.author.id %}
+    <div class="innerContainer"style="display: flex;align-items: center;flex-direction:column">
         <div style="display: flex;align-items: center;       flex-direction: column;        font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;">
             <img style="width: 35px;height: 35px;"  src="{% static 'icons8-pencil-48.png'%}" alt="">
-            <h1 style="margin-top: 10px;color: #122459;margin-bottom: 0;">Edit Your Post</h1>
-            <h4 style="margin-top: 5px;color: #122459;">Use the form below to Edit your Blog</h4>
+            <h1 style="margin-top: 10px;color: #122459;margin-bottom: 0;">Edit Your Profile</h1>
+            <h4 style="margin-top: 5px;color: #122459;">Use the form below to Edit your Profile</h4>
             <a style="all: unset;color: #122e59;cursor: pointer;margin-bottom: 20px;"   href="{% url 'blogarea'%}">Go back to Home Page</a>
         </div>
-        <form action = "{% url 'updateBlog' post.pk %}" method="POST" enctype="multipart/form-data">
-            {% csrf_token %}
-            <p>{{ form.title.label_tag}}</p>
-          <p>{{ form.title}}</p>
-          <p> {{ form.articleSnippet.label_tag}}</p>
-          <p> {{ form.articleSnippet}}</p>
-          <p>{{ form.category.label_tag}}</p>
-          <p>{{ form.category}}</p>
-          <p>{{ form.thumbnail}}</p>
-          <!-- <label for="hashtagField">Hashtags:</label>
-          <input type="text" id="hashtagField" name="hashtags" /> -->
-          <p>{{ form.body.label_tag}}</p>
-          <p> {{ form.media}}</p>
-          <p>{{ form.body}}</p>
-            <button class="Post">Save Changes</button>
-        </form>
-        {% else %}
-        <h1>You are not allowed to edit this Post</h1>
-        {% endif %}
+        <div class="container">
+            <form action = "" method="POST" enctype="multipart/form-data">
+                {% csrf_token %}
+                <p>{{ form.username.label_tag}}</p>
+                <p>{{ form.username}}</p>
+                <p>{{ form.email.label_tag}}</p>
+                <p>{{ form.email}}</p>
+                <p>{{ form.first_name.label_tag}}</p>
+                <p>{{ form.first_name}}</p>
+                <p>{{ form.last_name.label_tag}}</p>
+                <p>{{ form.last_name}}</p>
+                <p>{{ form.password1.label_tag}}</p>
+                <p>{{ form.password1}}</p>
+                <p>{{ form.password2.label_tag}}</p>
+                <p>{{ form.password2}}</p>
+                <p> {{ form.media}}</p>
+                <p>{{ form.body}}</p>
+                <div style="display: flex;justify-content: center;"><button class="Post">Save Changes</button></div>
+                
+            </form>
+        </div>
     </div>
 </div>
 

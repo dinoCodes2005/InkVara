@@ -35,14 +35,10 @@ class Post(models.Model):
     author = models.ForeignKey(User,on_delete=models.CASCADE,null=True,blank=True)
     post_date = models.DateField(auto_now_add=True)
     category = models.CharField(choices=choices,max_length=255,default="Uncategorized")
-    # image = models.ImageField(upload_to='blogPostImages/',null=True,blank=True)
+    articleSnippet = models.CharField(max_length=150,default="Default Article Snippet")
     thumbnail = models.ImageField(upload_to='thumbnail/',null=True,blank=True)
-    like = models.ManyToManyField(User,related_name='blog_posts')
-    # hashtags = models.ManyToManyField(Hashtag,related_name='post',blank=True)
+    like = models.ManyToManyField(User,related_name='blog_posts',null=True,blank=True)
     body = RichTextField(blank=True,null=True)
-    
-    
-    
     
     def total_likes(self):
         return self.like.count()
