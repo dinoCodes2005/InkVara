@@ -33,13 +33,18 @@
           "
         >
           <img
+            class="profilePic"
             style="
               width: 50px;
               height: 50px;
               transform: translateY(15px);
               border-radius: 50%;
+              margin-bottom: 10px;
             "
-            src="{% static 'blue-circle-with-white-user_78370-4707.jpg'%}"
+            src="{% if user.profile.profileImage %}
+            {{ user.profile.profileImage.url }}
+            {% else %}/media/thumbnail/thumbnail.jpg
+            {% endif %}"
             alt=""
         /></a>
         {% endif %}
@@ -62,7 +67,7 @@
         >
           <img
             style="width: 35px; height: 35px"
-            src="{% static 'icons8-pencil-48.png'%}"
+            src="{{ user.profile.profileImage}}"
             alt=""
           />
           <h1 style="margin-top: 10px; color: #122459; margin-bottom: 0">

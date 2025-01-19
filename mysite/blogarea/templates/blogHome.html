@@ -42,8 +42,12 @@
               height: 50px;
               transform: translateY(15px);
               border-radius: 50%;
+              margin-bottom: 10px;
             "
-            src="{% static 'blue-circle-with-white-user_78370-4707.jpg'%}"
+           src="{% if user.profile.profileImage %}
+           {{ user.profile.profileImage.url }}
+           {% else %}/media/thumbnail/thumbnail.jpg
+           {% endif %}"
             alt=""
         /></a>
         {% endif %}
@@ -61,13 +65,14 @@
       class="Featured"
       style="display: flex; flex-direction: column; align-items: center"
     >
-      <h1 class="recentPosts">Recent Blogs</h1>
+      <h1 class="recentPosts">Blogs</h1>
       <div class="FeaturedInnerContainer">
-        <img
-          style="height: 100%"
+          <img
+          style="height: 100%;width: 70%;"
           src="{{ post_with_highest_likes.thumbnail.url}}"
           alt=""
         />
+        
         <div class="right" style="padding: 20px">
           <h4
             style="
@@ -88,7 +93,7 @@
           <h4 style="color: gray;font-family: Cambria;">
             <a
           class="profilePic"
-          href="{% url 'editProfile' %}"
+          href="{% url 'show_profile_page' post_with_highest_likes.author.profile.id %}"
           style="
             margin: 0;
             margin-left: auto;
@@ -103,9 +108,23 @@
               transform: translateY(15px);
               border-radius: 50%;
             "
-            src="{% static 'blue-circle-with-white-user_78370-4707.jpg'%}"
+            src="{% if post.author.profile.profileImage %}
+            {{ post.author.profile.profileImage.url }}
+            {% else %}/media/thumbnail/thumbnail.jpg
+            {% endif %}"
             alt=""
         /></a>{{post_with_highest_likes.author}} &bull; {{ post_with_highest_likes.post_date}} </h4>
+        <a
+              href="{% url 'ArticleDetailView' post_with_highest_likes.pk %}"
+              style="margin: 0"
+            >
+              <button
+                class="ReadMore"
+                style="margin-bottom: 30px; margin-top: 20px;margin-left: 60%;"
+              >
+                Read More
+              </button>
+            </a>
         </div>
       </div>
     </div>
@@ -138,16 +157,22 @@
           "
         >
         &larr;
+        {% if post.author.profile %}
+        <a href="{% url 'show_profile_page' post.author.profile.id %}">
           <img
-            style="
-              width: 50px;
-              height: 50px;
-              transform: translateY(15px);
-              border-radius: 50%;
-            "
-            src="{% static 'blue-circle-with-white-user_78370-4707.jpg'%}"
-            alt=""
-        /></a>
+          style="
+            width: 50px;
+            height: 50px;
+            transform: translateY(15px);
+            border-radius: 50%;
+          "
+          src="{% if post.author.profile.profileImage %}
+          {{ post.author.profile.profileImage.url }}
+          {% else %}/media/thumbnail/thumbnail.jpg
+          {% endif %}"/></a>
+          {%else %}
+          <p>Profile not Available</p>
+          {% endif %}
             <span class="cardAuthor_Date"
               > by {{ post.author }} &bull; {{ post.post_date }}
             </span>

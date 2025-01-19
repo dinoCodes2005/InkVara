@@ -1,6 +1,7 @@
 from ast import mod
 from os import name
 from tabnanny import verbose
+from tkinter import CASCADE
 from django.db import models
 from django.contrib.auth.models import User
 from django.http import HttpResponse
@@ -49,5 +50,13 @@ class Post(models.Model):
     def get_absolute_url(self):
             return reverse('ArticleDetailView', args=[self.id])
 
-
+class Profile(models.Model):
+    user = models.OneToOneField(User,null=True,on_delete=models.CASCADE)
+    bio = models.TextField()
+    profileImage = models.ImageField(upload_to='profile_pics',null=True,blank=True)
+    twitter_link = models.URLField(max_length=200,null=True,blank=True,default="https://x.com/")
+    instagram_link = models.URLField(max_length=200,null=True,blank=True,default="https://instagram.com/")
+    youtube_link = models.URLField(max_length=200,null=True,blank=True,default="https://youtube.com/")
+    def __str__(self):
+        return str(self.user)
 

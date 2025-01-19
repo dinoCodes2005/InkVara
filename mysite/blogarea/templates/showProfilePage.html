@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+  {% load static %}
+  <link rel="stylesheet" href="{% static 'header.css' %}" />
+    <link rel="stylesheet" href="{% static 'showProfilePage.css' %}">
+</head>
+<header>
+    <nav style="justify-content: space-between;">
+        <a href=""
+        ><img
+                class="headerLogo"
+                src="{% static '1to1 invictus logo.png'%}"
+                height="50px"
+                width="50px"
+        /></a>
+        <a href="{% url 'blogarea'%}">Home</a>
+        <a href="">My Blogs</a>
+        <a href="">About</a>
+        <a href="">Contact</a>
+        {% if user.is_authenticated %}
+        <a
+          class="profilePic"
+          href="{% url 'editProfile' %}"
+          style="
+            margin: 0;
+            margin-left: auto;
+            margin-bottom: 20px;
+            margin-right: 10px;
+          "
+        >
+          <img class="profilePic"
+            style="
+             width: 50px;
+              height: 50px;
+              transform: translateY(15px);
+              border-radius: 50%;
+              margin-bottom: 10px;
+              ;
+            "
+            src="{% if user.profile.profileImage %}
+            {{ user.profile.profileImage.url }}
+            {% else %}/media/thumbnail/thumbnail.jpg
+            {% endif %}"
+            alt=""
+        /></a>
+        {% endif %}
+        <form action="{% url 'logout' %}" method="post">
+            {% csrf_token %}
+            <button class="headerSignUp" style="margin-left: auto;margin-right: 60px;margin-left: 10px;">Logout</button>
+        </form>
+    </nav>
+</header>
+<div class="container">
+  <div class="innerContainer">
+    <img src="{% if user.profile.profileImage %}
+    {{ user.profile.profileImage.url }}
+    {% else %}/media/thumbnail/thumbnail.jpg
+    {% endif %}" alt=""
+    height="300px"
+    width="300px"
+    class="profileImage">
+    <h1>{{page_user.user.username}}</h1>
+    <div style="display: flex;flex-direction: column;"><h3>{{page_user.bio}}</h3>
+      <a href="{{page_user.twitter_link}}">Twitter</a>
+      <a href="{{page_user.instagram_link}}">Instagram</a>
+      <a href="{{page_user.youtube_link}}">Youtube</a></div>
+    
+  </div>
+    
+</div>
+
+
+</body>
+<script>
+    document.addEventListener("scroll", () => {
+        const header = document.querySelector("header");
+        if (window.scrollY > 0) {
+            header.classList.add("scrolled");
+        } else {
+            header.classList.remove("scrolled");
+        }
+    });
+
+    var clearButton = document.getElementById("thumbnail-clear_id")
+    clearButton.addEventListener('onclick',()=>{
+
+    })
+</script>
+</body>
+</html>

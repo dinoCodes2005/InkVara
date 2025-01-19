@@ -18,7 +18,7 @@ from tkinter.font import names
 
 from django.urls import path
 from . import views
-from .views import BlogHome, ArticleDetailView, AddPostView, UpdatePostView, DeletePostView
+from .views import BlogHome, ArticleDetailView, AddPostView, ShowProfileView, UpdatePostView, DeletePostView
 from django.conf import settings
 from django.conf.urls.static import static
 
@@ -32,7 +32,7 @@ urlpatterns = [
     path('article/deleteBlog/<int:pk>', DeletePostView.as_view(), name="deleteBlog"),
     path('category/<str:cats>',views.CategoryView,name='category'),
     path('likes/<int:pk>',views.LikeView,name='like_post'),
-    
+    path('show_profile_page/<int:pk>/',ShowProfileView.as_view(),name="show_profile_page")
 
 ]
 

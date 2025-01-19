@@ -1,0 +1,22 @@
+body{
+    background: rgb(240,240,240);
+}
+
+.container{
+    display: flex;
+    justify-content: center;
+    
+}
+
+.innerContainer{
+    display: flex;
+    flex-direction: column;
+    align-items: center ;
+    justify-content: center;
+}
+
+.profileImage{
+    border-radius: 50%;
+    border: 1px solid black;
+    margin-top: 50px;
+}

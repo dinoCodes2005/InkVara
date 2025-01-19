@@ -2,7 +2,10 @@
 .recentPosts{
   position: relative;
   display: inline-block;
-  margin-top: 20px;
+  text-align: left;
+  margin-top: 50px;
+  font-size: xxx-large;
+  margin-right: 50%;
 }
 
 /* .recentPosts::before{
@@ -132,13 +135,14 @@ span{
 
 
 
-
  .FeaturedInnerContainer{
   height: 600px;
   width: 75%;
   background: white;
   display: flex;
   border-radius: 10px;
+  align-items: stretch;
+  overflow: auto;
  }
 
 

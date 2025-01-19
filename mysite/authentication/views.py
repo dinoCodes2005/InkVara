@@ -1,8 +1,9 @@
+from profile import Profile
 from django.shortcuts import render, redirect
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 from django.urls import reverse_lazy
-from .forms import UserRegisterForm
+from .forms import ProfileEditForm, UserRegisterForm
 from django.contrib.auth.models import User
 from django.views import generic
 from django.contrib.auth.forms import UserCreationForm,UserChangeForm
@@ -14,10 +15,18 @@ class UserRegisterView(generic.CreateView):
     template_name = 'signUp.html'
     success_url = reverse_lazy('login')
     
-class EditProfileView(generic.CreateView):
-    form_class = UserChangeForm
+class EditProfileView(generic.UpdateView):
+    model = User
+    form_class = ProfileEditForm
     template_name = 'registration/editProfile.html'
-    success_url = reverse_lazy('blogarea')
+    success_url = reverse_lazy('blogarea') 
+
+    def get_object(self):
+        return self.request.user
+    
+    def form_valid(self, form):
+        response = super().form_valid(form)
+        return response
     
 def login_home(request):
     return render(request,'registration/login.html')
