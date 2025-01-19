@@ -8,12 +8,26 @@ from django.views.generic import ListView, DetailView, CreateView, UpdateView, D
 from .models import Post
 from django.urls import reverse_lazy,reverse
 from django.http import HttpResponseRedirect
+from django.db.models import Count
 
 # Create your views here.
 class BlogHome(ListView):
     model = Post
     template_name = 'blogHome.html'
     ordering = ['post_date']
+    
+    def get_context_data(self, **kwargs):
+        context = super(BlogHome, self).get_context_data(**kwargs)
+        post_with_highest_likes = Post.objects.annotate(like_count=Count('like')).order_by('-like_count').first()
+        post_with_second_highest_likes = Post.objects.annotate(like_count=Count('like')).order_by('-like_count')[1]
+        post_with_third_highest_likes = Post.objects.annotate(like_count=Count('like')).order_by('-like_count')[2]
+        post_with_fourth_highest_likes = Post.objects.annotate(like_count=Count('like')).order_by('-like_count')[3]
+        
+        context['post_with_highest_likes'] = post_with_highest_likes
+        context['post_with_second_highest_likes'] = post_with_second_highest_likes
+        context['post_with_third_highest_likes'] = post_with_third_highest_likes
+        context['post_with_fourth_highest_likes'] = post_with_fourth_highest_likes
+        return context
     
 class ArticleDetailView(DetailView):
     model = Post

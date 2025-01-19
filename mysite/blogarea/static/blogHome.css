@@ -5,15 +5,16 @@
   margin-top: 20px;
 }
 
-.recentPosts::before{
+/* .recentPosts::before{
   content: '';
+  display: block;
   position: absolute;
   bottom: -5px;
   height: 3px;
   width: 50%;
   background: black;
 
-}
+} */
 body{
   overflow-x: hidden;
   background: rgb(240, 240, 240);
@@ -68,7 +69,7 @@ span{
 }
 
 .CardImages{
-    border-radius: 20px;
+    border-radius: 10px;
     width: 100%;
     object-fit: cover;
  }
@@ -127,6 +128,20 @@ span{
    color: white;
    transition: all 0.3s ease-in-out;
  }
+
+
+
+
+
+ .FeaturedInnerContainer{
+  height: 600px;
+  width: 75%;
+  background: white;
+  display: flex;
+  border-radius: 10px;
+ }
+
+
 
 
 

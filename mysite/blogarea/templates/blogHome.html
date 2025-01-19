@@ -22,15 +22,6 @@
         <a href="" class="nav-items">My Blogs</a>
         <a href="#" style="text-decoration: none">
           Category
-          <!-- <label for="check" id="categoryHeader">Category</label> -->
-          <!-- <input id="check" type="checkbox" />
-          <div id="dropDown" class="invisibleList">
-            <div class="items">1</div>
-            <div class="items">2</div>
-            <div class="items">3</div>
-            <div class="items">4</div>
-            <div class="items">5</div>
-          </div> -->
         </a>
         <a href="" class="nav-items">About</a>
         <a href="" class="nav-items">Contact</a>
@@ -66,9 +57,61 @@
         </form>
       </nav>
     </header>
-    <h1 class="recentPosts">Recent Blogs</h1>
+    <div
+      class="Featured"
+      style="display: flex; flex-direction: column; align-items: center"
+    >
+      <h1 class="recentPosts">Recent Blogs</h1>
+      <div class="FeaturedInnerContainer">
+        <img
+          style="height: 100%"
+          src="{{ post_with_highest_likes.thumbnail.url}}"
+          alt=""
+        />
+        <div class="right" style="padding: 20px">
+          <h4
+            style="
+              color: blue;
+              font-family: Andale Mono, monospace;
+              font-weight: lighter;
+            "
+          >
+            FEATURED
+          </h4>
+          <h1 style="text-align: justify; margin-left: 0; font-weight: lighter">
+            {{ post_with_highest_likes.title }}
+          </h1>
+          <h3 style="font-weight: lighter;font-family: Cambria;color: rgb(98, 98, 98);">
+            
+            {{ post_with_highest_likes.body | truncatewords:60 | safe}}
+          </h5>
+          <h4 style="color: gray;font-family: Cambria;">
+            <a
+          class="profilePic"
+          href="{% url 'editProfile' %}"
+          style="
+            margin: 0;
+            margin-left: auto;
+            margin-bottom: 20px;
+            margin-right: 10px;
+          "
+        >
+          <img
+            style="
+              width: 50px;
+              height: 50px;
+              transform: translateY(15px);
+              border-radius: 50%;
+            "
+            src="{% static 'blue-circle-with-white-user_78370-4707.jpg'%}"
+            alt=""
+        /></a>{{post_with_highest_likes.author}} &bull; {{ post_with_highest_likes.post_date}} </h4>
+        </div>
+      </div>
+    </div>
     <div class="CardContainer">
       {% for post in object_list %}
+      {% if post.id != post_with_highest_likes.id %}
       <div class="item">
         <div class="Cards">
           <a
@@ -84,8 +127,29 @@
           </a>
           <p style="text-align: justify">
             <span class="cardTitle">{{ post.title }}</span>
+            <a
+          class="profilePic"
+          href="{% url 'editProfile' %}"
+          style="
+            margin: 0;
+            margin-left: auto;
+            margin-bottom: 20px;
+            margin-right: 10px;
+          "
+        >
+        &larr;
+          <img
+            style="
+              width: 50px;
+              height: 50px;
+              transform: translateY(15px);
+              border-radius: 50%;
+            "
+            src="{% static 'blue-circle-with-white-user_78370-4707.jpg'%}"
+            alt=""
+        /></a>
             <span class="cardAuthor_Date"
-              >&larr; by {{ post.author }} &bull; {{ post.post_date }}
+              > by {{ post.author }} &bull; {{ post.post_date }}
             </span>
           </p>
           <div style="display: flex">
@@ -140,6 +204,7 @@
           </div>
         </div>
       </div>
+      {% endif %}
       {% endfor %}
     </div>
 
