@@ -4,9 +4,12 @@ from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 from django.urls import reverse_lazy
 from .forms import ProfileEditForm, UserRegisterForm
+from blogarea.models import Profile
+from .forms import ProfileEditForm
 from django.contrib.auth.models import User
 from django.views import generic
 from django.contrib.auth.forms import UserCreationForm,UserChangeForm
+from blogarea.models import Profile
 from .models import *\
 
 # Create your views here.
@@ -26,6 +29,13 @@ class EditProfileView(generic.UpdateView):
     
     def form_valid(self, form):
         response = super().form_valid(form)
+        profile,created = Profile.objects.get_or_create(user=self.request.user)
+        profile.bio = form.cleaned_data.get('bio')
+        profile.profileImage = form.cleaned_data.get('profileImage')
+        profile.twitter_link = form.cleaned_data.get('twitter_link')
+        profile.instagram_link = form.cleaned_data.get('instagram_link')
+        profile.youtube_link = form.cleaned_data.get('youtube_link')
+        profile.save()
         return response
     
 def login_home(request):
@@ -67,5 +77,8 @@ def signUp_user(request):
 
 def blogarea(request):
     return render(request,'blogHome.html')
+
+
+    
 
 

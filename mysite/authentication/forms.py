@@ -1,6 +1,5 @@
 from cProfile import label
 from pyexpat import model
-
 from django import forms
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm,UserChangeForm
@@ -25,16 +24,33 @@ class UserRegisterForm(UserCreationForm):
 	class Meta:
 		model = User
 		fields = ['username', 'email', 'first_name','last_name','password1', 'password2']
-  
+
 class ProfileEditForm(UserChangeForm):
-    username = forms.CharField(max_length=20,widget=forms.TextInput(attrs={'class':'form-control'}))
-    email = forms.CharField(widget=forms.EmailInput(attrs={'class':'form-control'}))
-    first_name = forms.CharField(widget=forms.TextInput(attrs={'class':'form-control'}))
-    last_name = forms.CharField(widget=forms.TextInput(attrs={'class':'form-control'}))
-    
+    # User fields
+    username = forms.CharField(max_length=20, widget=forms.TextInput(attrs={'class': 'form-control'}))
+    email = forms.CharField(widget=forms.EmailInput(attrs={'class': 'form-control'}))
+    first_name = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control'}))
+    last_name = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control'}))
+
+    # Profile fields
+    bio = forms.CharField(widget=forms.Textarea(attrs={'class': 'form-control', 'rows': 4, 'placeholder': 'Tell us about yourself...'}), required=False)
+    profileImage = forms.ImageField(widget=forms.ClearableFileInput(attrs={'class': 'form-control-file'}), required=False)
+    twitter_link = forms.URLField(widget=forms.URLInput(attrs={'class': 'form-control'}), required=False, initial="https://x.com/")
+    instagram_link = forms.URLField(widget=forms.URLInput(attrs={'class': 'form-control'}), required=False, initial="https://instagram.com/")
+    youtube_link = forms.URLField(widget=forms.URLInput(attrs={'class': 'form-control'}), required=False, initial="https://youtube.com/")
+
     class Meta:
         model = User
-        fields = ['username','email','first_name','last_name']
+        fields = ['username', 'email', 'first_name', 'last_name']
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['bio'] = forms.CharField(widget=forms.Textarea(attrs={'class': 'form-control', 'rows': 4}), required=False)
+        self.fields['profileImage'] = forms.ImageField(widget=forms.ClearableFileInput(attrs={'class': 'form-control-file'}), required=False)
+        self.fields['twitter_link'] = forms.URLField(widget=forms.URLInput(attrs={'class': 'form-control'}), required=False)
+        self.fields['instagram_link'] = forms.URLField(widget=forms.URLInput(attrs={'class': 'form-control'}), required=False)
+        self.fields['youtube_link'] = forms.URLField(widget=forms.URLInput(attrs={'class': 'form-control'}), required=False)
+        
     
 
     

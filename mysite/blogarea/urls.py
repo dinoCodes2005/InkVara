@@ -32,7 +32,7 @@ urlpatterns = [
     path('article/deleteBlog/<int:pk>', DeletePostView.as_view(), name="deleteBlog"),
     path('category/<str:cats>',views.CategoryView,name='category'),
     path('likes/<int:pk>',views.LikeView,name='like_post'),
-    path('show_profile_page/<int:pk>/',ShowProfileView.as_view(),name="show_profile_page")
+    path('show_profile_page/<int:pk>/',ShowProfileView.as_view(),name="show_profile_page"),
 
 ]
 

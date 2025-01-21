@@ -1,22 +1,52 @@
-body{
-    background: rgb(240,240,240);
-}
-
-.container{
+body {
+    background: rgb(240, 240, 240);
+    width: 100vw;
+    min-height: 100vh;
+  }
+  
+  .container {
     display: flex;
     justify-content: center;
-    
-}
-
-.innerContainer{
+    flex-direction: column;
+    align-items: center;
+    width: 80%;
+    margin: 0;
+  }
+  
+  .profileBgContainer::before {
+    content: "";
+    background: var(--img);
+    background-size: cover;
+    width: 210px;
+    height: 210px;
+    background-position: center;
+    position: absolute;
+    left: 5%;
+    bottom: -20%;
+    z-index: 1;
+    border-radius: 50%;
+    border: 5px solid white;
+    filter: drop-shadow(10px 10px 10px rgba(0,0,0,0.2));
+  }
+  
+  .profileBg {
+    z-index: 0; /* Ensure the image stays behind the pseudo-element */
+  }
+  
+  .innerContainer {
     display: flex;
     flex-direction: column;
-    align-items: center ;
+    align-items: center;
     justify-content: center;
-}
-
-.profileImage{
+  }
+  
+  .profileImage {
     border-radius: 50%;
-    border: 1px solid black;
     margin-top: 50px;
-}
+  }
+
+  .profileParagraph h1,h3{
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+  }
+
+  

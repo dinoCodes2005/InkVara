@@ -56,7 +56,7 @@
     <div class="innerContainer"style="display: flex;align-items: center;flex-direction:column">
         <div style="display: flex;align-items: center;       flex-direction: column;        font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;padding-top: 50px;">
             <img style="width: 35px;height: 35px;"  src="{% static 'icons8-pencil-48.png'%}" alt="">
-            <h1 style="margin-top: 10px;color: #122459;margin-bottom: 0;">Edit Your Credentials</h1>
+            <h1 style="margin-top: 10px;color: #122459;margin-bottom: 0;">Edit Your Profile</h1>
             <h4 style="margin-top: 5px;color: #122459;">Use the form below to Edit your Profile</h4>
             <a style="all: unset;color: #122e59;cursor: pointer;margin-bottom: 20px;"   href="{% url 'blogarea'%}">Go back to Home Page</a>
         </div>
@@ -76,8 +76,35 @@
                 <p>{{ form.password1}}</p>
                 <p>{{ form.password2.label_tag}}</p>
                 <p>{{ form.password2}}</p>
-                <p> {{ form.media}}</p>
-                <p>{{ form.body}}</p>
+                <div class="form-group">
+                    <label for="bio">Bio</label>
+                    <textarea id="bio" name="bio" class="form-control">{{ user.profile.bio }}</textarea>
+                  </div>
+                
+                  <div class="form-group">
+                    <label for="profileImage">Profile Image</label>
+                    <input type="file" id="profileImage" name="profileImage" class="form-control">
+                    <img src="{% if user.profile.profileImage %}
+                    {{ user.profile.profileImage.url }}
+                    {% else %}/media/thumbnail/thumbnail.jpg
+                    {% endif %}" alt="Profile Image" style="width: 100px;">
+                  </div>
+                
+                  <!-- Social media links -->
+                  <div class="form-group">
+                    <label for="twitter_link">Twitter Link</label>
+                    <input type="url" id="twitter_link" name="twitter_link" value="{{ user.profile.twitter_link }}" class="form-control">
+                  </div>
+                
+                  <div class="form-group">
+                    <label for="instagram_link">Instagram Link</label>
+                    <input type="url" id="instagram_link" name="instagram_link" value="{{ user.profile.instagram_link }}" class="form-control">
+                  </div>
+                
+                  <div class="form-group">
+                    <label for="youtube_link">YouTube Link</label>
+                    <input type="url" id="youtube_link" name="youtube_link" value="{{ user.profile.youtube_link }}" class="form-control">
+                  </div>
                 <div style="display: flex;justify-content: center;">
                     <button class="Post" type="submit">Save Changes</button>
                 </div>
@@ -85,7 +112,6 @@
         </div>
     </div>
 </div>
-
 
 </body>
 <script>
