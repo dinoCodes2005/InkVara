@@ -35,8 +35,8 @@
             style="
              width: 50px;
               height: 50px;
-              transform: translateY(15px);
               border-radius: 50%;
+              transform: translateY(15px);
               margin-bottom: 10px;
               ;
             "
@@ -53,16 +53,28 @@
         </form>
     </nav>
 </header>
-<div style="display: flex;justify-content: center;">
-  <div class="container">
-    <div class="profileBgContainer" style="--img: url({% if post.author.profile.profileImage %}{{ post.author.profile.profileImage.url }}{% else %}/media/thumbnail/thumbnail.jpg{% endif %});position: relative;">
+<div style="display: flex;justify-content: center;width: 100%;">
+  <div class="container" style="width: 80%;">
+    <div class="profileBgContainer" style="--img: url({% if page_user.user.profile.profileImage %}{{ page_user.user.profile.profileImage.url }}{% else %}/media/thumbnail/thumbnail.jpg{% endif %});position: relative;width: 90%;">
       <img class="profileBg" src="{% static 'panaroma.jpg' %}" style="object-fit: cover; height: 400px; width: 100%;border-radius: 20px;margin: 0;" alt="">
     </div>
-    <div class="profileParagraph" style="width: 100%;height: 80vh;justify-content: flex-start;">
-
-      <h2 style="margin-top: 100px;margin-left:20px;color: rgb(95, 95, 95);">@ {{page_user.user.username}}</h2>
+    <div class="profileParagraph" style="height: 90vh;width:90%">
+      <div class="left">
+        <h2 style="margin-top: 100px;margin-left:20px;color: rgb(95, 95, 95);">@ {{page_user.user.username}}</h2>
       <h1>{{page_user.user.first_name}} {{page_user.user.last_name}}</h1>
       <p>{{page_user.user.profile.bio}}</p>
+      <a style="color: rgb(0, 73, 163);cursor: pointer;" href="mailto:{{page_user.user.email}}">{{page_user.user.email}}</a>
+      <h3> Occupation: <span>{{page_user.user.profile.occupation}}</span></h3>
+      <h3> Indstry: <span>{{page_user.user.profile.industry}}</span></h3>
+      <h3>Location: <span>{{page_user.user.profile.location}}</span></h3>
+      </div>
+      <div class="right" style="display: flex;flex-direction: column;margin-top: 20px;">
+        <a href="{{page_user.user.profile.twitter_link}}"><img src="{% static 'twitter.svg'%}" height="50px" alt="">&nbsp;&nbsp;&nbsp; Twitter</a>
+        <a href="{{page_user.user.profile.instagram_link}}"><img src="{% static 'instagram.png'%}" height="50px"  alt="">&nbsp;&nbsp;&nbsp; Instagram</a>
+        <a href="{{page_user.user.profile.youtube_link}}"><img src="{% static 'youtube.png'%}" height="50px"   alt="">&nbsp;&nbsp;&nbsp; YouTube</a>
+        <h1>Total Posts : {{total_posts}}</h1>
+        <h1>Total Likes : {{total_likes}}</h1>
+      </div>
     </div>
   </div>
 </div>

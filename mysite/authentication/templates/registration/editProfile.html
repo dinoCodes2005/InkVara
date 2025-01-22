@@ -61,9 +61,15 @@
             <a style="all: unset;color: #122e59;cursor: pointer;margin-bottom: 20px;"   href="{% url 'blogarea'%}">Go back to Home Page</a>
         </div>
         <div class="container">
-            <!-- {{user.profile.bio}} -->
             <form method="POST" enctype="multipart/form-data">
                 {% csrf_token %}
+                <div class="form-group imageSelection" >
+                  <input type="file" id="profileImage" name="profileImage" class="file-input">
+
+    <label for="profileImage" class="file-input-label"
+        style="background-image: url('{% if user.profile.profileImage %}{{ user.profile.profileImage.url }}{% else %}/media/thumbnail/thumbnail.jpg{% endif %}')">
+    </label>
+                </div>
                 <p>{{ form.username.label_tag}}</p>
                 <p>{{ form.username}}</p>
                 <p>{{ form.email.label_tag}}</p>
@@ -76,22 +82,32 @@
                 <p>{{ form.password1}}</p>
                 <p>{{ form.password2.label_tag}}</p>
                 <p>{{ form.password2}}</p>
+
+                <div class="form-group" >
+                  <label for="profileBackground" >Profile Background:</label>
+                  <input type="file" id="profileBackground" name="profileBackground">
+
+                </div>
                 <div class="form-group">
                     <label for="bio">Bio</label>
-                    <textarea id="bio" name="bio" class="form-control">{{ user.profile.bio }}</textarea>
+                    <textarea id="bio" name="bio" class="form-control" rows="5" cols="30">{{ user.profile.bio }}</textarea>
                   </div>
                 
                   <div class="form-group">
-                    <label for="profileImage">Profile Image</label>
-                    <input type="file" id="profileImage" name="profileImage" class="form-control">
-                    <img src="{% if user.profile.profileImage %}
-                    {{ user.profile.profileImage.url }}
-                    {% else %}/media/thumbnail/thumbnail.jpg
-                    {% endif %}" alt="Profile Image" style="width: 100px;">
+                    <label for="occupation">Occupation</label>
+                    <input type="text" id="occupation" name="occupation" class="form-control"></textarea>
+                  </div>
+                  <div class="form-group">
+                    <label for="industry">Industry</label>
+                    <input type="text" id="industry" name="industry" class="form-control"></textarea>
+                  </div>
+                  <div class="form-group">
+                    <label for="Location">Location</label>
+                    <input type="text" id="Location" name="Location" class="form-control"></textarea>
                   </div>
                 
                   <!-- Social media links -->
-                  <div class="form-group">
+                  <div class="form-group" style="margin-bottom:10px ;">
                     <label for="twitter_link">Twitter Link</label>
                     <input type="url" id="twitter_link" name="twitter_link" value="{{ user.profile.twitter_link }}" class="form-control">
                   </div>

@@ -33,7 +33,11 @@ class ProfileEditForm(UserChangeForm):
     last_name = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control'}))
 
     # Profile fields
+    profileBg = forms.ImageField(widget=forms.ClearableFileInput(attrs={'class': 'form-control-file'}), required=False)
     bio = forms.CharField(widget=forms.Textarea(attrs={'class': 'form-control', 'rows': 4, 'placeholder': 'Tell us about yourself...'}), required=False)
+    location = forms.CharField(widget=forms.Textarea(attrs={'class': 'form-control', 'rows': 4, 'placeholder': 'Your Location'}), required=False)
+    occupation = forms.CharField(widget=forms.Textarea(attrs={'class': 'form-control', 'rows': 4, 'placeholder': 'Your Occupation'}), required=False)
+    indsutry = forms.CharField(widget=forms.Textarea(attrs={'class': 'form-control', 'rows': 4, 'placeholder': 'Your Industry'}), required=False)
     profileImage = forms.ImageField(widget=forms.ClearableFileInput(attrs={'class': 'form-control-file'}), required=False)
     twitter_link = forms.URLField(widget=forms.URLInput(attrs={'class': 'form-control'}), required=False, initial="https://x.com/")
     instagram_link = forms.URLField(widget=forms.URLInput(attrs={'class': 'form-control'}), required=False, initial="https://instagram.com/")

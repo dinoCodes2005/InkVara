@@ -50,7 +50,12 @@ class ShowProfileView(DetailView):
     def get_context_data(self, *args, **kwargs):
         context = super(ShowProfileView, self).get_context_data(*args, **kwargs)
         page_user = get_object_or_404(Profile,id=self.kwargs['pk'])
+        total_posts = Post.objects.filter(author=page_user.user).count()
+        total_likes = Post.objects.filter(author=page_user.user).aggregate(total_likes=Count('like'))['total_likes'] or 0
         context['page_user'] = page_user
+        context['total_posts'] = total_posts
+        context['total_likes'] = total_likes
+        
         return context    
         
 class AddPostView(CreateView):

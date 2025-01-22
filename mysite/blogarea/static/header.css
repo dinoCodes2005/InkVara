@@ -124,17 +124,16 @@ header.scrolled a::before{
 }
 
 .profilePic{
-    all:unset;
+    /* all:unset; */
+    border-radius: 50%;
 }
 
 .profilePic:hover{
-    all:unset;
     cursor:pointer;
 
 }
 
 .profilePic::before{
-    all: unset;
     display: none;
 }
 

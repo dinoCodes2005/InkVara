@@ -29,8 +29,15 @@ class EditProfileView(generic.UpdateView):
     
     def form_valid(self, form):
         response = super().form_valid(form)
+        
+        #this part is handling the profile data entered by the user during editing the profile 
+        #it creates space in the form for further actions
         profile,created = Profile.objects.get_or_create(user=self.request.user)
+        profile.profileBackground = form.cleaned_data.get('profileBackground')
         profile.bio = form.cleaned_data.get('bio')
+        profile.location = form.cleaned_data.get('location')
+        profile.occupation = form.cleaned_data.get('occupation')
+        profile.industry = form.cleaned_data.get('industry')
         profile.profileImage = form.cleaned_data.get('profileImage')
         profile.twitter_link = form.cleaned_data.get('twitter_link')
         profile.instagram_link = form.cleaned_data.get('instagram_link')
@@ -38,7 +45,7 @@ class EditProfileView(generic.UpdateView):
         profile.save()
         return response
     
-def login_home(request):
+def login_home(request):#
     return render(request,'registration/login.html')
 
 def loginUser(request):
