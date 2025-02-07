@@ -1,124 +1,88 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
+  <head>
+    <meta charset="UTF-8" />
     <title>Title</title>
-  {% load static %}
-  <link rel="stylesheet" href="{% static 'header.css' %}" />
-    <link rel="stylesheet" href="{% static 'showProfilePage.css' %}">
-</head>
-<header>
-    <nav style="justify-content: space-between;">
-        <a href=""
-        ><img
-                class="headerLogo"
-                src="{% static '1to1 invictus logo.png'%}"
-                height="50px"
-                width="50px"
-        /></a>
-        <a href="{% url 'blogarea'%}">Home</a>
-        <a href="">My Blogs</a>
-        <a href="">About</a>
-        <a href="">Contact</a>
-        {% if user.is_authenticated %}
-        <a
-          class="profilePic"
-          href="{% url 'editProfile' %}"
-          style="
-            margin: 0;
-            margin-left: auto;
-            margin-bottom: 20px;
-            margin-right: 10px;
-          "
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'showProfilePage.css' %}" />
+  </head>
+
+  <body>
+    {% include 'header.html'%}
+    <div style="display: flex; justify-content: center; width: 100%">
+      <div class="container" style="width: 80%">
+        <div
+          class="profileBgContainer"
+          style="--img: url({% if page_user.user.profile.profileImage %}{{ page_user.user.profile.profileImage.url }}{% else %}/media/thumbnail/thumbnail.jpg{% endif %});position: relative;width: 90%;"
         >
-          <img class="profilePic"
+          <img
+            class="profileBg"
+            src="{% static 'panaroma.jpg' %}"
             style="
-             width: 50px;
-              height: 50px;
-              border-radius: 50%;
-              transform: translateY(15px);
-              margin-bottom: 10px;
-              ;
+              object-fit: cover;
+              height: 400px;
+              width: 100%;
+              border-radius: 20px;
+              margin: 0;
             "
-            src="{% if user.profile.profileImage %}
-            {{ user.profile.profileImage.url }}
-            {% else %}/media/thumbnail/thumbnail.jpg
-            {% endif %}"
             alt=""
-        /></a>
-        {% endif %}
-        <form action="{% url 'logout' %}" method="post">
-            {% csrf_token %}
-            <button class="headerSignUp" style="margin-left: auto;margin-right: 60px;margin-left: 10px;">Logout</button>
-        </form>
-    </nav>
-</header>
-<div style="display: flex;justify-content: center;width: 100%;">
-  <div class="container" style="width: 80%;">
-    <div class="profileBgContainer" style="--img: url({% if page_user.user.profile.profileImage %}{{ page_user.user.profile.profileImage.url }}{% else %}/media/thumbnail/thumbnail.jpg{% endif %});position: relative;width: 90%;">
-      <img class="profileBg" src="{% static 'panaroma.jpg' %}" style="object-fit: cover; height: 400px; width: 100%;border-radius: 20px;margin: 0;" alt="">
-    </div>
-    <div class="profileParagraph" style="height: 90vh;width:90%">
-      <div class="left">
-        <h2 style="margin-top: 100px;margin-left:20px;color: rgb(95, 95, 95);">@ {{page_user.user.username}}</h2>
-      <h1>{{page_user.user.first_name}} {{page_user.user.last_name}}</h1>
-      <p>{{page_user.user.profile.bio}}</p>
-      <a style="color: rgb(0, 73, 163);cursor: pointer;" href="mailto:{{page_user.user.email}}">{{page_user.user.email}}</a>
-      <h3> Occupation: <span>{{page_user.user.profile.occupation}}</span></h3>
-      <h3> Indstry: <span>{{page_user.user.profile.industry}}</span></h3>
-      <h3>Location: <span>{{page_user.user.profile.location}}</span></h3>
+          />
+        </div>
+        <div class="profileParagraph" style="height: 90vh; width: 90%">
+          <div class="left">
+            <h2
+              style="
+                margin-top: 100px;
+                margin-left: 20px;
+                color: rgb(95, 95, 95);
+              "
+            >
+              @ {{page_user.user.username}}
+            </h2>
+            <h1>{{page_user.user.first_name}} {{page_user.user.last_name}}</h1>
+            <p>{{page_user.user.profile.bio}}</p>
+            <a
+              style="color: rgb(0, 73, 163); cursor: pointer"
+              href="mailto:{{page_user.user.email}}"
+              >{{page_user.user.email}}</a
+            >
+            <h3>
+              Occupation: <span>{{page_user.user.profile.occupation}}</span>
+            </h3>
+            <h3>Indstry: <span>{{page_user.user.profile.industry}}</span></h3>
+            <h3>Location: <span>{{page_user.user.profile.location}}</span></h3>
+          </div>
+          <div
+            class="right"
+            style="display: flex; flex-direction: column; margin-top: 20px"
+          >
+            <a href="{{page_user.user.profile.twitter_link}}"
+              ><img
+                src="{% static 'twitter.svg'%}"
+                height="50px"
+                alt=""
+              />&nbsp;&nbsp;&nbsp; Twitter</a
+            >
+            <a href="{{page_user.user.profile.instagram_link}}"
+              ><img
+                src="{% static 'instagram.png'%}"
+                height="50px"
+                alt=""
+              />&nbsp;&nbsp;&nbsp; Instagram</a
+            >
+            <a href="{{page_user.user.profile.youtube_link}}"
+              ><img
+                src="{% static 'youtube.png'%}"
+                height="50px"
+                alt=""
+              />&nbsp;&nbsp;&nbsp; YouTube</a
+            >
+            <h1>Total Posts : {{total_posts}}</h1>
+            <h1>Total Likes : {{total_likes}}</h1>
+          </div>
+        </div>
       </div>
-      <div class="right" style="display: flex;flex-direction: column;margin-top: 20px;">
-        <a href="{{page_user.user.profile.twitter_link}}"><img src="{% static 'twitter.svg'%}" height="50px" alt="">&nbsp;&nbsp;&nbsp; Twitter</a>
-        <a href="{{page_user.user.profile.instagram_link}}"><img src="{% static 'instagram.png'%}" height="50px"  alt="">&nbsp;&nbsp;&nbsp; Instagram</a>
-        <a href="{{page_user.user.profile.youtube_link}}"><img src="{% static 'youtube.png'%}" height="50px"   alt="">&nbsp;&nbsp;&nbsp; YouTube</a>
-        <h1>Total Posts : {{total_posts}}</h1>
-        <h1>Total Likes : {{total_likes}}</h1>
-      </div>
     </div>
-  </div>
-</div>
-
-  
-  
-
-
-
-
-
-  <!-- <div class="innerContainer">
-    <img src="{% if user.profile.profileImage %}
-    {{ user.profile.profileImage.url }}
-    {% else %}/media/thumbnail/thumbnail.jpg
-    {% endif %}" alt=""
-    height="300px"
-    width="300px"
-    class="profileImage">
-    <h1>{{page_user.user.username}}</h1>
-    <div style="display: flex;flex-direction: column;"><h3>{{page_user.bio}}</h3>
-      <a href="{{page_user.twitter_link}}">Twitter</a>
-      <a href="{{page_user.instagram_link}}">Instagram</a>
-      <a href="{{page_user.youtube_link}}">Youtube</a></div>
-    
-  </div> -->
-</div>
-
-
-</body>
-<script>
-    document.addEventListener("scroll", () => {
-        const header = document.querySelector("header");
-        if (window.scrollY > 0) {
-            header.classList.add("scrolled");
-        } else {
-            header.classList.remove("scrolled");
-        }
-    });
-
-    var clearButton = document.getElementById("thumbnail-clear_id")
-    clearButton.addEventListener('onclick',()=>{
-
-    })
-</script>
-</body>
+    {% include 'footer.html'%}
+  </body>
 </html>

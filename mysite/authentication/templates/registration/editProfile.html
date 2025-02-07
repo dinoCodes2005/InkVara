@@ -4,146 +4,87 @@
     <meta charset="UTF-8">
     <title>Title</title>
   {% load static %}
-  <link rel="stylesheet" href="{% static 'header.css' %}" />
-    <link rel="stylesheet" href="{% static 'editProfile.css' %}">
+  <link rel="stylesheet" href="{% static 'editProfile.css' %}">
 </head>
-<header>
-    <nav style="justify-content: space-between;">
-        <a href=""
-        ><img
-                class="headerLogo"
-                src="{% static '1to1 invictus logo.png'%}"
-                height="50px"
-                width="50px"
-        /></a>
-        <a href="{% url 'blogarea'%}">Home</a>
-        <a href="">My Blogs</a>
-        <a href="">About</a>
-        <a href="">Contact</a>
-        {% if user.is_authenticated %}
-        <a
-          class="profilePic"
-          href="{% url 'editProfile' %}"
-          style="
-            margin: 0;
-            margin-left: auto;
-            margin-bottom: 20px;
-            margin-right: 10px;
-          "
-        >
-          <img
-            style="
-              width: 50px;
-              height: 50px;
-              transform: translateY(15px);
-              border-radius: 50%;
-              ;
-            "
-            src="{% if user.profile.profileImage %}
-            {{ user.profile.profileImage.url }}
-            {% else %}/media/thumbnail/thumbnail.jpg
-            {% endif %}"
-            alt=""
-        /></a>
-        {% endif %}
-        <form action="{% url 'logout' %}" method="post">
-            {% csrf_token %}
-            <button class="headerSignUp" style="margin-left: 20px;margin-right: 60px;">Logout</button>
-        </form>
-    </nav>
-</header>
-<div class="mainContainer">
-    <div class="innerContainer"style="display: flex;align-items: center;flex-direction:column">
-        <div style="display: flex;align-items: center;       flex-direction: column;        font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;padding-top: 50px;">
-            <img style="width: 35px;height: 35px;"  src="{% static 'icons8-pencil-48.png'%}" alt="">
-            <h1 style="margin-top: 10px;color: #122459;margin-bottom: 0;">Edit Your Profile</h1>
-            <h4 style="margin-top: 5px;color: #122459;">Use the form below to Edit your Profile</h4>
-            <a style="all: unset;color: #122e59;cursor: pointer;margin-bottom: 20px;"   href="{% url 'blogarea'%}">Go back to Home Page</a>
-        </div>
-        <div class="container">
-            <form method="POST" enctype="multipart/form-data">
-                {% csrf_token %}
-                <div class="form-group imageSelection" >
-                  <input type="file" id="profileImage" name="profileImage" class="file-input">
-
-    <label for="profileImage" class="file-input-label"
-        style="background-image: url('{% if user.profile.profileImage %}{{ user.profile.profileImage.url }}{% else %}/media/thumbnail/thumbnail.jpg{% endif %}')">
-    </label>
-                </div>
-                <p>{{ form.username.label_tag}}</p>
-                <p>{{ form.username}}</p>
-                <p>{{ form.email.label_tag}}</p>
-                <p>{{ form.email}}</p>
-                <p>{{ form.first_name.label_tag}}</p>
-                <p>{{ form.first_name}}</p>
-                <p>{{ form.last_name.label_tag}}</p>
-                <p>{{ form.last_name}}</p>
-                <p>{{ form.password1.label_tag}}</p>
-                <p>{{ form.password1}}</p>
-                <p>{{ form.password2.label_tag}}</p>
-                <p>{{ form.password2}}</p>
-
-                <div class="form-group" >
-                  <label for="profileBackground" >Profile Background:</label>
-                  <input type="file" id="profileBackground" name="profileBackground">
-
-                </div>
-                <div class="form-group">
-                    <label for="bio">Bio</label>
-                    <textarea id="bio" name="bio" class="form-control" rows="5" cols="30">{{ user.profile.bio }}</textarea>
+<body>
+  
+  {% include 'header.html'%}
+  <div class="mainContainer">
+      <div class="innerContainer"style="display: flex;align-items: center;flex-direction:column">
+          <div style="display: flex;align-items: center;       flex-direction: column;        font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;padding-top: 50px;">
+              <img style="width: 35px;height: 35px;"  src="{% static 'icons8-pencil-48.png'%}" alt="">
+              <h1 style="margin-top: 10px;color: #122459;margin-bottom: 0;">Edit Your Profile</h1>
+              <h4 style="margin-top: 5px;color: #122459;">Use the form below to Edit your Profile</h4>
+              <a style="all: unset;color: #122e59;cursor: pointer;margin-bottom: 20px;"   href="{% url 'blogarea'%}">Go back to Home Page</a>
+          </div>
+          <div class="container">
+              <form method="POST" enctype="multipart/form-data">
+                  {% csrf_token %}
+                  <div class="form-group imageSelection" >
+                    <input type="file" id="profileImage" name="profileImage" class="file-input">
+  
+      <label for="profileImage" class="file-input-label"
+          style="background-image: url('{% if user.profile.profileImage %}{{ user.profile.profileImage.url }}{% else %}/media/thumbnail/thumbnail.jpg{% endif %}')">
+      </label>
                   </div>
-                
-                  <div class="form-group">
-                    <label for="occupation">Occupation</label>
-                    <input type="text" id="occupation" name="occupation" class="form-control"></textarea>
+                  <p>{{ form.username.label_tag}}</p>
+                  <p>{{ form.username}}</p>
+                  <p>{{ form.email.label_tag}}</p>
+                  <p>{{ form.email}}</p>
+                  <p>{{ form.first_name.label_tag}}</p>
+                  <p>{{ form.first_name}}</p>
+                  <p>{{ form.last_name.label_tag}}</p>
+                  <p>{{ form.last_name}}</p>
+                  <p>{{ form.password1.label_tag}}</p>
+                  <p>{{ form.password1}}</p>
+                  <p>{{ form.password2.label_tag}}</p>
+                  <p>{{ form.password2}}</p>
+  
+                  <div class="form-group" >
+                    <label for="profileBackground" >Profile Background:</label>
+                    <input type="file" id="profileBackground" name="profileBackground">
+  
                   </div>
                   <div class="form-group">
-                    <label for="industry">Industry</label>
-                    <input type="text" id="industry" name="industry" class="form-control"></textarea>
+                      <label for="bio">Bio</label>
+                      <textarea id="bio" name="bio" class="form-control" rows="5" cols="30">{{ user.profile.bio }}</textarea>
+                    </div>
+                  
+                    <div class="form-group">
+                      <label for="occupation">Occupation</label>
+                      <input type="text" id="occupation" name="occupation" class="form-control"></textarea>
+                    </div>
+                    <div class="form-group">
+                      <label for="industry">Industry</label>
+                      <input type="text" id="industry" name="industry" class="form-control"></textarea>
+                    </div>
+                    <div class="form-group">
+                      <label for="Location">Location</label>
+                      <input type="text" id="Location" name="Location" class="form-control"></textarea>
+                    </div>
+                  
+                    <!-- Social media links -->
+                    <div class="form-group" style="margin-bottom:10px ;">
+                      <label for="twitter_link">Twitter Link</label>
+                      <input type="url" id="twitter_link" name="twitter_link" value="{{ user.profile.twitter_link }}" class="form-control">
+                    </div>
+                  
+                    <div class="form-group">
+                      <label for="instagram_link">Instagram Link</label>
+                      <input type="url" id="instagram_link" name="instagram_link" value="{{ user.profile.instagram_link }}" class="form-control">
+                    </div>
+                  
+                    <div class="form-group">
+                      <label for="youtube_link">YouTube Link</label>
+                      <input type="url" id="youtube_link" name="youtube_link" value="{{ user.profile.youtube_link }}" class="form-control">
+                    </div>
+                  <div style="display: flex;justify-content: center;">
+                      <button class="Post" type="submit">Save Changes</button>
                   </div>
-                  <div class="form-group">
-                    <label for="Location">Location</label>
-                    <input type="text" id="Location" name="Location" class="form-control"></textarea>
-                  </div>
-                
-                  <!-- Social media links -->
-                  <div class="form-group" style="margin-bottom:10px ;">
-                    <label for="twitter_link">Twitter Link</label>
-                    <input type="url" id="twitter_link" name="twitter_link" value="{{ user.profile.twitter_link }}" class="form-control">
-                  </div>
-                
-                  <div class="form-group">
-                    <label for="instagram_link">Instagram Link</label>
-                    <input type="url" id="instagram_link" name="instagram_link" value="{{ user.profile.instagram_link }}" class="form-control">
-                  </div>
-                
-                  <div class="form-group">
-                    <label for="youtube_link">YouTube Link</label>
-                    <input type="url" id="youtube_link" name="youtube_link" value="{{ user.profile.youtube_link }}" class="form-control">
-                  </div>
-                <div style="display: flex;justify-content: center;">
-                    <button class="Post" type="submit">Save Changes</button>
-                </div>
-            </form>
-        </div>
-    </div>
-</div>
-
-</body>
-<script>
-    document.addEventListener("scroll", () => {
-        const header = document.querySelector("header");
-        if (window.scrollY > 0) {
-            header.classList.add("scrolled");
-        } else {
-            header.classList.remove("scrolled");
-        }
-    });
-
-    var clearButton = document.getElementById("thumbnail-clear_id")
-    clearButton.addEventListener('onclick',()=>{
-
-    })
-</script>
+              </form>
+          </div>
+      </div>
+  </div>
+  {% include 'footer.html'%}
 </body>
 </html>

@@ -8,16 +8,7 @@
   margin-right: 50%;
 }
 
-/* .recentPosts::before{
-  content: '';
-  display: block;
-  position: absolute;
-  bottom: -5px;
-  height: 3px;
-  width: 50%;
-  background: black;
 
-} */
 body{
   overflow-x: hidden;
   background: rgb(240, 240, 240);

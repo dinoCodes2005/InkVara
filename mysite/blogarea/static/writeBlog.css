@@ -5,10 +5,13 @@
 
 
 .innerContainer{
+    all: unset;
     margin-top: 60px;
 }
 
 .mainContainer{
+    all: unset;
+
     display: flex;
     justify-content: center;
 }
@@ -21,16 +24,20 @@ body{
 
 
 label{
+    all: unset;
+
     display: block;
     font-family: Cambria;
     font-size: large;
     margin-bottom: 15px;
 }
 input{
+    all: unset;
     width: 750px;
     height: 30px;
     padding: 10px;
     font-size: medium;
+    border: 1px solid gray;
 }
 
 select{

@@ -1,147 +1,79 @@
-<!DOCTYPE html>
-<html>
-  <head>
-    {% load static %}
-    <link rel="stylesheet" href="{% static 'signUpPage.css' %}" />
-    {% load widget_tweaks %}
-  </head>
-  <body>
-    <header
-      style="
-        position: sticky;
-        top: 0;
-        height: 50px;
-        width: 100%;
-        background: transparent;
-        z-index: 12;
-      "
+<head>
+  <script src="https://unpkg.com/@tailwindcss/browser@4"></script>
+  {% load static %}
+</head>
+<div class="flex min-h-full flex-col justify-center px-6 py-12 lg:px-8">
+  <div class="sm:mx-auto sm:w-full sm:max-w-sm">
+    <img
+      class="mx-auto h-20 w-auto"
+      src="{% static 'Invictus logo.png'%}"
+      alt="Your Company"
+    />
+    <h2
+      class="mt-10 text-center text-2xl/9 font-bold tracking-tight text-gray-900"
     >
-      <form action="{% url 'login'%}" method="POST">
-        {% csrf_token %}
-        <button
-          style="position: absolute; right: 0; padding: 15px; width: 100px"
-        >
-          Login
-        </button>
-      </form>
-    </header>
-    <div class="container">
-      <h1 style="font-family: Cambria; font-weight: normal; margin-top: 250px">
-        Welcome to Ink Vara
-      </h1>
-      <div
-        class="horizontalLine"
-        style="width: 100%; height: 1px; background-color: #b6b6b6"
-      ></div>
-      <div class="innerContainer">
-        <div class="textArea">
-          {% load widget_tweaks %}
-          <form method="POST">
-            {% csrf_token %}
-            <div>
-              {{ form.username.label_tag }}
-              <br />
-              {{ form.username }}
-            </div>
-            <div>
-              {{ form.email.label_tag }}
-              <br />
-              {{ form.email }}
-            </div>
-            <div>
-              {{ form.first_name.label_tag }}
-              <br />
-              {{ form.first_name }}
-            </div>
-            <div>
-              {{ form.last_name.label_tag }}
-              <br />
-              {{ form.last_name }}
-            </div>
-            <div>
-              {{ form.password1.label_tag }}
-              <br />
-              {{ form.password1 }}
-            </div>
-            <div>
-              {{ form.password2.label_tag }}
-              <br />
-              {{ form.password2 }}
-            </div>
-            <button class="createAccount" type="submit">Sign Up</button>
+      Create your account
+    </h2>
+  </div>
 
-            {% if form.password1.errors %}
-            <div
-              class="errors"
-              style="
-                background-color: #ffe1e1;
-                margin-top: 20px;
-                padding: 10px;
-                border-radius: 10px;
-              "
-            >
-              {% for error in form.password1.errors %}
-              <p style="color: #c60000; font-family: Cambria">{{ error }}</p>
-              {% endfor %}
-            </div>
-            {% endif %} {% if form.password2.errors %}
-            <div
-              class="errors"
-              style="
-                background-color: #ffe1e1;
-                margin-top: 20px;
-                padding: 10px;
-                border-radius: 10px;
-              "
-            >
-              {% for error in form.password2.errors %}
-              <p style="color: #c60000; font-family: Cambria">{{ error }}</p>
-              {% endfor %}
-            </div>
-            {% endif %}
-          </form>
-        </div>
-        <div
-          class="verticalLine"
-          style="
-            width: 1px;
-            height: 90%;
-            transform: translateY(-20px);
-            background-color: #b6b6b6;
-          "
-        ></div>
-        <div class="rightButtonGroup">
-          <form action="" method="POST">
-            {% csrf_token %}
-            <button class="rightSide" type="submit" style="margin: 10px">
-              <img
-                src="{%static 'google.svg'%}"
-                height="20px"
-                width="20px"
-              /><span>&nbsp;&nbsp;&nbsp;Continue With Google </span>
-            </button>
-            <br />
-            <button class="rightSide" type="submit" style="margin: 10px">
-              <img
-                src="{%static 'twitter.svg'%}"
-                height="20px"
-                width="20px"
-                style="filter: brightness(0)"
-              /><span>&nbsp;&nbsp;&nbsp;Continue With Twitter</span>
-            </button>
-            <br />
-            <button class="rightSide" type="submit" style="margin: 10px">
-              <img
-                src="{%static 'facebook.svg'%}"
-                height="20px"
-                width="20px "
-                style="filter: brightness(0)"
-              /><span>&nbsp;&nbsp;&nbsp;Continue With Facebook</span>
-            </button>
-            <br />
-          </form>
+  <div class="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
+    <form class="space-y-6" method="POST">
+      {% csrf_token %}
+      <div>
+        <label for="username" class="block text-sm/6 font-medium text-gray-900"
+          >Username</label
+        >
+        <div class="mt-2">
+          <input
+            type="text"
+            name="username"
+            id="username"
+            placeholder="JohnDoe_123"
+            autocomplete="username"
+            required
+            class="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"
+          />
         </div>
       </div>
-    </div>
-  </body>
-</html>
+
+      <div>
+        <div class="flex items-center justify-between">
+          <label
+            for="password"
+            class="block text-sm/6 font-medium text-gray-900"
+            >Password</label
+          >
+        </div>
+        <div class="mt-2">
+          <input
+            type="password"
+            name="password"
+            id="password"
+            placeholder="Password"
+            autocomplete="current-password"
+            required
+            class="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"
+          />
+        </div>
+      </div>
+
+      <div>
+        <button
+          type="submit"
+          class="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm/6 font-semibold text-white shadow-xs hover:bg-indigo-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+        >
+          Sign Up
+        </button>
+      </div>
+    </form>
+
+    <p class="mt-10 text-center text-sm/6 text-gray-500">
+      Already a member?
+      <a
+        href="{% url 'login'%}"
+        class="font-semibold text-indigo-600 hover:text-indigo-500"
+        >Sign In</a
+      >
+    </p>
+  </div>
+</div>

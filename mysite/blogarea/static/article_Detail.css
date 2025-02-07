@@ -20,13 +20,7 @@ h1{
     font-weight: light;
 }
 
-div img {
-    margin-left: 50px;
-    height: 500px;
-    width: 800px;
-    border-radius: 20px;
-    box-shadow: 10px 10px 10px #979797;
-}
+
 
 p{
     margin-left: 50px;

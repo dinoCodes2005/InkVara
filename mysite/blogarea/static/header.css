@@ -1,243 +1,72 @@
-header{
-    background-color: white;
-    height: 5em;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    position: sticky;
-    top: 0;
-    z-index: 10;
-    transition: background-color .4s ease-in-out;
-    backdrop-filter: blur(2px);
+.btn-outline-dark {
+  background: transparent;
+  color: black;
+  border: none;
+  margin-left: 20px;
 }
 
-body{
-    margin: 0;
+body {
+  position: relative;
 }
-header .headerLogo{
-    filter: brightness(0);
-    transition: filter .4s ease-in-out;
+.logo {
+  filter: brightness(0);
 }
-
-header.scrolled .headerLogo{
-    filter: brightness(0) invert(1);
+header {
+  position: sticky;
+  top: 0;
+  z-index: 100;
 }
-
-.headerSignUp{
-    margin-left:10px;
-    padding: 5px;
-    background: transparent;
-    font-family: Cambria;
-    border:none;
-    transition: .4s all ease-in-out;
-    margin-right: 10px;
-    font-size: large;
-    cursor: pointer;
-}
-
-.headerEditProfile{
-    margin-left: auto; 
-    margin-right: 10px;
-    background: transparent;
-    font-family: Cambria;
-    border:none;
-    transition: .4s all ease-in-out;
-    margin-right: 10px;
-    font-size: large;
-    cursor: pointer;
-    color: black;
+nav {
+  backdrop-filter: blur(2px);
 }
 
 
-
-.headerCreateBlog{
-    margin-left:20px;
-    padding: 5px;
-    background: transparent;
-    font-family: Cambria;
-    border:none;
-    transition: .4s all ease-in-out;
-    margin-right: 30px;
-    font-size: large;
-    cursor: pointer;
+nav li>a{
+  font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
 }
 
-header.scrolled .headerSignUp, .headerCreateBlog, .headerEditProfile{
-    background: white;
-    padding: 10px;
-    transition: .4s all ease-in-out;
+.navbar-nav .nav-link.active{
+  color: black;
 }
 
-form {
-    display: contents; /* Makes the form behave like its child elements */
+header.navbar {
+  color: white;
 }
 
-nav{
-    width: 100%;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    position: relative;
+header.scrolled {
+  background: rgb(1, 0, 41);
+  color: white;
+  transition: all 0.4s ease-in-out;
 }
 
-header.scrolled{
-    background-color:#09122C;
-    /* opacity: 0.9; */
+header.scrolled .nav-link {
+  color: white;
+  transition: all 0.4s ease-in-out;
 }
-header nav{
-    padding: 1.5em 0 1.5em 5em;
+header.scrolled .navbar-brand img {
+  filter: brightness(0) invert(1);
+  transition: all 0.4s ease-in-out;
 }
-
-a{
-    text-decoration: none;
-    color: black;
-    font-size: 1.3em;
-    margin: 1em;
-    transition: color .4s ease-in-out;
+header.scrolled .navbar-nav .nav-link.active {
+  color: white;
 }
 
-header.scrolled nav a{
-    color: white;
+header.scrolled button {
+  background: white;
+  transition: all 0.4s ease-in-out;
+  border: 1px solid white;
 }
 
-a{
-    position: relative;
-    display: inline-block;
-}
-nav a::before{
-    content: "";
-    position: absolute;
-    bottom: -5px;
-    width: 0%;
-    height: 3px;
-    background-color: black;
-    transition: .4s all ease-in-out;
+header.scrolled
+.navbar-nav .nav-link.show {
+  color: white;
 }
 
-nav a:hover::before{
-    width: 100%;
-    /* background-color: white; */
+header.scrolled .dropdown-toggle[aria-expanded="true"] {
+  color: white;
 }
 
-header.scrolled a::before{
-    background-color: white;
+.nav-link.active{
+  color: black;
+  cursor: pointer;
 }
-
-.profilePic{
-    /* all:unset; */
-    border-radius: 50%;
-}
-
-.profilePic:hover{
-    cursor:pointer;
-
-}
-
-.profilePic::before{
-    display: none;
-}
-
-/* header dropdown logic
-/* .dropdownContainer{
-    position:relative;
-}
-#categoryHeader{
-    position: relative;
-    text-decoration: none;
-    color: black;
-    font-size: 1.3em;
-    margin: 1em;
-    transition: all 0.4s ease-in-out;
-    transform: translateY(10px);
-}
-#categoryHeader::after{
-    content: '';
-    position: absolute;
-    height: 10px;
-    width: 10px;
-    background: url('reshot-icon-arrow-chevron-right-WDGHUKQ634.svg ');
-    transform: rotate(90deg);
-    background-size: contain;
-    top:30%;
-    margin-left:7px;
-}
-
-header.scrolled #categoryHeader{
-    filter: invert();
-    transition: color .4s ease-in-out;
-}
-
-#check{
-    display: none;
-}
-#check:checked+.invisibleList{
-    display: block;
-    position: absolute;
-    transition: all 0.4s ease-in-out;
-    max-height:fit-content;
-    z-index: 2;
-    overflow: hidden;
-    width: 100%;
-}
-.invisibleList{
-    position: absolute;
-    max-height: 0px;
-    overflow: hidden;
-    z-index: 2;
-    margin-top: 10px;
-}
-
-.items{
-    margin-left: 50%;
-    margin-top: 20px;
-} */
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-#categoryHeader::before{
-    content: "";
-    position: absolute;
-    bottom: -5px;
-    width: 0%;
-    height: 3px;
-    background-color: black;
-    transition: .4s all ease-in-out;
-}
-
-#categoryHeader:hover::before{
-    width: 100%;
-}
-
-
-
-
-
-
-

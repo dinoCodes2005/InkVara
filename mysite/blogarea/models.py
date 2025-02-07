@@ -2,6 +2,7 @@ from ast import mod
 from os import name
 from tabnanny import verbose
 from tkinter import CASCADE
+from turtle import position
 from django.db import models
 from django.contrib.auth.models import User
 from django.http import HttpResponse
@@ -61,6 +62,7 @@ class Profile(models.Model):
     location = models.CharField(max_length=150,null=True,blank=True,default="Earth")
     occupation = models.CharField(max_length=50,null=True,blank=True,default="Occupation")
     industry = models.CharField(max_length=50,null=True,blank=True,default="Industry")
+    position = models.CharField(max_length=50,null=True,blank=True,default="position")
 
     def __str__(self):
         return str(self.user)

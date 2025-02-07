@@ -4,54 +4,10 @@
     <meta charset="UTF-8" />
     <title>{{ post.title }}</title>
     {% load static %}
-    <link rel="stylesheet" href="{% static 'header.css' %}" />
     <link rel="stylesheet" href="{% static 'article_Detail.css' %}" />
   </head>
   <body>
-    <header>
-      <nav>
-        <a href=""
-          ><img
-            class="headerLogo"
-            src="{% static '1to1 invictus logo.png'%}"
-            height="50px"
-            width="50px"
-        /></a>
-        <a href="{% url 'blogarea'%}">Home</a>
-        <a href="">My Blogs</a>
-        <a href="">About</a>
-        <a href="">Contact</a>
-        <a
-          class="profilePic"
-          href="{% url 'editProfile' %}"
-          style="
-            margin: 0;
-            margin-left: auto;
-            margin-bottom: 20px;
-            margin-right: 10px;
-          "
-        >
-          <img
-            class="profilePic"
-            style="
-              width: 50px;
-              height: 50px;
-              transform: translateY(15px);
-              border-radius: 50%;
-              margin-bottom: 10px;
-            "
-            src="{% if user.profile.profileImage %}
-            {{ user.profile.profileImage.url }}
-            {% else %}/media/thumbnail/thumbnail.jpg
-            {% endif %}"
-            alt=""
-        /></a>
-        <form action="{% url 'logout' %}" method="post">
-          {% csrf_token %}
-          <button class="headerSignUp">Logout</button>
-        </form>
-      </nav>
-    </header>
+    {% include 'header.html'%}
     <div class="mainContainer" style="display: flex">
       <div class="left">
         <h1>{{ post.title }} / {{ post.category }}</h1>
@@ -86,15 +42,6 @@
         style="min-width: 20%; min-height: 100%; background-color: blue"
       ></div>
     </div>
+    {% include 'footer.html'%}
   </body>
-  <script>
-    document.addEventListener("scroll", () => {
-      const header = document.querySelector("header");
-      if (window.scrollY > 0) {
-        header.classList.add("scrolled");
-      } else {
-        header.classList.remove("scrolled");
-      }
-    });
-  </script>
 </html>
