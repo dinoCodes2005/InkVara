@@ -3,19 +3,15 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Bootstrap demo</title>
+    <title>Ink Vara</title>
     {% load static %}
-    <link rel="stylesheet" href="{% static 'homePage.css' %}" />
-    <link rel="stylesheet" href="{% static 'footer.css'%}" />
-    <script defer src="{% static 'scrollTransition.js' %}"></script>
   </head>
   <body>
-    <div class="fullContainer">
-      {% include 'nav.html'%}
-      {% include 'frontPageTop.html' %}
-      {% include 'threecolumn.html'%}
-      {% include 'startInkVara.html'%}
-      {% include 'workcation.html'%}
-      {% include 'footerCode.html' %}
+    {% include 'nav.html'%}
+    <div class="fullContainer flex justify-center align-middle flex-col">
+      {% include 'frontPageTop.html' %} {% include 'threecolumn.html'%}
+      {%include 'startInkVara.html'%} {% include 'workcation.html'%}
+    </div>
+    {% include 'footerCode.html' %}
   </body>
 </html>

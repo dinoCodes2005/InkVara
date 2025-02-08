@@ -33,6 +33,7 @@ urlpatterns = [
     path('category/<str:cats>',views.CategoryView,name='category'),
     path('likes/<int:pk>',views.LikeView,name='like_post'),
     path('show_profile_page/<int:pk>/',ShowProfileView.as_view(),name="show_profile_page"),
+    path('load-more/',views.load_more,name="load-more")
 
 ]
 

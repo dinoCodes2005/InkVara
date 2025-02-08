@@ -10,6 +10,9 @@ from django.urls import reverse_lazy,reverse
 from django.http import HttpResponseRedirect
 from django.db.models import Count
 from blogarea.models import Profile
+from django.core import serializers
+from django.http import HttpResponse, JsonResponse
+from django.views.decorators.csrf import csrf_exempt
 # Create your views here.
 class BlogHome(ListView):
     model = Post
@@ -25,6 +28,7 @@ class BlogHome(ListView):
         post_with_fourth_highest_likes = posts[3] if len(posts) > 3 else None  # The fourth post, if it exists
 
     # Add posts to context
+        context['posts'] = posts[:6]
         context['post_with_highest_likes'] = post_with_highest_likes
         context['post_with_second_highest_likes'] = post_with_second_highest_likes
         context['post_with_third_highest_likes'] = post_with_third_highest_likes
@@ -96,3 +100,14 @@ def CategoryView(request,cats):
     category_posts = Post.objects.filter(category=category_name)
     return render(request,'categories.html',{'category_posts':category_posts})
 
+def load_more(request):
+    offset=int(request.POST['offset'])
+    limit=6
+    posts=Post.objects.all()[offset:limit+offset]
+    totalData=Post.objects.count()
+    data={}
+    posts_json=serializers.serialize('json',posts)
+    return JsonResponse(data={
+        'posts':posts_json,
+        'totalResult':totalData
+    })

@@ -15,6 +15,7 @@
     "tailwindcss": "^3.4.17"
   },
   "dependencies": {
+    "flowbite": "^3.1.2",
     "mysite": "file:"
   }
 }

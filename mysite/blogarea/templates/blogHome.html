@@ -3,56 +3,145 @@
   <head>
     <meta charset="UTF-8" />
     <title>Title</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     {% load static %}
-    <link rel="stylesheet" href="{% static 'blogHome.css'%}" />
   </head>
   <body>
     {% include 'nav.html'%}
-    <div
-      class="Featured"
-      style="display: flex; flex-direction: column; align-items: center"
-    >
-      <div class="carouselcontainer" style="transform: scale(1.1)"></div>
-    </div>
-    <div class="CardContainer">
-      {% for post in object_list %}
-      <div class="item">{% include 'testCard.html' %}</div>
-      {% endfor %}
+    <div class="flex justify-center">
+      <div class="flex items-center justify-center flex-col w-4/5">
+        <div class="grid grid-rows-5 w-9/12 sm:w-4/5">
+          <h1 class="row-span-1 p-10 text-4xl font-bold text-gray-900">
+            Blogs
+          </h1>
+          <div class="row-span-3">{% include 'carousel.html' %}</div>
+        </div>
+        <div
+          id="cardContainer"
+          class="flex w-full gap-10 flex-wrap justify-center"
+        >
+          {% for post in posts%}
+          <div class="blog-cards">
+            <a href="{% url 'ArticleDetailView' post.id%}">
+              <div
+                class="relative flex flex-col my-1 bg-white shadow-sm border border-slate-200 rounded-lg w-96"
+              >
+                <div
+                  class="relative h-56 m-2.5 overflow-hidden text-white rounded-md"
+                >
+                  <img
+                    src="{% if post.thumbnail %}
+                  {{ post.thumbnail.url }}
+                  {% else %}/media/thumbnail/thumbnail.jpg
+                  {% endif %}"
+                    alt="card-image"
+                  />
+                </div>
+                <div class="p-4">
+                  <div
+                    class="mb-4 rounded-full bg-cyan-600 py-0.5 px-2.5 border border-transparent text-xs text-white transition-all shadow-sm w-20 text-center"
+                  >
+                    POPULAR
+                  </div>
+                  <h6 class="mb-2 text-slate-800 text-xl font-semibold">
+                    {{post.title}}
+                  </h6>
+                  <p class="text-slate-600 leading-normal font-light">
+                    {{post.articleSnippet}}
+                  </p>
+                </div>
+
+                <div class="flex items-center justify-between p-4">
+                  <div class="flex items-center">
+                    <img
+                      alt="Tania Andrew"
+                      src="{% if post.author.profile.profileImage %}
+                {{ post.author.profile.profileImage.url }}
+                {% else %}/media/thumbnail/thumbnail.jpg
+                {% endif %}"
+                      class="relative inline-block h-8 w-8 rounded-full"
+                    />
+                    <div class="flex flex-col ml-3 text-sm">
+                      <span class="text-slate-800 font-semibold"
+                        >{{post.author}}</span
+                      >
+                      <span class="text-slate-600"> {{post.date}} </span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </a>
+          </div>
+          {% endfor %}
+        </div>
+
+        <script src="https://unpkg.com/@tailwindcss/browser@4"></script>
+
+        <button
+          id="load-more"
+          class="text-white cursor-pointer bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 p-3 rounded-md hover:bg-gradient-to-l"
+        >
+          Load More
+        </button>
+      </div>
     </div>
 
-    <button id="show-more">Show More</button>
-
-    {% include 'footer.html' %}
     <script>
-      //show More Logic
-      document.addEventListener("DOMContentLoaded", function () {
-        const items = document.querySelectorAll(".CardContainer .item");
-        const showMoreButton = document.getElementById("show-more");
-        let visibleCount = 5;
+      $(document).ready(function () {
+        $("#load-more").on("click", function () {
+          var _currentResult = $(".blog-cards").length;
 
-        // Initially show the first 7 items
-        for (let i = 0; i < visibleCount; i++) {
-          if (items[i]) {
-            items[i].classList.add("visible");
-          }
-        }
+          $.ajax({
+            url: "{% url 'load-more' %}",
+            type: "POST",
+            data: {
+              offset: _currentResult,
+              csrfmiddlewaretoken: "{{csrf_token}}",
+            },
+            dataType: "json",
+            beforeSend: function () {
+              $("#load-more").addClass("disabled").text("Loading.....");
+            },
+            success: function (res) {
+              var _html = "";
+              var json_data = $.parseJSON(res.posts);
 
-        showMoreButton.addEventListener("click", function () {
-          // Show 7 more items each time the button is clicked
-          const nextVisibleCount = visibleCount + 5;
-          for (let i = visibleCount; i < nextVisibleCount; i++) {
-            if (items[i]) {
-              items[i].classList.add("visible");
-            }
-          }
-          visibleCount = nextVisibleCount;
-
-          // Hide the button if there are no more items to show
-          if (visibleCount >= items.length) {
-            showMoreButton.style.display = "none";
-          }
+              $.each(json_data, function (index, data) {
+                _html += `
+                <a href="javascript:void(0)">
+                  <div class="relative flex flex-col my-1 bg-white shadow-sm border border-slate-200 rounded-lg w-96">
+                    <div class="relative h-56 m-2.5 overflow-hidden text-white rounded-md">
+                      <img src="/media/${data.fields.thumbnail}" alt="card-image" class="object-cover w-full h-full" />
+                    </div>
+                    <div class="p-4">
+                      <h6 class="mb-2 text-slate-800 text-xl font-semibold">${data.fields.title}</h6>
+                      <p class="text-slate-600 leading-normal font-light">${data.fields.articleSnippet}</p>
+                    </div>
+                    <div class="flex items-center justify-between p-4">
+                      <div class="flex items-center">
+                        <img alt="${data.fields.author}" src="/media/${data.fields.author.profileImage}" class="relative inline-block h-8 w-8 rounded-full" />
+                        <div class="flex flex-col ml-3 text-sm">
+                          <span class="text-slate-800 font-semibold">${data.fields.author}</span>
+                          <span class="text-slate-600">${data.fields.date}</span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </a>`;
+              });
+              $("#cardContainer").append(_html);
+              var _countTotal = $(".blog-cards").length;
+              if (_countTotal == res.totalResult) {
+                $("#loadmoreBtn").remove();
+              } else {
+                $("#loadmoreBtn").removeClass("disabled").text("Load More");
+              }
+            },
+          });
         });
       });
     </script>
+
+    {% include 'footerCode.html' %}
   </body>
 </html>
