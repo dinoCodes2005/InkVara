@@ -1,5 +1,6 @@
 <!-- Flowbite CSS -->
 <head>
+  {% load static %}
   <link
     href="https://cdn.jsdelivr.net/npm/flowbite@1.5.3/dist/flowbite.min.css"
     rel="stylesheet"
@@ -12,8 +13,8 @@
       <div class="mb-6 md:mb-0">
         <a href="https://flowbite.com/" class="flex items-center">
           <img
-            src="https://flowbite.com/docs/images/logo.svg"
-            class="h-8 me-3"
+            src="{% static 'inkpot.png'%}"
+            class="h-16 me-3"
             alt="FlowBite Logo"
           />
           <span

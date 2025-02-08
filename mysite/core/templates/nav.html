@@ -69,8 +69,8 @@
       >
         <div class="flex shrink-0 items-center">
           <img
-            class="h-8 w-auto invert brightness-0"
-            src="{% static '1to1 invictus logo.png'%}"
+            class="h-12 w-auto"
+            src="{% static 'inkpot.png'%}"
             alt="Your Company"
           />
         </div>
@@ -194,19 +194,37 @@
               >Settings</a
             >
             <a
-              href="{% url 'logout' %}"
+              href="#"
+              onclick="event.preventDefault(); document.getElementById('logout-form').submit();"
               class="block px-4 py-2 text-sm text-gray-700"
               role="menuitem"
               tabindex="-1"
               id="user-menu-item-2"
-              >Sign out</a
             >
+              Sign out
+            </a>
+
+            <form
+              id="logout-form"
+              action="{% url 'logout' %}"
+              method="POST"
+              class="hidden"
+            >
+              {% csrf_token %}
+            </form>
           </div>
         </div>
         {% else %}
-        <div class="button1">
-          <a href="{% url 'login'%}">Login</a>
-        </div>
+        <form action="{% url 'login'%}" method="POST">
+          {% csrf_token %}
+          <button
+            type="submit"
+            class="text-white bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 hover:bg-gradient-to-l rounded-md p-2 w-20 ml-3"
+          >
+            Login
+          </button>
+        </form>
+
         {% endif %}
       </div>
     </div>

@@ -4,93 +4,125 @@
     <meta charset="UTF-8" />
     <title>Title</title>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Bitter:ital,wght@0,100..900;1,100..900&family=Exo+2:ital,wght@0,500;1,500&display=swap"
+      rel="stylesheet"
+    />
     {% load static %}
   </head>
   <body>
     {% include 'nav.html'%}
     <div class="flex justify-center">
-      <div class="flex items-center justify-center flex-col w-4/5">
-        <div class="grid grid-rows-5 w-9/12 sm:w-4/5">
-          <h1 class="row-span-1 p-10 text-4xl font-bold text-gray-900">
-            Blogs
-          </h1>
-          <div class="row-span-3">{% include 'carousel.html' %}</div>
+      <div
+        class="flex items-center justify-center flex-col w-full sm:w-4/5 px-5 sm:px-20 md:px-[30px] lg:px-56"
+      >
+        <div class="grid grid-rows-3 w-full sm:w-3/5 mb-20 relative">
+          <div class="flex justify-between row-span-1">
+            <div
+              class="px-0 py-10 sm:px-10 font-semibold text-5xl sm:text-6xl w-3/5"
+              style="font-family: Bitter"
+            >
+              Blogs
+            </div>
+            <div class="px-0 py-10 sm:px-10 sm:p-10 w-2/5 text-sm sm:text-lg">
+              Stay informed with the latest updates, events, and announcements
+              shaping the InkVara.com community and beyond
+            </div>
+          </div>
+
+          <div class="row-span-4 md:row-span-3 sm:row-span-3">
+            {% include 'carousel.html' %}
+          </div>
         </div>
-        <div
-          id="cardContainer"
-          class="flex w-full gap-10 flex-wrap justify-center"
-        >
-          {% for post in posts%}
-          <div class="blog-cards">
-            <a href="{% url 'ArticleDetailView' post.id%}">
-              <div
-                class="relative flex flex-col my-1 bg-white shadow-sm border border-slate-200 rounded-lg w-96"
-              >
+
+        <div class="w-full">
+          <div class="w-full sm:w-4/5">
+            <h1 style="font-family: Bitter" class="text-3xl font-medium">
+              Discover
+            </h1>
+            <p class="text-gray-600 mb-4">
+              Explore popular blogs that inspire, educate, and entertain.
+            </p>
+            <hr />
+            <br />
+          </div>
+          <div
+            id="cardContainer"
+            class="grid grid-cols-1 md:grid-cols-3 sm:grid-cols-2 gap-8"
+          >
+            {% for post in posts%}
+            <div class="blog-cards">
+              <a href="{% url 'ArticleDetailView' post.id%}">
                 <div
-                  class="relative h-56 m-2.5 overflow-hidden text-white rounded-md"
+                  class="relative flex flex-col my-1 bg-white shadow-sm border border-slate-200 rounded-lg w-full"
                 >
-                  <img
-                    src="{% if post.thumbnail %}
+                  <div
+                    class="relative h-1/2 overflow-hidden text-white rounded-md"
+                  >
+                    <img
+                      src="{% if post.thumbnail %}
                   {{ post.thumbnail.url }}
                   {% else %}/media/thumbnail/thumbnail.jpg
                   {% endif %}"
-                    alt="card-image"
-                  />
-                </div>
-                <div class="p-4">
-                  <div
-                    class="mb-4 rounded-full bg-cyan-600 py-0.5 px-2.5 border border-transparent text-xs text-white transition-all shadow-sm w-20 text-center"
-                  >
-                    POPULAR
+                      alt="card-image"
+                    />
                   </div>
-                  <h6 class="mb-2 text-slate-800 text-xl font-semibold">
-                    {{post.title}}
-                  </h6>
-                  <p class="text-slate-600 leading-normal font-light">
-                    {{post.articleSnippet}}
-                  </p>
-                </div>
+                  <div class="p-4">
+                    <div
+                      class="mb-4 rounded-full bg-cyan-600 py-0.5 px-2.5 border border-transparent text-xs text-white transition-all shadow-sm w-20 text-center"
+                    >
+                      POPULAR
+                    </div>
+                    <h6 class="mb-2 text-slate-800 text-xl font-semibold">
+                      {{post.title}}
+                    </h6>
+                    <p class="text-slate-600 leading-normal font-light">
+                      {{post.articleSnippet}}
+                    </p>
+                  </div>
 
-                <div class="flex items-center justify-between p-4">
-                  <div class="flex items-center">
-                    <img
-                      alt="Tania Andrew"
-                      src="{% if post.author.profile.profileImage %}
+                  <div class="flex items-center justify-between p-4">
+                    <div class="flex items-center">
+                      <img
+                        alt="Tania Andrew"
+                        src="{% if post.author.profile.profileImage %}
                 {{ post.author.profile.profileImage.url }}
                 {% else %}/media/thumbnail/thumbnail.jpg
                 {% endif %}"
-                      class="relative inline-block h-8 w-8 rounded-full"
-                    />
-                    <div class="flex flex-col ml-3 text-sm">
-                      <span class="text-slate-800 font-semibold"
-                        >{{post.author}}</span
-                      >
-                      <span class="text-slate-600"> {{post.date}} </span>
+                        class="relative inline-block h-8 w-8 rounded-full"
+                      />
+                      <div class="flex flex-col ml-3 text-sm">
+                        <span class="text-slate-800 font-semibold"
+                          >{{post.author}}</span
+                        >
+                        <span class="text-slate-600"> {{post.date}} </span>
+                      </div>
                     </div>
                   </div>
                 </div>
-              </div>
-            </a>
+              </a>
+            </div>
+            {% endfor %}
           </div>
-          {% endfor %}
         </div>
 
         <script src="https://unpkg.com/@tailwindcss/browser@4"></script>
 
         <button
           id="load-more"
-          class="text-white cursor-pointer bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 p-3 rounded-md hover:bg-gradient-to-l"
+          class="text-white cursor-pointer bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 p-3 rounded-md hover:bg-gradient-to-l m-20"
         >
           Load More
         </button>
       </div>
     </div>
+    {% include 'newsletter.html'%}
 
     <script>
       $(document).ready(function () {
         $("#load-more").on("click", function () {
           var _currentResult = $(".blog-cards").length;
-
+          console.log("Current Result : " + _currentResult);
           $.ajax({
             url: "{% url 'load-more' %}",
             type: "POST",
@@ -103,14 +135,16 @@
               $("#load-more").addClass("disabled").text("Loading.....");
             },
             success: function (res) {
+              console.log(res);
               var _html = "";
               var json_data = $.parseJSON(res.posts);
-
+              console.log("JSON DATA : " + JSON.parse(res.posts));
               $.each(json_data, function (index, data) {
                 _html += `
+                <div class="blog-cards">
                 <a href="javascript:void(0)">
                   <div class="relative flex flex-col my-1 bg-white shadow-sm border border-slate-200 rounded-lg w-96">
-                    <div class="relative h-56 m-2.5 overflow-hidden text-white rounded-md">
+                    <div class="relative h-56 overflow-hidden text-white rounded-md">
                       <img src="/media/${data.fields.thumbnail}" alt="card-image" class="object-cover w-full h-full" />
                     </div>
                     <div class="p-4">
@@ -127,14 +161,16 @@
                       </div>
                     </div>
                   </div>
-                </a>`;
+                </a>
+                </div>`;
               });
               $("#cardContainer").append(_html);
               var _countTotal = $(".blog-cards").length;
+              console.log("Count Total : " + _countTotal);
               if (_countTotal == res.totalResult) {
-                $("#loadmoreBtn").remove();
+                $("#load-more").remove();
               } else {
-                $("#loadmoreBtn").removeClass("disabled").text("Load More");
+                $("#load-more").removeClass("disabled").text("Load More");
               }
             },
           });

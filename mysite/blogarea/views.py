@@ -28,7 +28,7 @@ class BlogHome(ListView):
         post_with_fourth_highest_likes = posts[3] if len(posts) > 3 else None  # The fourth post, if it exists
 
     # Add posts to context
-        context['posts'] = posts[:6]
+        context['posts'] = posts[:8]
         context['post_with_highest_likes'] = post_with_highest_likes
         context['post_with_second_highest_likes'] = post_with_second_highest_likes
         context['post_with_third_highest_likes'] = post_with_third_highest_likes

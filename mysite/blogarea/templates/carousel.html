@@ -6,7 +6,7 @@
 
 <div id="split-carousel" class="relative w-full" data-carousel="slide">
   <h3
-    class="text-2xl font-bold text-blue-700 absolute bottom-100 left-10 sm:top-5 sm:right-10 sm:left-auto z-10 font-roboto"
+    class="text-2xl font-bold text-blue-700 absolute bottom-100 left-10 lg:top-5 lg:right-10 lg:left-auto z-10 font-roboto"
   >
     Featured
   </h3>
@@ -29,10 +29,26 @@
       </div>
       <div class="w-2/5 h-full bg-gray-100 p-8 flex items-center">
         <div>
-          <h2 class="text-2xl font-bold">{{ post_with_highest_likes.title}}</h2>
-          <p class="text-gray-700 mt-2">
-            {{ post_with_highest_likes.articleSnippet}}
-          </p>
+          <a
+            href="{% url 'ArticleDetailView' post_with_highest_likes.author.profile.id%}"
+          >
+            <h2 class="text-2xl font-bold">
+              {{ post_with_highest_likes.title}}
+            </h2>
+            <p class="text-gray-700 mt-2">
+              {{ post_with_highest_likes.articleSnippet}}
+            </p></a
+          >
+
+          <br />
+          <a
+            href="{% url 'show_profile_page' post_with_highest_likes.author.profile.id%}"
+          >
+            <p class="text-gray-600">
+              {{post_with_highest_likes.author}} &bull;
+              {{post_with_highest_likes.post_date}}
+            </p>
+          </a>
         </div>
       </div>
     </div>
@@ -53,12 +69,25 @@
       </div>
       <div class="w-2/5 h-full bg-gray-100 p-8 flex items-center">
         <div>
-          <h2 class="text-2xl font-bold">
-            {{post_with_second_highest_likes.title}}
-          </h2>
-          <p class="text-gray-700 mt-2">
-            {{post_with_second_highest_likes.articleSnippet}}
-          </p>
+          <a
+            href="{% url 'ArticleDetailView' post_with_second_highest_likes.id%}"
+          >
+            <h2 class="text-2xl font-bold">
+              {{ post_with_second_highest_likes.title}}
+            </h2>
+            <p class="text-gray-700 mt-2">
+              {{ post_with_second_highest_likes.articleSnippet}}
+            </p></a
+          >
+          <br />
+          <a
+            href="{% url 'show_profile_page' post_with_second_highest_likes.author.profile.id%}"
+          >
+            <p class="text-gray-600">
+              {{post_with_second_highest_likes.author}} &bull;
+              {{post_with_second_highest_likes.post_date}}
+            </p>
+          </a>
         </div>
       </div>
     </div>
@@ -79,12 +108,25 @@
       </div>
       <div class="w-2/5 h-full bg-gray-100 p-8 flex items-center">
         <div>
-          <h2 class="text-2xl font-bold">
-            {{post_with_third_highest_likes.title}}
-          </h2>
-          <p class="text-gray-700 mt-2">
-            {{post_with_third_highest_likes.articleSnippet}}
-          </p>
+          <a
+            href="{% url 'ArticleDetailView' post_with_third_highest_likes.id%}"
+          >
+            <h2 class="text-2xl font-bold">
+              {{ post_with_third_highest_likes.title}}
+            </h2>
+            <p class="text-gray-700 mt-2">
+              {{ post_with_third_highest_likes.articleSnippet}}
+            </p></a
+          >
+          <br />
+          <a
+            href="{% url 'show_profile_page' post_with_third_highest_likes.author.profile.id%}"
+          >
+            <p class="text-gray-600">
+              {{post_with_third_highest_likes.author}} &bull;
+              {{post_with_third_highest_likes.post_date}}
+            </p>
+          </a>
         </div>
       </div>
     </div>
