@@ -1,47 +1,72 @@
+{% load static tailwind_tags %}
 <!DOCTYPE html>
 <html lang="en">
   <head>
+    <link rel="icon" href="{% static 'inkpot.png' %}" type="image/x-icon" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&display=swap"
+      rel="stylesheet"
+    />
     <meta charset="UTF-8" />
     <title>{{ post.title }}</title>
-    {% load static %}
-    <link rel="stylesheet" href="{% static 'article_Detail.css' %}" />
+    {% tailwind_css %} {% load static %}
   </head>
-  <body>
-    {% include 'header.html'%}
-    <div class="mainContainer" style="display: flex">
-      <div class="left">
-        <h1>{{ post.title }} / {{ post.category }}</h1>
-        <h3>Written by : {{ post.author }} - {{ post.author.email }}</h3>
-        <hr />
-        <p>{{ post.body|safe }}</p>
-        {% if user.id == post.author.id %}
-        <a
-          href="{% url 'updateBlog' post.pk %}"
-          style="text-decoration: none; color: black"
-          ><button>Edit Post</button></a
+  <body class="min-h-screen flex flex-col">
+    {% include 'nav.html' %}
+    <div class="flex-grow grid grid-rows-[400px_auto] min-h-[800px]">
+      <div
+        class="w-full h-full max-h-[650px] relative bg-cover bg-center flex justify-center items-center"
+        style="background-image: url('{%static 'bg.jpg'%}')"
+      >
+        <div
+          class="w-4/5 md:w-2/5 h-3/5 rounded-2xl backdrop-blur-sm bg-black/50 flex justify-center items-center flex-col"
         >
-        {% endif%}
-        <div style="display: flex">
-          <form action="{% url 'like_post' post.pk %}" method="post">
-            {% csrf_token %}
-            <button
-              type="submit"
-              name="post_id"
-              value="{{ post.id }}"
-              class="like-button {% if request.user in post.like.all %}liked{% else %}unliked{% endif %}"
-              id="LikeButton"
-            ></button>
-            <label style="margin-top: 10px" for="LikeButton"
-              >&nbsp;- {{ total_likes }} Likes</label
-            >
-          </form>
+          <a
+            href="{% url 'show_profile_page' post.author.profile.id%}"
+            style="font-family: lato"
+            class="text-gray-100 text-4xl font-bold mb-5 cursor-pointer"
+          >
+            {{post.author | upper}}
+          </a>
+          <h1
+            style="font-family: lato"
+            class="text-gray-300 text-xl font-normal mb-5"
+          >
+            {{post.author.profile.blogcaption}}
+          </h1>
         </div>
       </div>
-      <div
-        class="right"
-        style="min-width: 20%; min-height: 100%; background-color: blue"
-      ></div>
+      <div class="flex justify-center w-full px-7">
+        <div class="w-full md:w-3/5 sm:w-4/5 py-10">
+          <h1 style="font-family: lato" class="text-4xl font-bold mb-3">
+            {{post.title}}
+          </h1>
+          <h2
+            style="font-family: lato"
+            class="text-1xl font-normal text-slate-500 mb-10"
+          >
+            {{post.post_date}}
+          </h2>
+          <h1 style="font-family: lato" class="text-3xl font-bold mb-10">
+            {{post.author}}
+          </h1>
+          <p
+            style="font-family: lato"
+            class="text-slate-500 sm:text-lg text-md"
+          >
+            {{post.body|safe}}
+          </p>
+          <h1>Stay Connected</h1>
+          <h1>Follow us:<a href="">@instagram</a></h1>
+          <h1>Word Count:</h1>
+          <h1>Share This</h1>
+          <h1>Like</h1>
+          <h1>Related</h1>
+          <h1>Comments</h1>
+        </div>
+      </div>
     </div>
-    {% include 'footer.html'%}
+
+    <div class="footer w-full">{% include 'footerCode.html' %}</div>
   </body>
 </html>

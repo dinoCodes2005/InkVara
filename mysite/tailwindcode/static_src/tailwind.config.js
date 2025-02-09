@@ -22,7 +22,11 @@ module.exports = {
         '../../**/*.py'
     ],
     theme: {
-        extend: {},
+        extend: {
+            screens:{
+                'ml':'900px',
+            }
+        },
     },
     plugins: [
         require('@tailwindcss/forms'),

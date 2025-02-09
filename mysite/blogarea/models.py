@@ -54,6 +54,7 @@ class Post(models.Model):
 class Profile(models.Model):
     user = models.OneToOneField(User,null=True,on_delete=models.CASCADE)
     bio = models.TextField()
+    blogcaption = models.CharField(max_length=150,null=True,blank=True,default="Former Adventurer turned full-time Dad moonlighting as an author")
     profileImage = models.ImageField(upload_to='profile_pics',null=True,blank=True)
     profileBackground = models.ImageField(upload_to='profile_background',null=True,blank=True)
     twitter_link = models.URLField(max_length=200,null=True,blank=True,default="https://x.com/")
