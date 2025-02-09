@@ -59,6 +59,8 @@ INTERNAL_IPS = [
 ]
 TAILWIND_CSS_PATH = 'css/dist/styles.css'
 
+
+
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
