@@ -30,7 +30,9 @@ urlpatterns = [
     path('authentication/', include('authentication.urls')),
     path('blogarea/', include('blogarea.urls')),
     path('accounts/', include('allauth.urls')),
-    path('blogarea/',include(django.contrib.auth.urls))
+    path('blogarea/',include(django.contrib.auth.urls)),
+    path("__reload__/", include("django_browser_reload.urls")),
+    path("tailwind/",include("tailwindcode.urls")),
 ]
 
 if settings.DEBUG:

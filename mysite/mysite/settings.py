@@ -43,13 +43,21 @@ INSTALLED_APPS = [
     'core',
     'blogarea',
     'widget_tweaks',
-    'allauth',  # For social authentication
+    'allauth',  
     'allauth.account',
     'allauth.socialaccount',
     'allauth.socialaccount.providers.google',
     'ckeditor',
-    'compressor',
+    'tailwind',
+    'tailwindcode',
+    'django_browser_reload',
 ]
+
+TAILWIND_APP_NAME = 'tailwindcode'
+INTERNAL_IPS = [
+    "127.0.0.1",
+]
+TAILWIND_CSS_PATH = 'css/dist/styles.css'
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -60,6 +68,7 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'allauth.account.middleware.AccountMiddleware',
+    "django_browser_reload.middleware.BrowserReloadMiddleware",
 ]
 
 # this gives the project's URL location where the ROOT_URLCONF will look for the urls.py
@@ -122,6 +131,8 @@ AUTHENTICATION_BACKENDS = (
 # Site ID for Django sites framework
 SITE_ID = 1
 
+
+NPM_BIN_PATH = "C:\\Program Files\\nodejs\\npm.cmd"
 # Redirect URL after login
 LOGIN_REDIRECT_URL = reverse_lazy('blogarea') 
 LOGOUT_REDIRECT_URL = reverse_lazy('home')# Change this to your desired redirect URL after successful login
@@ -143,13 +154,9 @@ USE_TZ = True
 
 
 
-COMPRESS_ROOT = BASE_DIR / 'static'
- 
-COMPRESS_ENABLED = True
- 
-STATICFILES_FINDERS = ('compressor.finders.CompressorFinder',)
 STATIC_URL = '/static/'
 STATICFILES_DIRS = []
+
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
