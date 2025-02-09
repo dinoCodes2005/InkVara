@@ -4,21 +4,21 @@
   rel="stylesheet"
 />
 
-<div id="split-carousel" class="relative w-full" data-carousel="slide">
+<div id="split-carousel" class="relative w-full h-full" data-carousel="slide">
   <h3
-    class="text-2xl font-bold text-blue-700 absolute bottom-100 left-10 lg:top-5 lg:right-10 lg:left-auto z-10 font-roboto"
+    class="text-2xl font-bold text-blue-700 absolute bottom-100 hidden sm:block top-5 right-10 left-auto z-10 font-roboto"
   >
     Featured
   </h3>
 
   <!-- Carousel wrapper -->
-  <div class="relative flex h-96 overflow-hidden z-1">
+  <div class="relative flex h-full sm:h-96 overflow-hidden z-1">
     <!-- Slide 1 -->
     <div
-      class="hidden duration-700 ease-in-out flex items-center w-full z-1"
+      class="hidden duration-700 ease-in-out flex items-center w-full z-1 flex-col sm:flex-row"
       data-carousel-item
     >
-      <div class="w-3/5 h-full">
+      <div class="w-full sm:w-3/5 h-full">
         <img
           src="{% if post_with_highest_likes.thumbnail %}
         {{ post_with_highest_likes.thumbnail.url }}
@@ -27,7 +27,9 @@
           class="w-full h-full object-cover rounded-l-lg"
         />
       </div>
-      <div class="w-2/5 h-full bg-gray-100 p-8 flex items-center">
+      <div
+        class="w-full sm:w-2/5 h-full bg-gray-100 p-8 flex items-center relative"
+      >
         <div>
           <a
             href="{% url 'ArticleDetailView' post_with_highest_likes.author.profile.id%}"
@@ -50,15 +52,20 @@
             </p>
           </a>
         </div>
+        <h1
+          class="block sm:hidden absolute right-8 top-5 text-2xl font-bold text-blue-700 font-roboto"
+        >
+          Featured
+        </h1>
       </div>
     </div>
 
     <!-- Slide 2 -->
     <div
-      class="hidden duration-700 ease-in-out flex items-center w-full z-1"
+      class="hidden duration-700 ease-in-out flex items-center w-full z-1 flex-col sm:flex-row"
       data-carousel-item
     >
-      <div class="w-3/5 h-full">
+      <div class="w-full sm:w-3/5 h-full">
         <img
           src="{% if post_with_second_highest_likes.thumbnail %}
         {{ post_with_second_highest_likes.thumbnail.url }}
@@ -67,7 +74,9 @@
           class="w-full h-full object-cover rounded-l-lg"
         />
       </div>
-      <div class="w-2/5 h-full bg-gray-100 p-8 flex items-center">
+      <div
+        class="w-full sm:w-2/5 h-full bg-gray-100 p-8 flex items-center relative"
+      >
         <div>
           <a
             href="{% url 'ArticleDetailView' post_with_second_highest_likes.id%}"
@@ -89,15 +98,20 @@
             </p>
           </a>
         </div>
+        <h1
+          class="block sm:hidden absolute right-8 top-5 text-2xl font-bold text-blue-700 font-roboto"
+        >
+          Featured
+        </h1>
       </div>
     </div>
 
     <!-- Slide 3 -->
     <div
-      class="hidden duration-700 ease-in-out flex items-center w-full"
+      class="hidden duration-700 ease-in-out flex items-center w-full z-1 flex-col sm:flex-row"
       data-carousel-item
     >
-      <div class="w-3/5 h-full">
+      <div class="w-full sm:w-3/5 h-full">
         <img
           src="{% if post_with_third_highest_likes.thumbnail %}
         {{ post_with_third_highest_likes.thumbnail.url }}
@@ -106,7 +120,9 @@
           class="w-full h-full object-cover rounded-l-lg"
         />
       </div>
-      <div class="w-2/5 h-full bg-gray-100 p-8 flex items-center">
+      <div
+        class="w-full sm:w-2/5 h-full bg-gray-100 p-8 flex items-center relative"
+      >
         <div>
           <a
             href="{% url 'ArticleDetailView' post_with_third_highest_likes.id%}"
@@ -128,6 +144,11 @@
             </p>
           </a>
         </div>
+        <h1
+          class="block sm:hidden absolute right-8 top-5 text-2xl font-bold text-blue-700 font-roboto"
+        >
+          Featured
+        </h1>
       </div>
     </div>
   </div>
