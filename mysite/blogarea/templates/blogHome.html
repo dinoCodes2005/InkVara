@@ -3,6 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <title>Title</title>
+
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     <link
       href="https://fonts.googleapis.com/css2?family=Bitter:ital,wght@0,100..900;1,100..900&family=Exo+2:ital,wght@0,500;1,500&display=swap"
@@ -14,9 +15,11 @@
     {% include 'nav.html'%}
     <div class="flex justify-center">
       <div
-        class="flex items-center justify-center flex-col w-full sm:w-4/5 px-5 sm:px-20 md:px-[30px] lg:px-56"
+        class="flex items-center justify-center flex-col w-full md:w-4/5 px-5"
       >
-        <div class="grid grid-rows-3 w-full sm:w-3/5 mb-20 relative">
+        <div
+          class="grid grid-rows-3 sm:grid-rows-[2fr_3fr] mb-20 relative w-full"
+        >
           <div class="flex justify-between row-span-1">
             <div
               class="px-0 py-10 sm:px-10 font-semibold text-5xl sm:text-6xl w-3/5"
@@ -36,7 +39,7 @@
         </div>
 
         <div class="w-full">
-          <div class="w-full sm:w-4/5">
+          <div class="w-full">
             <h1 style="font-family: Bitter" class="text-3xl font-medium">
               Discover
             </h1>
@@ -48,7 +51,7 @@
           </div>
           <div
             id="cardContainer"
-            class="grid grid-cols-1 md:grid-cols-3 sm:grid-cols-2 gap-8"
+            class="grid grid-cols-1 md:grid-cols-3 sm:grid-cols-2 gap-8 w-full"
           >
             {% for post in posts%}
             <div class="blog-cards">
