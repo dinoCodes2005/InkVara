@@ -7,6 +7,7 @@
       href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&display=swap"
       rel="stylesheet"
     />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
     <meta charset="UTF-8" />
     <title>{{ post.title }}</title>
     <link
@@ -40,23 +41,24 @@
           </h1>
         </div>
       </div>
-      <div class="flex justify-center w-full px-7">
-        <div class="w-full md:w-3/5 sm:w-4/5 py-10">
+      <div class="grid grid-rows-[1fr_auto] ml:grid-cols-[2fr_1fr] w-full px-7">
+        <div class="w-full py-10 px-20">
           <h1 style="font-family: lato" class="text-4xl font-bold mb-3">
             {{post.title}}
           </h1>
           <h2
             style="font-family: lato"
-            class="text-1xl font-normal text-slate-500 mb-10 prose"
+            class="text-1xl font-normal text-slate-500 mb-10"
           >
             {{post.post_date}}
           </h2>
-          <h1 style="font-family: lato" class="text-3xl font-bold mb-10 prose">
+          <h1 style="font-family: lato" class="text-3xl font-bold mb-1">
             {{post.author}}
           </h1>
-          <p class="text-slate-500 sm:text-lg text-md prose">
-            {{post.body|safe}}
-          </p>
+          <h1 class="text-xl font-normal text-slate-500 mb-10">
+            #{{post.category}}
+          </h1>
+          <p class="text-slate-500 sm:text-lg text-md">{{post.body|safe}}</p>
           <h1 class="text-3xl font-bold mt-10 mb-10s">Stay Connected</h1>
           <h1 class="text-xl font-semibold" style="font-family: lato">
             Follow us:&nbsp;<a href="{{post.author.profile.instagram_link}}"
@@ -67,14 +69,21 @@
           <form action="{% url 'like_post' post.pk %}" method="post">
             {% csrf_token %}
             <button
-              class="text-4xl translate-y-1/4"
               type="submit"
               name="post_id"
               value="{{ post.id }}"
               class="like-button {% if request.user in post.like.all %}liked{% else %}unliked{% endif %}"
               id="LikeButton"
             >
-              <i class="bx bx-like"></i>
+              {% if has_liked %}
+              <i
+                class="bx bx-like text-2xl translate-y-1/4 text-white px-2 py-1 rounded-md bg-blue-600"
+              ></i>
+              {% else %}
+              <i
+                class="bx bx-like text-2xl translate-y-1/4 text-black border-black border-2 border-solid px-2 py-1 rounded-md"
+              ></i>
+              {% endif %} Like
             </button>
             <label style="margin-top: 10px" for="LikeButton"
               >&nbsp;- {{ total_likes }} Likes</label
@@ -107,12 +116,71 @@
             ></a>
           </p>
 
-          <h1>Related</h1>
           <h1>Comments</h1>
+        </div>
+        <div>
+          <h1 style="font-family: lato" class="mt-10 font-bold text-4xl">
+            Related Posts
+          </h1>
+          <div
+            class="w-full grid grid-rows-[auto_auto] grid-cols-[auto_auto] sm:flex sm:flex-wrap sm:gap-0 py-10 mb-10 relative"
+          >
+            {% for post in related_posts%}
+            <div class="blog-cards w-full sm:w-1/2">
+              <a href="{% url 'ArticleDetailView' post.id%}">
+                <div
+                  class="relative flex flex-col my-1 bg-white shadow-sm border border-slate-200 rounded-lg w-full"
+                >
+                  <div
+                    class="relative h-1/2 overflow-hidden text-white rounded-md"
+                  >
+                    <img
+                      src="{% if post.thumbnail %}
+              {{ post.thumbnail.url }}
+              {% else %}/media/thumbnail/thumbnail.jpg
+              {% endif %}"
+                      alt="card-image"
+                    />
+                  </div>
+                  <div class="p-4">
+                    <div
+                      class="mb-4 rounded-full bg-cyan-600 py-0.5 px-2.5 border border-transparent text-xs text-white transition-all shadow-sm w-20 text-center"
+                    >
+                      POPULAR
+                    </div>
+                    <h6 class="mb-2 text-slate-800 text-xl font-semibold">
+                      {{post.title}}
+                    </h6>
+                    <p class="text-slate-600 leading-normal font-light">
+                      {{post.articleSnippet}}
+                    </p>
+                  </div>
+
+                  <div class="flex items-center justify-between p-4">
+                    <div class="flex items-center">
+                      <img
+                        alt="Tania Andrew"
+                        src="{% if post.author.profile.profileImage %}
+            {{ post.author.profile.profileImage.url }}
+            {% else %}/media/thumbnail/thumbnail.jpg
+            {% endif %}"
+                        class="relative inline-block h-8 w-8 rounded-full"
+                      />
+                      <div class="flex flex-col ml-3 text-sm">
+                        <span class="text-slate-800 font-semibold"
+                          >{{post.author}}</span
+                        >
+                        <span class="text-slate-600"> {{post.date}} </span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </a>
+            </div> {% endfor %}
+          </div>
         </div>
       </div>
     </div>
-
-    <div class="footer w-full">{% include 'footerCode.html' %}</div>
+    {% include 'footerCode.html' %}
   </body>
 </html>

@@ -42,9 +42,13 @@ class ArticleDetailView(DetailView):
     
     def get_context_data(self, *args, **kwargs):
         context = super(ArticleDetailView, self).get_context_data(*args, **kwargs)
-        stuff = get_object_or_404(Post,id=self.kwargs['pk'])
-        total_words = stuff.word_count()
-        total_likes = stuff.total_likes()
+        posts = Post.objects.annotate(like_count=Count('like')).order_by('-like_count')
+        current_post = get_object_or_404(Post,id=self.kwargs['pk'])
+        related_posts = posts.filter(category=current_post.category).exclude(id=current_post.id)
+        total_words = current_post.word_count()
+        total_likes = current_post.total_likes()
+        context['related_posts'] = related_posts
+        context['posts'] = posts
         context['total_likes'] = total_likes
         context['total_words'] = total_words
         return context       
