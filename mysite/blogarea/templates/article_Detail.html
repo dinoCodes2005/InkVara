@@ -9,6 +9,10 @@
     />
     <meta charset="UTF-8" />
     <title>{{ post.title }}</title>
+    <link
+      href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css"
+      rel="stylesheet"
+    />
     {% tailwind_css %} {% load static %}
   </head>
   <body class="min-h-screen flex flex-col">
@@ -19,12 +23,12 @@
         style="background-image: url('{%static 'bg.jpg'%}')"
       >
         <div
-          class="w-4/5 md:w-2/5 h-3/5 rounded-2xl backdrop-blur-sm bg-black/50 flex justify-center items-center flex-col"
+          class="w-4/5 md:w-2/5 h-3/5 rounded-2xl backdrop-blur-sm bg-black/50 flex justify-center items-center flex-col sm:px-10 px-5"
         >
           <a
             href="{% url 'show_profile_page' post.author.profile.id%}"
             style="font-family: lato"
-            class="text-gray-100 text-4xl font-bold mb-5 cursor-pointer"
+            class="text-gray-300 text-4xl font-bold mb-5 cursor-pointer hover:text-white"
           >
             {{post.author | upper}}
           </a>
@@ -43,24 +47,66 @@
           </h1>
           <h2
             style="font-family: lato"
-            class="text-1xl font-normal text-slate-500 mb-10"
+            class="text-1xl font-normal text-slate-500 mb-10 prose"
           >
             {{post.post_date}}
           </h2>
-          <h1 style="font-family: lato" class="text-3xl font-bold mb-10">
+          <h1 style="font-family: lato" class="text-3xl font-bold mb-10 prose">
             {{post.author}}
           </h1>
-          <p
-            style="font-family: lato"
-            class="text-slate-500 sm:text-lg text-md"
-          >
+          <p class="text-slate-500 sm:text-lg text-md prose">
             {{post.body|safe}}
           </p>
-          <h1>Stay Connected</h1>
-          <h1>Follow us:<a href="">@instagram</a></h1>
-          <h1>Word Count:</h1>
-          <h1>Share This</h1>
-          <h1>Like</h1>
+          <h1 class="text-3xl font-bold mt-10 mb-10s">Stay Connected</h1>
+          <h1 class="text-xl font-semibold" style="font-family: lato">
+            Follow us:&nbsp;<a href="{{post.author.profile.instagram_link}}"
+              >@{{post.author}}</a
+            >
+          </h1>
+          <h1 class="mb-5">Word Count: {{total_words}}</h1>
+          <form action="{% url 'like_post' post.pk %}" method="post">
+            {% csrf_token %}
+            <button
+              class="text-4xl translate-y-1/4"
+              type="submit"
+              name="post_id"
+              value="{{ post.id }}"
+              class="like-button {% if request.user in post.like.all %}liked{% else %}unliked{% endif %}"
+              id="LikeButton"
+            >
+              <i class="bx bx-like"></i>
+            </button>
+            <label style="margin-top: 10px" for="LikeButton"
+              >&nbsp;- {{ total_likes }} Likes</label
+            >
+          </form>
+
+          <p>
+            Share on :
+            <a
+              href="https://www.facebook.com/sharer/sharer.php?u={{ request.build_absolute_uri }}"
+              target="_blank"
+              ><i
+                class="bx bxl-facebook-circle text-blue-600 text-4xl translate-y-1/4"
+              ></i
+            ></a>
+            <a
+              href="https://api.whatsapp.com/send?text=Check this out: {{ request.build_absolute_uri }}"
+              target="_blank"
+            >
+              <i
+                class="bx bxl-whatsapp text-green-500 text-4xl translate-y-1/4"
+              ></i>
+            </a>
+            <a
+              href="https://twitter.com/intent/tweet?url={{ request.build_absolute_uri }}&text=Check this out!"
+              target="_blank"
+              ><i
+                class="bx bxl-twitter text-cyan-400 text-4xl translate-y-1/4"
+              ></i
+            ></a>
+          </p>
+
           <h1>Related</h1>
           <h1>Comments</h1>
         </div>

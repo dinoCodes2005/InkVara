@@ -9,6 +9,7 @@ from django.http import HttpResponse
 from django.urls import reverse
 from datetime import datetime,date
 from ckeditor.fields import RichTextField
+from django.utils.html import strip_tags
 
 # Create your models here.
 # class Hashtag(models.Model):
@@ -44,6 +45,10 @@ class Post(models.Model):
     
     def total_likes(self):
         return self.like.count()
+    
+    def word_count(self):
+        text_content = strip_tags(self.body)
+        return len(text_content.split())
 
     def __str__(self):
         return self.title + ' | ' +  str(self.author)

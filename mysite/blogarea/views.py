@@ -43,8 +43,10 @@ class ArticleDetailView(DetailView):
     def get_context_data(self, *args, **kwargs):
         context = super(ArticleDetailView, self).get_context_data(*args, **kwargs)
         stuff = get_object_or_404(Post,id=self.kwargs['pk'])
+        total_words = stuff.word_count()
         total_likes = stuff.total_likes()
         context['total_likes'] = total_likes
+        context['total_words'] = total_words
         return context       
     
 class ShowProfileView(DetailView):
