@@ -7,7 +7,8 @@
       href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&display=swap"
       rel="stylesheet"
     />
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+
     <meta charset="UTF-8" />
     <title>{{ post.title }}</title>
     <link
@@ -211,7 +212,7 @@
           {% for comment in comments%}
           <div class="grid grid-cols-[80px_auto] mb-5">
             <div class="w-full">
-              <a href="{% url 'show_profile_page' comment.user.id %}">
+              <a href="{% url 'show_profile_page' comment.user.profile.id %}">
                 <img
                   class="size-10 rounded-full border-[1px] border-solid border-blue-950"
                   src="{% if comment.user.profile.profileImage %}

@@ -88,8 +88,14 @@ class ShowProfileView(DetailView):
     def get_context_data(self, *args, **kwargs):
         context = super(ShowProfileView, self).get_context_data(*args, **kwargs)
         page_user = get_object_or_404(Profile,id=self.kwargs['pk'])
+        posts = Post.objects.filter(author = page_user.user).order_by('-post_date')
         total_posts = Post.objects.filter(author=page_user.user).count()
         total_likes = Post.objects.filter(author=page_user.user).aggregate(total_likes=Count('like'))['total_likes'] or 0
+        skills = page_user.skills.split(',')
+        education = page_user.education.split(',')
+        context['posts'] = posts[:4]
+        context['education'] = education
+        context['skills'] = skills
         context['page_user'] = page_user
         context['total_posts'] = total_posts
         context['total_likes'] = total_likes
@@ -138,10 +144,23 @@ def load_more(request):
     offset=int(request.POST['offset'])
     limit=6
     posts=Post.objects.all()[offset:limit+offset]
+    profile_post = Post.objects.all()
     totalData=Post.objects.count()
     data={}
     posts_json=serializers.serialize('json',posts)
     return JsonResponse(data={
         'posts':posts_json,
         'totalResult':totalData
+    })
+
+def profile_load_more(request):
+    offset = int(request.POST.get('offset', 0))
+    limit = 6
+    author_id = request.POST.get('author_id')  # Get author ID from request
+    posts = Post.objects.filter(author_id=author_id).order_by('-post_date')[offset:offset + limit]  # Filter by author
+    totalData = Post.objects.filter(author_id=author_id).count()  # Count total posts for this author
+    posts_json = serializers.serialize('json', posts)  # Serialize posts data
+    return JsonResponse({
+        'posts': posts_json,
+        'totalResult': totalData
     })

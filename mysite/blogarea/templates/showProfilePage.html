@@ -1,88 +1,299 @@
+{% load static tailwind_tags%}
 <!DOCTYPE html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <title>Title</title>
-    {% load static %}
-    <link rel="stylesheet" href="{% static 'showProfilePage.css' %}" />
-  </head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    {% tailwind_css %} {% load static %}
+    <title>{{page_user.user}} - Profile</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css"
+      rel="stylesheet"
+    />
 
-  <body>
-    {% include 'header.html'%}
-    <div style="display: flex; justify-content: center; width: 100%">
-      <div class="container" style="width: 80%">
-        <div
-          class="profileBgContainer"
-          style="--img: url({% if page_user.user.profile.profileImage %}{{ page_user.user.profile.profileImage.url }}{% else %}/media/thumbnail/thumbnail.jpg{% endif %});position: relative;width: 90%;"
-        >
-          <img
-            class="profileBg"
-            src="{% static 'panaroma.jpg' %}"
-            style="
-              object-fit: cover;
-              height: 400px;
-              width: 100%;
-              border-radius: 20px;
-              margin: 0;
-            "
-            alt=""
-          />
-        </div>
-        <div class="profileParagraph" style="height: 90vh; width: 90%">
-          <div class="left">
-            <h2
-              style="
-                margin-top: 100px;
-                margin-left: 20px;
-                color: rgb(95, 95, 95);
-              "
-            >
-              @ {{page_user.user.username}}
-            </h2>
-            <h1>{{page_user.user.first_name}} {{page_user.user.last_name}}</h1>
-            <p>{{page_user.user.profile.bio}}</p>
-            <a
-              style="color: rgb(0, 73, 163); cursor: pointer"
-              href="mailto:{{page_user.user.email}}"
-              >{{page_user.user.email}}</a
-            >
-            <h3>
-              Occupation: <span>{{page_user.user.profile.occupation}}</span>
-            </h3>
-            <h3>Indstry: <span>{{page_user.user.profile.industry}}</span></h3>
-            <h3>Location: <span>{{page_user.user.profile.location}}</span></h3>
-          </div>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+  </head>
+  <body class="min-h-screen flex flex-col">
+    {%include 'nav.html'%}
+    <div class="flex justify-center w-full h-[60%]">
+      <div class="flex flex-col w-[90%]">
+        <div class="w-full">
           <div
-            class="right"
-            style="display: flex; flex-direction: column; margin-top: 20px"
+            class="relative w-full"
+            style="--img: url({% if page_user.user.profile.profileImage %}{{ page_user.user.profile.profileImage.url }}{% else %}/media/thumbnail/thumbnail.jpg{% endif %});"
           >
-            <a href="{{page_user.user.profile.twitter_link}}"
-              ><img
-                src="{% static 'twitter.svg'%}"
-                height="50px"
-                alt=""
-              />&nbsp;&nbsp;&nbsp; Twitter</a
+            <div
+              class="absolute ml:left-[5%] ml:bottom-[-20%] left-1/2 top-1/2 translate-x-[-50%] translate-y-[-50%] ml:translate-x-0 ml:translate-y-1/4 size-[180px] sm:size-[210px] rounded-full border-4 border-white shadow-lg"
+              style="
+                background: var(--img);
+                background-size: cover;
+                background-position: center;
+              "
+            ></div>
+            <img
+              class="object-cover h-[400px] w-full rounded-[20px] m-0"
+              src="{% if page_user.user.profile.profileBackground %}{{ page_user.user.profile.profileBackground.url }}{% else %}/media/thumbnail/thumbnail.jpg{% endif %}"
+              alt=""
+            />
+          </div>
+          <div></div>
+        </div>
+        <div
+          class="grid grid-rows-reverse grid-rows-[1fr_auto] lg:grid-cols-[1fr_2fr] gap-3"
+        >
+          <ul class="sm:px-5 mt-[50px] sm:mt-[100px] ml-5">
+            <li class="text-xl" class="font-family:lato">
+              Working as
+              <span class="font-bold">{{page_user.position}}</span> at
+              <span class="font-bold">{{page_user.industry}}</span>
+            </li>
+            <hr class="mt-5" />
+            <ul class="list-disc">
+              <h1 class="mt-5 text-3xl text-blue-700 font-semibold mb-5">
+                Skills
+              </h1>
+              {% for skill in skills %}
+              <li class="text-lg text-slate-800" class="font-family:lato">
+                {{skill}}
+              </li>
+              {% endfor %}
+            </ul>
+            <hr class="mt-5" />
+            <ul class="list-disc">
+              <h1 class="mt-5 text-3xl text-blue-700 font-semibold mb-5">
+                Education
+              </h1>
+              {% for edu in education %}
+              <li class="text-lg text-slate-800" class="font-family:lato">
+                {{edu}}
+              </li>
+              {% endfor %}
+            </ul>
+          </ul>
+          <div class="mt-5 flex flex-col gap-5">
+            <h1 class="text-4xl font-bold" style="font-family: lato">
+              {{page_user.user.first_name}}&nbsp;{{page_user.user.last_name}}
+            </h1>
+            <h1 class="text-2xl mb-5 text-slate-600" style="font-family: lato">
+              @{{page_user.user|lower}}
+            </h1>
+            <hr />
+            <h1
+              class="text-xl text-blue-700 font-semibold"
+              style="font-family: lato"
             >
-            <a href="{{page_user.user.profile.instagram_link}}"
-              ><img
-                src="{% static 'instagram.png'%}"
-                height="50px"
-                alt=""
-              />&nbsp;&nbsp;&nbsp; Instagram</a
+              {{page_user.occupation}}
+            </h1>
+
+            <h1 class="text-md sm:text-lg mb-5" style="font-family: lato">
+              {{page_user.bio}}
+            </h1>
+            <div>
+              <h1 class="text-lg text-slate-800 mb-3">
+                Total Posts :
+                <span class="font-bold text-slate-900">{{total_posts}}</span>
+              </h1>
+              <h1 class="text-lg text-slate-800">
+                Total Likes :
+                <span class="font-bold text-slate-900"> {{total_likes}}</span>
+              </h1>
+            </div>
+
+            <div>
+              <h1
+                class="text-xl text-blue-700 font-semibold mt-5"
+                style="font-family: lato"
+              >
+                Contact Information
+              </h1>
+              <hr class="mt-5 mb-5" />
+              <a href="mailto:{{page_user.user.email}}"
+                ><i
+                  class="bx bxl-gmail text-2xl text-red-500 translate-y-1/4"
+                ></i
+                >&nbsp;&nbsp;{{page_user.user.email}}</a
+              >
+              <a class="ml-4"
+                ><i
+                  class="bx bxs-phone text-2xl text-blue-600 translate-y-1/4"
+                ></i>
+                {{page_user.contact}}</a
+              >
+            </div>
+            <a href=""
+              ><i class="bx bxs-map text-2xl text-slate-500 translate-y-1/4"></i
+              >&nbsp;&nbsp;{{page_user.location}}</a
             >
-            <a href="{{page_user.user.profile.youtube_link}}"
-              ><img
-                src="{% static 'youtube.png'%}"
-                height="50px"
-                alt=""
-              />&nbsp;&nbsp;&nbsp; YouTube</a
-            >
-            <h1>Total Posts : {{total_posts}}</h1>
-            <h1>Total Likes : {{total_likes}}</h1>
+
+            <div>
+              <h1
+                class="text-xl text-blue-700 font-semibold mt-5"
+                style="font-family: lato"
+              >
+                Socials
+              </h1>
+              <hr class="mt-5 mb-5" />
+
+              <a href="{{page_user.twitter_link}}" class="mr-5 italic"
+                ><i
+                  class="bx bxl-twitter text-4xl text-cyan-400 translate-y-1/4"
+                ></i
+                >&nbsp;&nbsp;witcher_geralt</a
+              >
+              <a href="{{page_user.youtube_link}}" class="mr-5 italic"
+                ><i
+                  class="bx bxl-youtube text-4xl text-red-500 translate-y-1/4"
+                ></i
+                >&nbsp;&nbsp;witcherGeralt</a
+              >
+              <a href="{{page_user.instagram_link}}" class="mr-5 italic"
+                ><i
+                  class="bx bxl-instagram text-4xl bg-gradient-to-r from-yellow-400 via-pink-500 to-purple-600 bg-clip-text text-transparent translate-y-1/4"
+                ></i
+                >&nbsp;&nbsp;geralt_of_rivia</a
+              >
+            </div>
           </div>
         </div>
       </div>
     </div>
-    {% include 'footer.html'%}
+    <div class="mx-10 lg:mx-20">
+      <h1 class="m-10 text-blue-700 font-semibold text-4xl">
+        Posts By :&nbsp;<span>{{page_user.user}}</span>
+      </h1>
+      <hr class="mt-5 mb-5" />
+      <div class="flex flex-col justify-center items-center">
+        <div
+          id="cardContainer"
+          class="grid grid-cols-1 md:grid-cols-4 sm:grid-cols-2 gap-8 w-full"
+        >
+          {% for post in posts%}
+          <div class="blog-cards">
+            <a href="{% url 'ArticleDetailView' post.id%}">
+              <div
+                class="relative flex flex-col my-1 bg-white shadow-sm border border-slate-200 rounded-lg w-full"
+              >
+                <div
+                  class="relative h-1/2 overflow-hidden text-white rounded-md"
+                >
+                  <img
+                    src="{% if post.thumbnail %}
+                  {{ post.thumbnail.url }}
+                  {% else %}/media/thumbnail/thumbnail.jpg
+                  {% endif %}"
+                    alt="card-image"
+                  />
+                </div>
+                <div class="p-4">
+                  <div
+                    class="mb-4 rounded-full bg-cyan-600 py-0.5 px-2.5 border border-transparent text-xs text-white transition-all shadow-sm w-20 text-center"
+                  >
+                    POPULAR
+                  </div>
+                  <h6 class="mb-2 text-slate-800 text-xl font-semibold">
+                    {{post.title}}
+                  </h6>
+                  <p class="text-slate-600 leading-normal font-light">
+                    {{post.articleSnippet}}
+                  </p>
+                </div>
+
+                <div class="flex items-center justify-between p-4">
+                  <div class="flex items-center">
+                    <img
+                      alt="Tania Andrew"
+                      src="{% if post.author.profile.profileImage %}
+                {{ post.author.profile.profileImage.url }}
+                {% else %}/media/thumbnail/thumbnail.jpg
+                {% endif %}"
+                      class="relative inline-block h-8 w-8 rounded-full"
+                    />
+                    <div class="flex flex-col ml-3 text-sm">
+                      <span class="text-slate-800 font-semibold"
+                        >{{post.author}}</span
+                      >
+                      <span class="text-slate-600"> {{post.date}} </span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </a>
+          </div>
+          {% endfor %}
+        </div>
+        <button
+          id="load-more"
+          type="button"
+          class="text-white bg-gradient-to-r from-cyan-500 to-blue-500 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-cyan-300 p-5 w-[150px] my-10 rounded-xl"
+        >
+          Load More
+        </button>
+      </div>
+    </div>
+    {%include 'footerCode.html'%}
+    <script>
+      $(document).ready(function () {
+        $("#load-more").on("click", function () {
+          var _currentResult = $(".blog-cards").length;
+          console.log("Current Result : " + _currentResult);
+          $.ajax({
+            url: "{% url 'profile-load-more' %}",
+            type: "POST",
+            data: {
+              author_id: "{{ page_user.user.id }}",
+              offset: _currentResult,
+              csrfmiddlewaretoken: "{{csrf_token}}",
+            },
+            dataType: "json",
+            beforeSend: function () {
+              $("#load-more").addClass("disabled").text("Loading.....");
+            },
+            success: function (res) {
+              console.log(res);
+              var _html = "";
+              var json_data = $.parseJSON(res.posts);
+              console.log("JSON DATA : " + JSON.parse(res.posts));
+              $.each(json_data, function (index, data) {
+                _html += `
+                      <div class="blog-cards">
+                      <a href="javascript:void(0)">
+                        <div class="relative flex flex-col my-1 bg-white shadow-sm border border-slate-200 rounded-lg w-96">
+                          <div class="relative h-56 overflow-hidden text-white rounded-md">
+                            <img src="/media/${data.fields.thumbnail}" alt="card-image" class="object-cover w-full h-full" />
+                          </div>
+                          <div class="p-4">
+                            <h6 class="mb-2 text-slate-800 text-xl font-semibold">${data.fields.title}</h6>
+                            <p class="text-slate-600 leading-normal font-light">${data.fields.articleSnippet}</p>
+                          </div>
+                          <div class="flex items-center justify-between p-4">
+                            <div class="flex items-center">
+                              <img alt="${data.fields.author}" src="/media/${data.fields.author.profileImage}" class="relative inline-block h-8 w-8 rounded-full" />
+                              <div class="flex flex-col ml-3 text-sm">
+                                <span class="text-slate-800 font-semibold">${data.fields.author}</span>
+                                <span class="text-slate-600">${data.fields.date}</span>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </a>
+                      </div>`;
+              });
+              $("#cardContainer").append(_html);
+              var _countTotal = $(".blog-cards").length;
+              console.log("Count Total : " + _countTotal);
+              if (_countTotal == res.totalResult) {
+                $("#load-more").remove();
+              } else {
+                $("#load-more").removeClass("disabled").text("Load More");
+              }
+            },
+          });
+        });
+      });
+    </script>
   </body>
 </html>

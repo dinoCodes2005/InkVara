@@ -10,6 +10,8 @@ from django.urls import reverse
 from datetime import datetime,date
 from ckeditor.fields import RichTextField
 from django.utils.html import strip_tags
+from phonenumber_field.modelfields import PhoneNumberField
+
 
 # Create your models here.
 # class Hashtag(models.Model):
@@ -65,10 +67,13 @@ class Profile(models.Model):
     twitter_link = models.URLField(max_length=200,null=True,blank=True,default="https://x.com/")
     instagram_link = models.URLField(max_length=200,null=True,blank=True,default="https://instagram.com/")
     youtube_link = models.URLField(max_length=200,null=True,blank=True,default="https://youtube.com/")
+    contact = PhoneNumberField(blank=True, null=True)
     location = models.CharField(max_length=150,null=True,blank=True,default="Earth")
     occupation = models.CharField(max_length=50,null=True,blank=True,default="Occupation")
     industry = models.CharField(max_length=50,null=True,blank=True,default="Industry")
     position = models.CharField(max_length=50,null=True,blank=True,default="position")
+    skills = models.TextField(null=True,blank=True,help_text="Enter your skills separated by commas")
+    education = models.TextField(null=True,blank=True)
 
     def __str__(self):
         return str(self.user)
