@@ -42,7 +42,7 @@
         </div>
       </div>
       <div class="grid grid-rows-[1fr_auto] ml:grid-cols-[2fr_1fr] w-full px-7">
-        <div class="w-full py-10 px-20">
+        <div class="w-full py-10 ml:px-20">
           <h1 style="font-family: lato" class="text-4xl font-bold mb-3">
             {{post.title}}
           </h1>
@@ -115,8 +115,6 @@
               ></i
             ></a>
           </p>
-
-          <h1>Comments</h1>
         </div>
         <div>
           <h1 style="font-family: lato" class="mt-10 font-bold text-4xl">
@@ -176,8 +174,72 @@
                   </div>
                 </div>
               </a>
-            </div> {% endfor %}
+            </div>
+            {% endfor %}
           </div>
+        </div>
+      </div>
+    </div>
+    <div class="flex-grow flex flex-col">
+      <!-- for each comment logic here  -->
+      <h1 class="text-4xl text-blue-700 pl-10 font-semibold mb-5 ml:pl-[100px]">
+        {{comments_number}}&nbsp;Comments
+      </h1>
+      <hr class="mx-10 mb-5" />
+      <div class="pl-10 ml:pl-[100px] relative">
+        <form method="POST">
+          <div class="flex flex-col">
+            {% csrf_token%} <label for="comment-text">Your Comment</label
+            ><br />{{form.body}}
+            <div class="flex mt-5">
+              <button
+                class="text-white bg-gradient-to-r from-cyan-500 to-blue-500 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-cyan-300 dark:focus:ring-cyan-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2 right:0 w-[100px]"
+              >
+                Comment
+              </button>
+              <button
+                class="text-white bg-gradient-to-r from-red-500 to-orange-500 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-cyan-300 dark:focus:ring-cyan-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2 w-[100px]"
+                onclick="document.getElementById('comment-text').value = ''"
+              >
+                Clear
+              </button>
+            </div>
+          </div>
+        </form>
+        <br />
+        <div class="mt-10">
+          {% for comment in comments%}
+          <div class="grid grid-cols-[80px_auto] mb-5">
+            <div class="w-full">
+              <a href="{% url 'show_profile_page' comment.user.id %}">
+                <img
+                  class="size-10 rounded-full border-[1px] border-solid border-blue-950"
+                  src="{% if comment.user.profile.profileImage %}
+                {{comment.user.profile.profileImage.url }}
+                {% else %}/media/thumbnail/thumbnail.jpg
+                {% endif %}"
+                  alt=""
+                />
+              </a>
+            </div>
+            <div class="flex flex-col gap-2">
+              <div>
+                @
+                <a href="{% url 'show_profile_page' comment.user.id %}"
+                  >{{comment.user}}</a
+                >
+                - {{comment.comment_date}}
+              </div>
+              {{comment.body}}
+              <div>
+                <button>
+                  <i class="bx bx-like mr-5"></i>{{comments_likes}}
+                </button>
+                <button><i class="bx bx-dislike"></i></button>
+              </div>
+            </div>
+          </div>
+          {% endfor%}
         </div>
       </div>
     </div>

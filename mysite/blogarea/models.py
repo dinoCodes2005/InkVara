@@ -72,3 +72,15 @@ class Profile(models.Model):
 
     def __str__(self):
         return str(self.user)
+
+class Comment(models.Model):
+    post = models.ForeignKey(Post,null=True,on_delete=models.CASCADE,related_name='comments')
+    user = models.ForeignKey(User,null=True,on_delete=models.CASCADE)
+    body = models.TextField()
+    comment_date = models.DateField(auto_now_add=True)
+    likes = models.ManyToManyField(User,related_name='liked_comment',blank=True)
+    dislikes = models.ManyToManyField(User,related_name='disliked_comment',blank=True)
+    
+    def __str__(self):
+        return f"{self.post.title} - {self.user.username} - {self.body[:25]}"
+    

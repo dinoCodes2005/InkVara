@@ -1,11 +1,12 @@
 from multiprocessing import context
 from unicodedata import category
-from urllib import response
+from urllib import request, response
+from wsgiref.util import request_uri
 from django.shortcuts import get_object_or_404, render,redirect
 from django.contrib.auth import logout,authenticate
 from django.contrib import messages
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
-from .models import Post, Profile
+from .models import Comment, Post, Profile
 from django.urls import reverse_lazy,reverse
 from django.http import HttpResponseRedirect
 from django.db.models import Count
@@ -13,6 +14,8 @@ from blogarea.models import Profile
 from django.core import serializers
 from django.http import HttpResponse, JsonResponse
 from django.views.decorators.csrf import csrf_exempt
+from .forms import CommentForm
+from django.views.generic.edit import FormMixin
 # Create your views here.
 class BlogHome(ListView):
     model = Post
@@ -26,9 +29,14 @@ class BlogHome(ListView):
         post_with_second_highest_likes = posts[1] if len(posts) > 1 else None  # The second post, if it exists
         post_with_third_highest_likes = posts[2] if len(posts) > 2 else None  # The third post, if it exists
         post_with_fourth_highest_likes = posts[3] if len(posts) > 3 else None  # The fourth post, if it exists
+        non_featured_post = posts.exclude(id__in=[post_with_highest_likes.id,
+                                                  post_with_second_highest_likes.id,
+                                                  post_with_third_highest_likes.id,
+                                                  post_with_fourth_highest_likes.id,]
+                                          )
 
     # Add posts to context
-        context['posts'] = posts[:8]
+        context['posts'] = non_featured_post[:]
         context['post_with_highest_likes'] = post_with_highest_likes
         context['post_with_second_highest_likes'] = post_with_second_highest_likes
         context['post_with_third_highest_likes'] = post_with_third_highest_likes
@@ -36,9 +44,10 @@ class BlogHome(ListView):
     
         return context
     
-class ArticleDetailView(DetailView):
+class ArticleDetailView(DetailView,FormMixin):
     model = Post
     template_name = 'article_Detail.html'
+    form_class = CommentForm
     
     def get_context_data(self, *args, **kwargs):
         context = super(ArticleDetailView, self).get_context_data(*args, **kwargs)
@@ -47,11 +56,30 @@ class ArticleDetailView(DetailView):
         related_posts = posts.filter(category=current_post.category).exclude(id=current_post.id)
         total_words = current_post.word_count()
         total_likes = current_post.total_likes()
+        has_liked = self.request.user in current_post.like.all() if self.request.user.is_authenticated else False 
+        comments = Comment.objects.all()
+        comments_number = comments.count()
+        context['comments_number'] = comments_number
+        context['comments'] = list(comments.filter(user=self.request.user)) + list(comments.exclude(user=self.request.user).order_by('-comment_date'))
+        context['form'] = self.get_form()
+        context['has_liked'] = has_liked
         context['related_posts'] = related_posts
         context['posts'] = posts
         context['total_likes'] = total_likes
         context['total_words'] = total_words
         return context       
+    
+    def post(self,request,*args,**kwargs):
+        self.object = self.get_object()
+        form = CommentForm(request.POST)
+        
+        if form.is_valid():
+            comment = form.save(commit=False)
+            comment.post = self.object 
+            comment.user = self.request.user
+            comment.save()
+            return redirect('ArticleDetailView',pk=self.object.pk)
+        return self.form_invalid(form) 
     
 class ShowProfileView(DetailView):
     model = Profile
