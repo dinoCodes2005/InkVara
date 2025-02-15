@@ -26,7 +26,7 @@ urlpatterns = [
     # path("blogarea/", views.blogarea, name="blogarea"),
     path("blogarea/", BlogHome.as_view(), name="blogarea"),
     path('home/', views.logout_user, name='logout'),
-    path('article/<int:pk>', ArticleDetailView.as_view(), name="ArticleDetailView"),
+    path('article/<int:pk>/', ArticleDetailView.as_view(), name="ArticleDetailView"),
     path('writeYourBlog/',AddPostView.as_view(),name="writeYourBlog"),
     path('article/updateBlog/<int:pk>',UpdatePostView.as_view(),name="updateBlog"),
     path('article/deleteBlog/<int:pk>', DeletePostView.as_view(), name="deleteBlog"),
@@ -34,7 +34,7 @@ urlpatterns = [
     path('likes/<int:pk>',views.LikeView,name='like_post'),
     path('show_profile_page/<int:pk>/',ShowProfileView.as_view(),name="show_profile_page"),
     path('load-more/',views.load_more,name="load-more"),
-    path('profile-load-more/',views.profile_load_more,name="profile-load-more")
+    path('filtered_load_more/',views.filtered_load_more,name="filtered_load_more")
 
 ]
 

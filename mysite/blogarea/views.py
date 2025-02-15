@@ -191,14 +191,48 @@ def load_more(request):
 #     because Json response requires a K-V pair
 #     JSON.parse converts back to original form which is an object but in js form 
 
-def profile_load_more(request):
-    offset = int(request.POST.get('offset', 0))
-    limit = 6
-    author_id = request.POST.get('author_id')  # Get author ID from request
-    posts = Post.objects.filter(author_id=author_id).order_by('-post_date')[offset:offset + limit]  # Filter by author
-    totalData = Post.objects.filter(author_id=author_id).count()  # Count total posts for this author
-    posts_json = serializers.serialize('json', posts)  # Serialize posts data
-    return JsonResponse({
-        'posts': posts_json,
-        'totalResult': totalData
+def filtered_load_more(request):
+    offset=int(request.POST.get('offset',False))
+    filter = request.POST.get('filter',False)
+    limit=6
+    posts=Post.objects.filter(author_id = filter )[offset:limit+offset]
+    post_list = [
+        {
+            "id":post.id,
+            "title":post.title,
+            "articleSnippet":post.articleSnippet,
+            "post_date":post.post_date,
+            "author":{
+                "id":post.author.id,
+                "username":post.author.username,
+                "profile":{
+                    "profile-id":post.author.profile.id,
+                }
+            }
+        }
+        for post in posts
+    ]
+    authors = [
+        {
+            "id":post.author.id,
+            "author":post.author.username,
+        }
+        for post in posts
+    ]
+    thumbnail_urls = {
+        post.id: post.thumbnail.url if post.thumbnail else "/media/thumbnail/thumbnail.jpg"
+        for post in posts
+    }
+    profile_urls = {
+        post.author.id: post.author.profile.profileImage.url if post.author.profile.profileImage else "/media/default-profile.jpg"
+        for post in posts
+    }
+    totalData=Post.objects.filter(author_id = filter).count()
+    posts_json=serializers.serialize('json',posts)
+    return JsonResponse(data={
+        'authors':authors,
+        'posts':post_list,
+        'totalResult':totalData,
+        'thumbnail':thumbnail_urls,
+        'profileImage':profile_urls,
     })

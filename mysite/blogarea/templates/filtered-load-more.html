@@ -1,0 +1,90 @@
+<script>
+  $(document).ready(function () {
+    $("#load-more").on("click", function () {
+      var _currentResult = $(".blog-cards").length;
+      console.log("Current Result : " + _currentResult);
+      $.ajax({
+        url: "{% url 'filtered_load_more' %}",
+        type: "POST",
+        data: {
+          offset: _currentResult,
+          filter: {{page_user.user.id}},
+          csrfmiddlewaretoken: "{{csrf_token}}",
+        },
+        dataType: "json",
+        beforeSend: function () {
+          $("#load-more").addClass("disabled").text("Loading.....");
+        },
+        success: function (res) {
+          var _html = "";
+          var json_data = res["posts"];
+          var thumbnail_urls = res["thumbnail"];
+          var profile_urls = res["profileImage"];
+          var authors = res["authors"];
+          $.each(json_data, function (index, data) {
+            var thumbnailURL = thumbnail_urls[data["id"]];
+            var profileURL = profile_urls[data.author["id"]];
+            var postAuthor = "John Doe";
+            console.log("DATA:" + data["id"]);
+            _html += `
+                      <div class="blog-cards hover:scale-[1.05] transition-transform duration-300">
+              <a href="/blogarea/article/${data.id}/">
+                <div
+                  class="relative flex flex-col my-1 bg-white shadow-sm border border-slate-200 rounded-lg w-full"
+                >
+                  <div
+                    class="relative h-1/2 overflow-hidden text-white rounded-md"
+                  >
+                    <img
+                      src="${thumbnailURL}"
+                      alt="card-image"
+                    />
+                  </div>
+                  <div class="p-4">
+                    <div
+                      class="mb-4 rounded-full bg-cyan-600 py-0.5 px-2.5 border border-transparent text-xs text-white transition-all shadow-sm w-20 text-center"
+                    >
+                      POPULAR
+                    </div>
+                    <h6 class="mb-2 text-slate-800 text-xl font-semibold">
+                      ${data.title}
+                    </h6>
+                    <p class="text-slate-600 leading-normal font-light">
+
+
+                    </p>
+                  </div>
+              </a>
+                  <div class="flex items-center justify-between p-4">
+                    <div class="flex items-center">
+                      <a href="/show_profile_page/${data.author.profile["profile-id"]}/" class="flex ">
+                      <img
+                        alt="Tania Andrew"
+                        src="${profileURL}"
+                        class="relative inline-block h-8 w-8 rounded-full"
+                      />
+                      <div class="flex flex-col ml-3 text-sm">
+                        <span class="text-slate-800 font-semibold"
+                          >${postAuthor}</span
+                        >
+                        <span class="text-slate-600"> ${data.post_date} </span>
+                      </div></a>
+                    </div>
+                  </div>
+                </div>
+            </div>`;
+          });
+          $("#cardContainer").append(_html);
+          $("#cardContainer").hide().fadeIn("fast");
+          var _countTotal = $(".blog-cards").length;
+          console.log("Count Total : " + _countTotal);
+          if (_countTotal == res.totalResult) {
+            $("#load-more").remove();
+          } else {
+            $("#load-more").removeClass("disabled").text("Load More");
+          }
+        },
+      });
+    });
+  });
+</script>
