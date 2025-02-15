@@ -1,4 +1,5 @@
 from multiprocessing import context
+from sre_constants import SUCCESS
 from unicodedata import category
 from urllib import request, response
 from wsgiref.util import request_uri
@@ -58,7 +59,7 @@ class ArticleDetailView(DetailView,FormMixin):
         total_words = current_post.word_count()
         total_likes = current_post.total_likes()
         has_liked = self.request.user in current_post.like.all() if self.request.user.is_authenticated else False 
-        comments = Comment.objects.all()
+        comments = Comment.objects.filter(post_id = current_post.id)
         comments_number = comments.count()
         context['current_post'] = current_post
         context['comments_number'] = comments_number
@@ -146,50 +147,38 @@ def load_more(request):
     offset=int(request.POST.get('offset',False))
     limit=6
     posts=Post.objects.all()[offset:limit+offset]
+        
     post_list = [
         {
             "id":post.id,
             "title":post.title,
             "articleSnippet":post.articleSnippet,
             "post_date":post.post_date,
+            "thumbnail":request.build_absolute_uri(post.thumbnail.url)
+                    if post.thumbnail
+                    else 
+                    request.build_absolute_uri('/media/thumbnail/thumbnail.jpg'),    
             "author":{
                 "id":post.author.id,
                 "username":post.author.username,
                 "profile":{
                     "profile-id":post.author.profile.id,
+                    "profileImage": request.build_absolute_uri(post.author.profile.profileImage.url)
+                    if post.author.profile.profileImage
+                    else 
+                    request.build_absolute_uri('/media/thumbnail/thumbnail.jpg') ,
                 }
             }
         }
         for post in posts
     ]
-    authors = [
-        {
-            "id":post.author.id,
-            "author":post.author.username,
-        }
-        for post in posts
-    ]
-    thumbnail_urls = {
-        post.id: post.thumbnail.url if post.thumbnail else "/media/thumbnail/thumbnail.jpg"
-        for post in posts
-    }
-    profile_urls = {
-        post.author.id: post.author.profile.profileImage.url if post.author.profile.profileImage else "/media/default-profile.jpg"
-        for post in posts
-    }
+    
     totalData=Post.objects.count()
-    posts_json=serializers.serialize('json',posts)
     return JsonResponse(data={
-        'authors':authors,
         'posts':post_list,
         'totalResult':totalData,
-        'thumbnail':thumbnail_urls,
-        'profileImage':profile_urls,
+
     })
-#     Received Objects(querySets)
-#     Serializer converts this objects into JSON string
-#     because Json response requires a K-V pair
-#     JSON.parse converts back to original form which is an object but in js form 
 
 def filtered_load_more(request):
     offset=int(request.POST.get('offset',False))
@@ -202,37 +191,59 @@ def filtered_load_more(request):
             "title":post.title,
             "articleSnippet":post.articleSnippet,
             "post_date":post.post_date,
+            "thumbnail":request.build_absolute_uri(post.thumbnail.url)
+                    if post.thumbnail
+                    else 
+                    request.build_absolute_uri('/media/thumbnail/thumbnail.jpg'),    
             "author":{
                 "id":post.author.id,
                 "username":post.author.username,
                 "profile":{
                     "profile-id":post.author.profile.id,
+                    "profileImage": request.build_absolute_uri(post.author.profile.profileImage.url)
+                    if post.author.profile.profileImage
+                    else 
+                    request.build_absolute_uri('/media/thumbnail/thumbnail.jpg') ,
                 }
             }
         }
         for post in posts
     ]
-    authors = [
-        {
-            "id":post.author.id,
-            "author":post.author.username,
-        }
-        for post in posts
-    ]
-    thumbnail_urls = {
-        post.id: post.thumbnail.url if post.thumbnail else "/media/thumbnail/thumbnail.jpg"
-        for post in posts
-    }
-    profile_urls = {
-        post.author.id: post.author.profile.profileImage.url if post.author.profile.profileImage else "/media/default-profile.jpg"
-        for post in posts
-    }
+        
     totalData=Post.objects.filter(author_id = filter).count()
-    posts_json=serializers.serialize('json',posts)
     return JsonResponse(data={
-        'authors':authors,
         'posts':post_list,
         'totalResult':totalData,
-        'thumbnail':thumbnail_urls,
-        'profileImage':profile_urls,
+    })
+    
+def submit_comment(request):
+    if request.method == 'POST':
+        body = request.POST.get('body')
+        user = request.user
+        post_id = request.POST.get('post')
+        if body and user.is_authenticated:
+            post = Post.objects.get(id = post_id)
+            comment = Comment.objects.create(user = user,body = body,post = post)
+            
+            if comment.user.profile.profileImage:
+                profile_image = request.build_absolute_uri(comment.user.profile.profileImage.url)
+            else:
+                profile_image = request.build_absolute_uri('/media/thumbnail/thumbnail.jpg')
+            return JsonResponse({
+                'success' : True,
+                'comment' : {
+                    'user':comment.user.username,
+                    'body':comment.body,
+                    'comment_date':comment.comment_date,
+                    'profile_image':profile_image,
+                    'profile_url':f"/show_profile_page/{comment.user.profile.id}/",
+                }
+            })
+        return JsonResponse({
+            'success':False,
+            'error':"not authenticated / invalid data"
+        })
+    return JsonResponse({
+        'success':False,
+        'error':'Invalid Request Method'
     })

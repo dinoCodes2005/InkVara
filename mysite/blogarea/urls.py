@@ -34,7 +34,8 @@ urlpatterns = [
     path('likes/<int:pk>',views.LikeView,name='like_post'),
     path('show_profile_page/<int:pk>/',ShowProfileView.as_view(),name="show_profile_page"),
     path('load-more/',views.load_more,name="load-more"),
-    path('filtered_load_more/',views.filtered_load_more,name="filtered_load_more")
+    path('filtered_load_more/',views.filtered_load_more,name="filtered_load_more"),
+    path('submit_comment/',views.submit_comment,name="submit_comment")
 
 ]
 

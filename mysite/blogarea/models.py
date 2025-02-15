@@ -1,5 +1,5 @@
 from ast import mod
-from os import name
+from os import name, truncate
 from tabnanny import verbose
 from tkinter import CASCADE
 from turtle import position
@@ -11,6 +11,7 @@ from datetime import datetime,date
 from ckeditor.fields import RichTextField
 from django.utils.html import strip_tags
 from phonenumber_field.modelfields import PhoneNumberField
+from requests import post
 
 
 # Create your models here.

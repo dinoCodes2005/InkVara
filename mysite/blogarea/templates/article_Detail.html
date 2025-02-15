@@ -190,17 +190,19 @@
       </h1>
       <hr class="mx-10 mb-5" />
       <div class="pl-10 ml:pl-[100px] relative">
-        <form method="POST">
+        <form method="POST" id="comment-form">
           <div class="flex flex-col">
             {% csrf_token%} <label for="comment-text">Your Comment</label
             ><br />{{form.body}}
             <div class="flex mt-5">
               <button
+                type="submit"
                 class="text-white bg-gradient-to-r from-cyan-500 to-blue-500 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-cyan-300 dark:focus:ring-cyan-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2 right:0 w-[100px]"
               >
                 Comment
               </button>
               <button
+                type="button"
                 class="text-white bg-gradient-to-r from-red-500 to-orange-500 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-cyan-300 dark:focus:ring-cyan-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2 w-[100px]"
                 onclick="document.getElementById('comment-text').value = ''"
               >
@@ -210,7 +212,7 @@
           </div>
         </form>
         <br />
-        <div class="mt-10">
+        <div class="mt-10" id="comments">
           {% for comment in comments%} {% if comment.post == current_post %}
           <div class="grid grid-cols-[80px_auto] mb-5">
             <div class="w-full">
@@ -247,5 +249,54 @@
       </div>
     </div>
     {% include 'footerCode.html' %}
+    <script>
+      $("#comment-form").on("submit", function (e) {
+        e.preventDefault();
+        $.ajax({
+          url: '{% url "submit_comment"%}',
+          type: "POST",
+          data: {
+            post: "{{current_post.id}}",
+            body: $("#comment-text").val(),
+            csrfmiddlewaretoken: "{{csrf_token}}",
+          },
+          success: function (response) {
+            if (response.success) {
+              var comment = `
+          <div class="grid grid-cols-[80px_auto] mb-5">
+              <div class="w-full">
+                  <a href="${response.comment.profile_url}  ">
+                      <img
+                          class="size-10 rounded-full border-[1px] border-solid border-blue-950"
+                          src=" ${response.comment.profile_image}"
+                          alt=""
+                      />
+                  </a>
+              </div>
+              <div class="flex flex-col gap-2">
+                  <div>
+                      @
+                      <a href=" ">${response.comment.user}</a>
+                      - ${response.comment.comment_date}
+                  </div>
+                  ${response.comment.body}
+                  <div>
+                      <button>
+                          <i class="bx bx-like mr-5"></i>${response.comments_likes}
+                      </button>
+                      <button><i class="bx bx-dislike"></i></button>
+                  </div>
+              </div>
+          </div>
+      `;
+              $("#comments").append(comment);
+              $("#comment-text").val("");
+            } else {
+              alert("Error" + response.error);
+            }
+          },
+        });
+      });
+    </script>
   </body>
 </html>
