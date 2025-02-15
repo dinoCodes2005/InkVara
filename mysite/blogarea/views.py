@@ -6,6 +6,7 @@ from django.shortcuts import get_object_or_404, render,redirect
 from django.contrib.auth import logout,authenticate
 from django.contrib import messages
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
+from requests import post
 from .models import Comment, Post, Profile
 from django.urls import reverse_lazy,reverse
 from django.http import HttpResponseRedirect
@@ -36,7 +37,7 @@ class BlogHome(ListView):
                                           )
 
     # Add posts to context
-        context['posts'] = non_featured_post[:]
+        context['posts'] = non_featured_post[:9]
         context['post_with_highest_likes'] = post_with_highest_likes
         context['post_with_second_highest_likes'] = post_with_second_highest_likes
         context['post_with_third_highest_likes'] = post_with_third_highest_likes
@@ -59,6 +60,7 @@ class ArticleDetailView(DetailView,FormMixin):
         has_liked = self.request.user in current_post.like.all() if self.request.user.is_authenticated else False 
         comments = Comment.objects.all()
         comments_number = comments.count()
+        context['current_post'] = current_post
         context['comments_number'] = comments_number
         context['comments'] = list(comments.filter(user=self.request.user)) + list(comments.exclude(user=self.request.user).order_by('-comment_date'))
         context['form'] = self.get_form()
@@ -91,8 +93,8 @@ class ShowProfileView(DetailView):
         posts = Post.objects.filter(author = page_user.user).order_by('-post_date')
         total_posts = Post.objects.filter(author=page_user.user).count()
         total_likes = Post.objects.filter(author=page_user.user).aggregate(total_likes=Count('like'))['total_likes'] or 0
-        skills = page_user.skills.split(',')
-        education = page_user.education.split(',')
+        skills = page_user.skills.split(',') if page_user.skills else []
+        education = page_user.education.split(',') if page_user.education else []
         context['posts'] = posts[:4]
         context['education'] = education
         context['skills'] = skills
@@ -141,17 +143,53 @@ def CategoryView(request,cats):
     return render(request,'categories.html',{'category_posts':category_posts})
 
 def load_more(request):
-    offset=int(request.POST['offset'])
+    offset=int(request.POST.get('offset',False))
     limit=6
     posts=Post.objects.all()[offset:limit+offset]
-    profile_post = Post.objects.all()
+    post_list = [
+        {
+            "id":post.id,
+            "title":post.title,
+            "articleSnippet":post.articleSnippet,
+            "post_date":post.post_date,
+            "author":{
+                "id":post.author.id,
+                "username":post.author.username,
+                "profile":{
+                    "profile-id":post.author.profile.id,
+                }
+            }
+        }
+        for post in posts
+    ]
+    authors = [
+        {
+            "id":post.author.id,
+            "author":post.author.username,
+        }
+        for post in posts
+    ]
+    thumbnail_urls = {
+        post.id: post.thumbnail.url if post.thumbnail else "/media/thumbnail/thumbnail.jpg"
+        for post in posts
+    }
+    profile_urls = {
+        post.author.id: post.author.profile.profileImage.url if post.author.profile.profileImage else "/media/default-profile.jpg"
+        for post in posts
+    }
     totalData=Post.objects.count()
-    data={}
     posts_json=serializers.serialize('json',posts)
     return JsonResponse(data={
-        'posts':posts_json,
-        'totalResult':totalData
+        'authors':authors,
+        'posts':post_list,
+        'totalResult':totalData,
+        'thumbnail':thumbnail_urls,
+        'profileImage':profile_urls,
     })
+#     Received Objects(querySets)
+#     Serializer converts this objects into JSON string
+#     because Json response requires a K-V pair
+#     JSON.parse converts back to original form which is an object but in js form 
 
 def profile_load_more(request):
     offset = int(request.POST.get('offset', 0))

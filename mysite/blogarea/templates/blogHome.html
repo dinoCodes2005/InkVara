@@ -67,7 +67,7 @@
             class="grid grid-cols-1 md:grid-cols-3 sm:grid-cols-2 gap-8 w-full"
           >
             {% for post in posts%}
-            <div class="blog-cards">
+            <div class="blog-cards hover:scale-[1.05] transition-transform duration-300">
               <a href="{% url 'ArticleDetailView' post.id%}">
                 <div
                   class="relative flex flex-col my-1 bg-white shadow-sm border border-slate-200 rounded-lg w-full"
@@ -96,9 +96,10 @@
                       {{post.articleSnippet}}
                     </p>
                   </div>
-
+              </a>
                   <div class="flex items-center justify-between p-4">
                     <div class="flex items-center">
+                      <a href="{% url 'show_profile_page' post.author.profile.id%}" class="flex ">
                       <img
                         alt="Tania Andrew"
                         src="{% if post.author.profile.profileImage %}
@@ -111,12 +112,11 @@
                         <span class="text-slate-800 font-semibold"
                           >{{post.author}}</span
                         >
-                        <span class="text-slate-600"> {{post.date}} </span>
-                      </div>
+                        <span class="text-slate-600"> {{post.post_date}} </span>
+                      </div></a>
                     </div>
                   </div>
                 </div>
-              </a>
             </div>
             {% endfor %}
           </div>
@@ -125,13 +125,15 @@
         <button
           id="load-more"
           type="button"
-          class="text-white bg-gradient-to-r from-cyan-500 to-blue-500 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-cyan-300 dark:focus:ring-cyan-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2"
+                    class="text-white bg-gradient-to-r from-cyan-500 to-blue-500 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-cyan-300 p-5 w-[150px] my-10 rounded-xl"
+
         >
           Load More
         </button>
       </div>
     </div>
     {% include 'newsletter.html'%} {% load static %}
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/1.6.5/flowbite.min.js"></script>
     <script>
       $(document).ready(function () {
         $("#load-more").on("click", function () {
@@ -149,36 +151,66 @@
               $("#load-more").addClass("disabled").text("Loading.....");
             },
             success: function (res) {
-              console.log(res);
               var _html = "";
-              var json_data = $.parseJSON(res.posts);
-              console.log("JSON DATA : " + JSON.parse(res.posts));
+              var json_data = res['posts'];
+              var thumbnail_urls = res['thumbnail'];
+              var profile_urls = res['profileImage'];
+              var authors = res['authors'];
               $.each(json_data, function (index, data) {
+                var thumbnailURL = thumbnail_urls[data['id']];
+                var profileURL = profile_urls[data.author['id']];
+                var postAuthor = "John Doe";
+                console.log("DATA:"+data['id']);
                 _html += `
-                      <div class="blog-cards">
-                      <a href="javascript:void(0)">
-                        <div class="relative flex flex-col my-1 bg-white shadow-sm border border-slate-200 rounded-lg w-96">
-                          <div class="relative h-56 overflow-hidden text-white rounded-md">
-                            <img src="/media/${data.fields.thumbnail}" alt="card-image" class="object-cover w-full h-full" />
-                          </div>
-                          <div class="p-4">
-                            <h6 class="mb-2 text-slate-800 text-xl font-semibold">${data.fields.title}</h6>
-                            <p class="text-slate-600 leading-normal font-light">${data.fields.articleSnippet}</p>
-                          </div>
-                          <div class="flex items-center justify-between p-4">
-                            <div class="flex items-center">
-                              <img alt="${data.fields.author}" src="/media/${data.fields.author.profileImage}" class="relative inline-block h-8 w-8 rounded-full" />
-                              <div class="flex flex-col ml-3 text-sm">
-                                <span class="text-slate-800 font-semibold">${data.fields.author}</span>
-                                <span class="text-slate-600">${data.fields.date}</span>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                      </a>
-                      </div>`;
+                      <div class="blog-cards hover:scale-[1.05] transition-transform duration-300">
+              <a href="/blogarea/article/${data.id}">
+                <div
+                  class="relative flex flex-col my-1 bg-white shadow-sm border border-slate-200 rounded-lg w-full"
+                >
+                  <div
+                    class="relative h-1/2 overflow-hidden text-white rounded-md"
+                  >
+                    <img
+                      src="${thumbnailURL}"
+                      alt="card-image"
+                    />
+                  </div>
+                  <div class="p-4">
+                    <div
+                      class="mb-4 rounded-full bg-cyan-600 py-0.5 px-2.5 border border-transparent text-xs text-white transition-all shadow-sm w-20 text-center"
+                    >
+                      POPULAR
+                    </div>
+                    <h6 class="mb-2 text-slate-800 text-xl font-semibold">
+                      ${data.title}
+                    </h6>
+                    <p class="text-slate-600 leading-normal font-light">
+                      
+
+                    </p>
+                  </div>
+              </a>
+                  <div class="flex items-center justify-between p-4">
+                    <div class="flex items-center">
+                      <a href="/show_profile_page/${data.author.profile['profile-id']}/" class="flex ">
+                      <img
+                        alt="Tania Andrew"
+                        src="${profileURL}"
+                        class="relative inline-block h-8 w-8 rounded-full"
+                      />
+                      <div class="flex flex-col ml-3 text-sm">
+                        <span class="text-slate-800 font-semibold"
+                          >${postAuthor}</span
+                        >
+                        <span class="text-slate-600"> ${data.post_date} </span>
+                      </div></a>
+                    </div>
+                  </div>
+                </div>
+            </div>`;
               });
               $("#cardContainer").append(_html);
+              $("#cardContainer").hide().fadeIn("fast");
               var _countTotal = $(".blog-cards").length;
               console.log("Count Total : " + _countTotal);
               if (_countTotal == res.totalResult) {

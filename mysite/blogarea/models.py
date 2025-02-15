@@ -35,13 +35,12 @@ class Category(models.Model):
 class Post(models.Model):
     
     choices = Category.objects.all().values_list('name','name')
-    
     title = models.CharField(max_length=255)
     author = models.ForeignKey(User,on_delete=models.CASCADE,null=True,blank=True)
     post_date = models.DateField(auto_now_add=True)
     category = models.CharField(choices=choices,max_length=255,default="Uncategorized")
     articleSnippet = models.CharField(max_length=150,default="Default Article Snippet")
-    thumbnail = models.ImageField(upload_to='thumbnail/',null=True,blank=True)
+    thumbnail = models.ImageField(upload_to='thumbnail/',null=True,blank=True, default='thumbnail/thumbnail.jpg')
     like = models.ManyToManyField(User,related_name='blog_posts',null=True,blank=True)
     body = RichTextField(blank=True,null=True)
     

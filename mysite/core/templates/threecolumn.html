@@ -36,7 +36,7 @@
           <h3
             class="mt-3 text-lg/6 font-semibold text-gray-900 group-hover:text-gray-600"
           >
-            <a href="#">
+            <a href="{% url 'ArticleDetailView' first_highest_post.id%}">
               <span class="absolute inset-0"></span>
               {{first_highest_post.title}}
             </a>
@@ -46,17 +46,23 @@
           </p>
         </div>
         <div class="relative mt-8 flex items-center gap-x-4">
-          <img
-            src="{% if first_highest_post.author.profile.profileImage %}
+          <a
+            href="{% url 'show_profile_page' first_highest_post.author.profile.id%}"
+          >
+            <img
+              src="{% if first_highest_post.author.profile.profileImage %}
           {{ first_highest_post.author.profile.profileImage.url }}
           {% else %}/media/thumbnail/thumbnail.jpg{% endif %}"
-            alt="{{ first_highest_post.author.username }}"
-            alt=""
-            class="size-10 rounded-full bg-gray-50"
-          />
+              alt="{{ first_highest_post.author.username }}"
+              alt=""
+              class="size-10 rounded-full bg-gray-50"
+            />
+          </a>
           <div class="text-sm/6">
             <p class="font-semibold text-gray-900">
-              <a href="#">
+              <a
+                href="{% url 'show_profile_page' first_highest_post.author.profile.id%}"
+              >
                 <span class="absolute inset-0"></span>
                 {{first_highest_post.author}}
               </a>
@@ -81,7 +87,7 @@
           <h3
             class="mt-3 text-lg/6 font-semibold text-gray-900 group-hover:text-gray-600"
           >
-            <a href="#">
+            <a href="{% url 'ArticleDetailView' second_highest_post.id%}">
               <span class="absolute inset-0"></span>
               {{second_highest_post.title}}
             </a>
@@ -91,17 +97,23 @@
           </p>
         </div>
         <div class="relative mt-8 flex items-center gap-x-4">
-          <img
-            src="{% if second_highest_post.author.profile.profileImage %}
+          <a
+            href="{% url 'show_profile_page' second_highest_post.author.profile.id%}"
+          >
+            <img
+              src="{% if second_highest_post.author.profile.profileImage %}
           {{ second_highest_post.author.profile.profileImage.url }}
           {% else %}/media/thumbnail/thumbnail.jpg{% endif %}"
-            alt="{{ first_highest_post.author.username }}"
-            alt=""
-            class="size-10 rounded-full bg-gray-50"
-          />
+              alt="{{ first_highest_post.author.username }}"
+              alt=""
+              class="size-10 rounded-full bg-gray-50"
+            />
+          </a>
           <div class="text-sm/6">
             <p class="font-semibold text-gray-900">
-              <a href="#">
+              <a
+                href="{% url 'show_profile_page' second_highest_post.author.profile.id%}"
+              >
                 <span class="absolute inset-0"></span>
                 {{second_highest_post.author}}
               </a>
@@ -128,7 +140,7 @@
           <h3
             class="mt-3 text-lg/6 font-semibold text-gray-900 group-hover:text-gray-600"
           >
-            <a href="#">
+            <a href="{% url 'ArticleDetailView' third_highest_post.id%}">
               <span class="absolute inset-0"></span>
               {{third_highest_post.title}}
             </a>
@@ -138,17 +150,23 @@
           </p>
         </div>
         <div class="relative mt-8 flex items-center gap-x-4">
-          <img
-            src="{% if third_highest_post.author.profile.profileImage %}
+          <a
+            href="{% url 'show_profile_page' third_highest_post.author.profile.id%}"
+          >
+            <img
+              src="{% if third_highest_post.author.profile.profileImage %}
           {{ third_highest_post.author.profile.profileImage.url }}
           {% else %}/media/thumbnail/thumbnail.jpg{% endif %}"
-            alt="{{ third_highest_post.author.username }}"
-            alt=""
-            class="size-10 rounded-full bg-gray-50"
-          />
+              alt="{{ third_highest_post.author.username }}"
+              alt=""
+              class="size-10 rounded-full bg-gray-50"
+            />
+          </a>
           <div class="text-sm/6">
             <p class="font-semibold text-gray-900">
-              <a href="#">
+              <a
+                href="{% url 'show_profile_page' third_highest_post.author.profile.id%}"
+              >
                 <span class="absolute inset-0"></span>
                 {{third_highest_post.author}}
               </a>

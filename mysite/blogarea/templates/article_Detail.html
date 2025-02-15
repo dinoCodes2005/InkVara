@@ -125,7 +125,9 @@
             class="w-full grid grid-rows-[auto_auto] grid-cols-[auto_auto] sm:flex sm:flex-wrap sm:gap-0 py-10 mb-10 relative"
           >
             {% for post in related_posts%}
-            <div class="blog-cards w-full sm:w-1/2">
+            <div
+              class="blog-cards w-full sm:w-[40%] hover:scale-[1.05] transition-transform duration-300 mx-1"
+            >
               <a href="{% url 'ArticleDetailView' post.id%}">
                 <div
                   class="relative flex flex-col my-1 bg-white shadow-sm border border-slate-200 rounded-lg w-full"
@@ -209,7 +211,7 @@
         </form>
         <br />
         <div class="mt-10">
-          {% for comment in comments%}
+          {% for comment in comments%} {% if comment.post == current_post %}
           <div class="grid grid-cols-[80px_auto] mb-5">
             <div class="w-full">
               <a href="{% url 'show_profile_page' comment.user.profile.id %}">
@@ -240,7 +242,7 @@
               </div>
             </div>
           </div>
-          {% endfor%}
+          {% endif %} {% endfor%}
         </div>
       </div>
     </div>
