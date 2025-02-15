@@ -224,18 +224,17 @@ def submit_comment(request):
         if body and user.is_authenticated:
             post = Post.objects.get(id = post_id)
             comment = Comment.objects.create(user = user,body = body,post = post)
-            
-            if comment.user.profile.profileImage:
-                profile_image = request.build_absolute_uri(comment.user.profile.profileImage.url)
-            else:
-                profile_image = request.build_absolute_uri('/media/thumbnail/thumbnail.jpg')
+                
             return JsonResponse({
                 'success' : True,
                 'comment' : {
                     'user':comment.user.username,
                     'body':comment.body,
                     'comment_date':comment.comment_date,
-                    'profile_image':profile_image,
+                    'profile_image': request.build_absolute_uri(comment.user.profile.profileImage.url)
+                    if comment.user.profile.profileImage 
+                    else 
+                    request.build_absolute_uri('/media/thumbnail/thumbnail.jpg') ,
                     'profile_url':f"/show_profile_page/{comment.user.profile.id}/",
                 }
             })

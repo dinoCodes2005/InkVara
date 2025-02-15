@@ -1,0 +1,49 @@
+<script>
+  $("#comment-form").on("submit", function (e) {
+    e.preventDefault();
+    $.ajax({
+      url: '{% url "submit_comment"%}',
+      type: "POST",
+      data: {
+        post: "{{current_post.id}}",
+        body: $("#comment-text").val(),
+        csrfmiddlewaretoken: "{{csrf_token}}",
+      },
+      success: function (response) {
+        if (response.success) {
+          var comment = `
+          <div class="grid grid-cols-[80px_auto] mb-5">
+              <div class="w-full">
+                  <a href="${response.comment.profile_url}  ">
+                      <img
+                          class="size-10 rounded-full border-[1px] border-solid border-blue-950"
+                          src=" ${response.comment.profile_image}"
+                          alt=""
+                      />
+                  </a>
+              </div>
+              <div class="flex flex-col gap-2">
+                  <div>
+                      @
+                      <a href=" ">${response.comment.user}</a>
+                      - ${response.comment.comment_date}
+                  </div>
+                  ${response.comment.body}
+                  <div>
+                      <button>
+                          <i class="bx bx-like mr-5"></i>${response.comments_likes}
+                      </button>
+                      <button><i class="bx bx-dislike"></i></button>
+                  </div>
+              </div>
+          </div>
+      `;
+          $("#comments").append(comment);
+          $("#comment-text").val("");
+        } else {
+          alert("Error" + response.error);
+        }
+      },
+    });
+  });
+</script>
