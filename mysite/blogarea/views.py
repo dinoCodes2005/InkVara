@@ -115,13 +115,25 @@ class AddPostView(CreateView):
         return redirect(self.object.get_absolute_url())
 
 def LikeView(request,pk):
-    post = get_object_or_404(Post,id=pk)
-    if request.user in post.like.all():
-        post.like.remove(request.user)  # Unlike the post
-        
+    if request.method == "POST":
+        post_id = request.POST.get('post_id',False)
+        post = Post.objects.get(id = post_id)
+        liked = False
+        if request.user.is_authenticated:
+            if request.user in post.like.all():
+                post.like.remove(request.user)                   # Unlike the post
+            else:
+                post.like.add(request.user) 
+                liked = True
+        return JsonResponse(data={
+        'success':True,
+        'liked':liked,
+        'likes':post.total_likes(),
+    })
     else:
-        post.like.add(request.user) 
-    return HttpResponseRedirect(reverse('ArticleDetailView',args=[pk]))
+        return JsonResponse(data={
+            'success':False,
+        })
     
 class UpdatePostView(UpdateView):
     model = Post

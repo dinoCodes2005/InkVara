@@ -67,27 +67,33 @@
             >
           </h1>
           <h1 class="mb-5">Word Count: {{total_words}}</h1>
-          <form action="{% url 'like_post' post.pk %}" method="post">
+          <form
+            action="{% url 'like_post' post.pk %}"
+            method="post"
+            id="like-form"
+          >
             {% csrf_token %}
             <button
               type="submit"
               name="post_id"
               value="{{ post.id }}"
-              class="like-button {% if request.user in post.like.all %}liked{% else %}unliked{% endif %}"
               id="LikeButton"
             >
-              {% if has_liked %}
+              {% if not has_liked %}
               <i
-                class="bx bx-like text-2xl translate-y-1/4 text-white px-2 py-1 rounded-md bg-blue-600"
+                id="like-icon"
+                class="bx bx-like text-2xl translate-y-1/4 text-black bg-white px-2 py-1 rounded-md"
               ></i>
-              {% else %}
+              {%else%}
               <i
-                class="bx bx-like text-2xl translate-y-1/4 text-black border-black border-2 border-solid px-2 py-1 rounded-md"
+                id="like-icon"
+                class="bx bx-like text-2xl translate-y-1/4 text-white bg-blue-600 px-2 py-1 rounded-md"
               ></i>
-              {% endif %} Like
+              {% endif %}
             </button>
             <label style="margin-top: 10px" for="LikeButton"
-              >&nbsp;- {{ total_likes }} Likes</label
+              >&nbsp;-
+              <span id="like-number">{{total_likes}}</span> Likes</label
             >
           </form>
 
@@ -249,5 +255,34 @@
       </div>
     </div>
     {% include 'footerCode.html' %} {% include 'comment.html'%}
+    <script>
+      $(document).ready(function () {});
+      $("#like-form").on("submit", function (e) {
+        e.preventDefault();
+        $.ajax({
+          url: "{% url 'like_post' post.id%}",
+          type: "POST",
+          data: {
+            post_id: "{{current_post.id}}",
+            csrfmiddlewaretoken: "{{csrf_token}}",
+          },
+          success: function (response) {
+            if (response.success) {
+              if (response.liked) {
+                $("#like-icon")
+                  .removeClass("text-black bg-white")
+                  .addClass("text-white bg-blue-600");
+                $("#like-number").text(response.likes);
+              } else {
+                $("#like-icon")
+                  .removeClass("text-white bg-blue-600")
+                  .addClass("text-black bg-white");
+                $("#like-number").text(response.likes);
+              }
+            }
+          },
+        });
+      });
+    </script>
   </body>
 </html>
