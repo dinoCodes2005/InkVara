@@ -40,7 +40,7 @@ class Post(models.Model):
     author = models.ForeignKey(User,on_delete=models.CASCADE,null=True,blank=True)
     post_date = models.DateField(auto_now_add=True)
     category = models.CharField(choices=choices,max_length=255,default="Uncategorized")
-    articleSnippet = models.CharField(max_length=150,default="Default Article Snippet")
+    articleSnippet = models.CharField(max_length=50,default="Default Article Snippet")
     thumbnail = models.ImageField(upload_to='thumbnail/',null=True,blank=True, default='thumbnail/thumbnail.jpg')
     like = models.ManyToManyField(User,related_name='blog_posts',null=True,blank=True)
     body = RichTextField(blank=True,null=True)
@@ -83,9 +83,33 @@ class Comment(models.Model):
     user = models.ForeignKey(User,null=True,on_delete=models.CASCADE)
     body = models.TextField()
     comment_date = models.DateField(auto_now_add=True)
-    likes = models.ManyToManyField(User,related_name='liked_comment',blank=True)
+    likes = models.ManyToManyField(User,related_name='liked_comment',blank=True,default=0)
     dislikes = models.ManyToManyField(User,related_name='disliked_comment',blank=True)
     
     def __str__(self):
         return f"{self.post.title} - {self.user.username} - {self.body[:25]}"
+    
+    def total_likes(self):
+        return self.likes.count()
+    
+    def total_dislikes(self):
+        return self.dislikes.count()
+    
+class Reply(models.Model):
+    user = models.ForeignKey(User,null=True,on_delete=models.CASCADE)
+    comment = models.ForeignKey(Comment,null=True,on_delete=models.CASCADE)
+    body = models.TextField()
+    reply_date = models.DateTimeField(auto_now_add=True)
+    likes = models.ManyToManyField(User,related_name='liked_reply',blank=True)
+    dislikes = models.ManyToManyField(User,related_name='disliked_reply',blank=True)
+    
+    def __str__(self):
+        return f"{self.user} - {self.comment | truncate:20}"
+    
+    def total_likes(self):
+        return self.likes.count()
+    
+    def total_dislikes(self):
+        return self.dislikes.count()
+    
     

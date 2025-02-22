@@ -10,7 +10,7 @@ from django.views.generic import ListView, DetailView, CreateView, UpdateView, D
 from requests import post
 from .models import Comment, Post, Profile
 from django.urls import reverse_lazy,reverse
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect , StreamingHttpResponse
 from django.db.models import Count
 from blogarea.models import Profile
 from django.core import serializers
@@ -18,6 +18,9 @@ from django.http import HttpResponse, JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 from .forms import CommentForm
 from django.views.generic.edit import FormMixin
+from openai import OpenAI
+import google.generativeai as genai
+import json
 # Create your views here.
 class BlogHome(ListView):
     model = Post
@@ -63,7 +66,7 @@ class ArticleDetailView(DetailView,FormMixin):
         comments_number = comments.count()
         context['current_post'] = current_post
         context['comments_number'] = comments_number
-        context['comments'] = list(comments.filter(user=self.request.user)) + list(comments.exclude(user=self.request.user).order_by('-comment_date'))
+        context['comments'] =  list(comments.filter(user=self.request.user)) + list(comments.exclude(user=self.request.user).order_by('-comment_date')) if self.request.user.is_authenticated else list(comments)
         context['form'] = self.get_form()
         context['has_liked'] = has_liked
         context['related_posts'] = related_posts
@@ -96,6 +99,10 @@ class ShowProfileView(DetailView):
         total_likes = Post.objects.filter(author=page_user.user).aggregate(total_likes=Count('like'))['total_likes'] or 0
         skills = page_user.skills.split(',') if page_user.skills else []
         education = page_user.education.split(',') if page_user.education else []
+        show_load_more = True
+        if posts.count()<4:
+            show_load_more = False
+        context['show_load_more'] = show_load_more
         context['posts'] = posts[:4]
         context['education'] = education
         context['skills'] = skills
@@ -114,26 +121,7 @@ class AddPostView(CreateView):
         response = super().form_valid(form)
         return redirect(self.object.get_absolute_url())
 
-def LikeView(request,pk):
-    if request.method == "POST":
-        post_id = request.POST.get('post_id',False)
-        post = Post.objects.get(id = post_id)
-        liked = False
-        if request.user.is_authenticated:
-            if request.user in post.like.all():
-                post.like.remove(request.user)                   # Unlike the post
-            else:
-                post.like.add(request.user) 
-                liked = True
-        return JsonResponse(data={
-        'success':True,
-        'liked':liked,
-        'likes':post.total_likes(),
-    })
-    else:
-        return JsonResponse(data={
-            'success':False,
-        })
+
     
 class UpdatePostView(UpdateView):
     model = Post
@@ -235,11 +223,11 @@ def submit_comment(request):
         post_id = request.POST.get('post')
         if body and user.is_authenticated:
             post = Post.objects.get(id = post_id)
-            comment = Comment.objects.create(user = user,body = body,post = post)
-                
+            comment = Comment.objects.create(user = user,body = body,post = post)    
             return JsonResponse({
                 'success' : True,
                 'comment' : {
+                    'id':comment.id,
                     'user':comment.user.username,
                     'body':comment.body,
                     'comment_date':comment.comment_date,
@@ -248,6 +236,8 @@ def submit_comment(request):
                     else 
                     request.build_absolute_uri('/media/thumbnail/thumbnail.jpg') ,
                     'profile_url':f"/show_profile_page/{comment.user.profile.id}/",
+                    'comment_likes':0,
+                    'comment_dislikes':0,
                 }
             })
         return JsonResponse({
@@ -258,3 +248,100 @@ def submit_comment(request):
         'success':False,
         'error':'Invalid Request Method'
     })
+    
+def LikeView(request,pk):
+    if request.method == "POST":
+        post_id = request.POST.get('post_id',False)
+        post = Post.objects.get(id = post_id)
+        liked = False
+        if request.user.is_authenticated:
+            if request.user in post.like.all():
+                post.like.remove(request.user)                   # Unlike the post
+            else:
+                post.like.add(request.user) 
+                liked = True
+        return JsonResponse(data={
+        'success':True,
+        'liked':liked,
+        'likes':post.total_likes(),
+    })
+    else:
+        return JsonResponse(data={
+            'success':False,
+        })
+           
+def comment_like(request, pk):
+    if request.method == "POST":
+        comment = get_object_or_404(Comment, id=pk)  
+        liked = False
+        removeDisliked = False
+        if request.user.is_authenticated:
+            if request.user in comment.likes.all():
+                comment.likes.remove(request.user)           #unlike system                   
+            else:
+                comment.likes.add(request.user)                 #liking
+                if request.user in comment.dislikes.all():
+                    comment.dislikes.remove(request.user)
+                    removeDisliked = True                       #if liked remove from dislike
+                liked = True
+
+            return JsonResponse({
+                "success": True,
+                "liked": liked,
+                "removeDisliked":removeDisliked,
+                "likes": comment.likes.count(),  
+                "dislikes":comment.dislikes.count(),
+            })
+
+    return JsonResponse({"success": False})
+
+def comment_dislike(request, pk):
+    if request.method == "POST":
+        comment = get_object_or_404(Comment, id=pk)  
+        disliked = False
+        removeLiked = False
+        if request.user.is_authenticated:
+            if request.user in comment.dislikes.all():
+                comment.dislikes.remove(request.user)       #removing dislike
+            else:
+                comment.dislikes.add(request.user)          #disliking
+                if request.user in comment.likes.all():
+                    comment.likes.remove(request.user)      #if disliked remove from liked 
+                    removeLiked = True
+                disliked = True
+
+            return JsonResponse({
+                "success": True,
+                "disliked": disliked,
+                "removeLiked":removeLiked,
+                "dislikes": comment.dislikes.count(),  # Directly count likes
+                "likes":comment.likes.count(),
+            })
+
+    return JsonResponse({"success": False})
+
+genai.configure(api_key="AIzaSyBw54sbgCFjRGqnGF2V91FyBfj0ZB2Oip4")
+          
+def generate_response(prompt):
+    model = genai.GenerativeModel("gemini-1.5-flash")
+    response = model.generate_content(prompt, stream=True)  
+
+    def stream_data():
+        try:
+            for chunk in response:
+                if chunk.text:
+                    yield chunk.text + " "  
+        except Exception as e:
+            yield f"Error: {str(e)}"
+
+    return StreamingHttpResponse(stream_data(), content_type="text/plain")
+
+@csrf_exempt
+def answer(request):
+    if request.method == "POST":
+        try:
+            data = json.loads(request.body)
+            prompt = data.get("prompt", "No prompt provided")
+            return generate_response(prompt) 
+        except Exception as e:
+            return JsonResponse({"error": str(e)}, status=500)

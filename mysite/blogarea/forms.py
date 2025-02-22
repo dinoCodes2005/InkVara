@@ -1,9 +1,10 @@
 from cProfile import label
 
 from click import style
+import widget_tweaks
 
 from core import models
-from .models import Comment
+from .models import Comment,Post
 from django import forms
 
 class CommentForm(forms.ModelForm):
@@ -18,3 +19,4 @@ class CommentForm(forms.ModelForm):
                                            'cols':50,
                                            'style':'width:80%;height:150px;',})
         }
+        

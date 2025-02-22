@@ -227,6 +227,7 @@
           </div>
           {% endfor %}
         </div>
+        {% if show_load_more %}
         <button
           id="load-more"
           type="button"
@@ -234,6 +235,7 @@
         >
           Load More
         </button>
+        {%endif %}
       </div>
     </div>
     {%include 'filtered-load-more.html'%} {%include 'footerCode.html'%}

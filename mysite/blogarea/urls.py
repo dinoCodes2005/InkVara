@@ -35,7 +35,13 @@ urlpatterns = [
     path('show_profile_page/<int:pk>/',ShowProfileView.as_view(),name="show_profile_page"),
     path('load-more/',views.load_more,name="load-more"),
     path('filtered_load_more/',views.filtered_load_more,name="filtered_load_more"),
-    path('submit_comment/',views.submit_comment,name="submit_comment")
+    path('submit_comment/',views.submit_comment,name="submit_comment"),
+    path('comment_like/<int:pk>/',views.comment_like,name="comment_like"),
+    path('comment_dislike/<int:pk>/',views.comment_dislike,name="comment_dislike"),
+    path('answer/',views.answer,name="answer"),
+    
+    
+    # path('comment_dislike/<int:pk>/',views.comment_dislike,name="comment_dislike"),
 
 ]
 
