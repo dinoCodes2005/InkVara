@@ -10,8 +10,11 @@
   <body>
     {% include 'nav.html'%}
     <div class="fullContainer flex justify-center align-middle flex-col">
-      {% include 'frontPageTop.html' %} {% include 'threecolumn.html'%}
-      {%include 'startInkVara.html'%} {% include 'workcation.html'%}
+      <!-- prettier-ignore -->
+      <div style="position: relative;">{% include 'frontPageTop.html' %} {% include 'marquee.html' %}</div>
+
+      <!-- prettier-ignore -->
+      {%include 'threecolumn.html'%} {%include 'startInkVara.html'%} {% include 'workcation.html'%}
     </div>
     {% include 'footerCode.html' %}
   </body>

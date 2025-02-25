@@ -1,5 +1,8 @@
 {
   "dependencies": {
     "node.js": "^0.0.1-security"
+  },
+  "devDependencies": {
+    "prettier-plugin-django": "^0.5.18"
   }
 }

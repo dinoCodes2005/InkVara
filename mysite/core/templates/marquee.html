@@ -1,0 +1,133 @@
+<head></head>
+<div class="marquee flex flex-col w-full h-full">
+  <div
+    x-data
+    x-init="
+            $nextTick(() => {
+                $refs.content.appendChild($refs.item.cloneNode(true));
+            });
+        "
+    class="w-full overflow-hidden text-lg italic tracking-wide text-white uppercase bg-black sm:text-xs md:text-sm lg:text-base xl:text-xl"
+  >
+    <div class="relative w-full overflow-hidden mx-auto max-w-7xl">
+      <div
+        class="absolute left-0 z-20 w-[100px] h-full bg-gradient-to-r from-black to-transparent"
+      ></div>
+      <div
+        class="absolute right-0 z-20 w-[100px] h-full bg-gradient-to-l from-black to-transparent"
+      ></div>
+      <div x-ref="content" class="flex animate-marquee">
+        <div
+          x-ref="item"
+          class="flex items-center justify-center flex-shrink-0 w-full py-2 space-x-2 container-block-02"
+        >
+          <div>🖋️ Welcome to InkVara</div>
+          <div class="hidden sm:inline two">
+            Explore, Write, and Share Your Stories!
+          </div>
+          <div class="hidden lg:inline three">Join the InkVara Community !</div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div
+    x-data
+    x-init="
+            $nextTick(() => {
+                $refs.content.appendChild($refs.item.cloneNode(true));
+            });
+        "
+    class="w-full overflow-hidden text-lg italic tracking-wide text-white uppercase bg-black sm:text-xs md:text-sm lg:text-base xl:text-xl"
+  >
+    <div class="relative w-full overflow-hidden mx-auto max-w-7xl">
+      <div
+        class="absolute left-0 z-20 w-40 h-full bg-gradient-to-r from-black to-transparent"
+      ></div>
+      <div
+        class="absolute right-0 z-20 w-40 h-full bg-gradient-to-l from-black to-transparent"
+      ></div>
+      <div x-ref="content" class="flex animate-marquee-reverse">
+        <div
+          x-ref="item"
+          class="flex items-center justify-center flex-shrink-0 w-full py-2 space-x-2 container-block-02"
+        >
+          <div class="pr-32">Turn Your Thoughts into Words !</div>
+          <div class="hidden sm:inline two pr-32">Ink Your Imagination !</div>
+          <div class="hidden lg:inline three pr-32">
+            A World of Stories Awaits !
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<style>
+  /*
+     *  This is the marquee animation styles. 
+     *  Instead of adding this CSS you may wish to implement in your tailwind config. 
+     *  Learn more in the marquee Tailwind Config section
+     */
+  @keyframes marquee {
+    0% {
+      transform: translateX(0);
+    }
+    100% {
+      transform: translateX(-100%);
+    }
+  }
+  @keyframes marquee-reverse {
+    0% {
+      transform: translateX(-100%);
+    }
+    100% {
+      transform: translateX(0);
+    }
+  }
+  .animate-marquee {
+    animation: marquee 20s linear infinite;
+  }
+  .animate-marquee-reverse {
+    animation: marquee-reverse 20s linear infinite;
+  }
+
+  .marquee {
+    /* position: relative; */
+  }
+  .marquee::before {
+    content: "";
+    position: absolute;
+    width: 100%;
+    height: 20%;
+    background: linear-gradient(
+      to bottom,
+      rgba(0, 0, 0, 1) 0%,
+      rgba(6, 8, 35, 0.9) 40%,
+
+      white
+    );
+
+    top: 100%;
+  }
+</style>
+
+<style>
+  /*
+     *  This is a container query used for the demo that does not need to be included
+     */
+  .container-block-02 {
+    container-type: inline-size;
+  }
+  @container (max-width: 1100px) {
+    .container-block-02 *:nth-child(2),
+    .container-block-02 *:nth-child(3) {
+      display: none;
+    }
+  }
+
+  @container (max-width: 1100px) {
+    .container-block-02 > div {
+      font-size: 12px !important;
+    }
+  }
+</style>
