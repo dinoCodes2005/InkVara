@@ -8,7 +8,7 @@ from django.contrib.auth import logout,authenticate
 from django.contrib import messages
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 from requests import post
-from .models import Comment, Post, Profile
+from .models import Comment, Hashtag, Post, Profile
 from django.urls import reverse_lazy,reverse
 from django.http import HttpResponseRedirect , StreamingHttpResponse
 from django.db.models import Count
@@ -16,7 +16,7 @@ from blogarea.models import Profile
 from django.core import serializers
 from django.http import HttpResponse, JsonResponse
 from django.views.decorators.csrf import csrf_exempt
-from .forms import CommentForm
+from .forms import CommentForm, PostForm
 from django.views.generic.edit import FormMixin
 from openai import OpenAI
 import google.generativeai as genai
@@ -64,6 +64,7 @@ class ArticleDetailView(DetailView,FormMixin):
         has_liked = self.request.user in current_post.like.all() if self.request.user.is_authenticated else False 
         comments = Comment.objects.filter(post_id = current_post.id)
         comments_number = comments.count()
+            
         context['current_post'] = current_post
         context['comments_number'] = comments_number
         context['comments'] =  list(comments.filter(user=self.request.user)) + list(comments.exclude(user=self.request.user).order_by('-comment_date')) if self.request.user.is_authenticated else list(comments)
@@ -115,12 +116,28 @@ class ShowProfileView(DetailView):
 class AddPostView(CreateView):
     model = Post
     template_name = 'writeBlog.html'
-    fields = '__all__'
+    form_class = PostForm
+
     def form_valid(self, form):
         form.instance.author = self.request.user
         response = super().form_valid(form)
-        return redirect(self.object.get_absolute_url())
+        
+        # Process hashtags
+        tags = form.instance.hashtags
+        tags_list = [tag.strip().lstrip('#') for tag in tags.split(',') if tag.strip()]
+        
+        for tag in tags_list:
+            hashtag, created = Hashtag.objects.get_or_create(tag=tag)
+            hashtag.post.add(form.instance)
+            form.instance.tags.add(hashtag)
+        return redirect(self.get_success_url())
 
+    def get_success_url(self):
+        return reverse_lazy('ArticleDetailView', kwargs={'pk': self.object.pk})
+
+def CategoryView(request,tag):
+    category_posts = Post.objects.filter(tags__tag = tag)
+    return render(request,'categories.html',{'posts':category_posts})
 
     
 class UpdatePostView(UpdateView):
@@ -137,11 +154,6 @@ def logout_user(request):
     logout(request)
     messages.success(request,"You have logged out")
     return redirect('home')
-
-def CategoryView(request,cats):
-    category_name = cats.replace('-',' ').title()
-    category_posts = Post.objects.filter(category=category_name)
-    return render(request,'categories.html',{'category_posts':category_posts})
 
 def load_more(request):
     offset=int(request.POST.get('offset',False))

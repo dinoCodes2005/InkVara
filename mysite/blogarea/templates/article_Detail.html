@@ -59,6 +59,11 @@
           <h1 class="text-xl font-normal text-slate-500 mb-10">
             #{{post.category}}
           </h1>
+          <h1>
+            Hashtags - {% if post.tags %} {% for tag in post.tags.all %}
+            <a href="{% url 'categories' tag %}">#{{tag}}</a>
+            {% endfor %} {% endif %}
+          </h1>
           <p class="text-slate-500 sm:text-lg text-md">{{post.body|safe}}</p>
           <h1 class="text-3xl font-bold mt-10 mb-10s">Stay Connected</h1>
           <h1 class="text-xl font-semibold" style="font-family: lato">
@@ -221,8 +226,7 @@
         {% endif %}
         <br />
         <div class="mt-10" id="comments">
-          {% for comment in comments %} 
-          {% if comment.post == current_post %}
+          {% for comment in comments %} {% if comment.post == current_post %}
           <div class="grid grid-cols-[80px_auto_80px] mb-5">
             <div class="w-full">
               <a href="{% url 'show_profile_page' comment.user.profile.id %}">
@@ -320,7 +324,7 @@
                   class="py-2 text-sm text-gray-800 bg-gray-200 rounded-md"
                   aria-labelledby="dropdownMenuIconButton"
                 >
-                <p>{{request.user}} {{comment.user.username}}</p>
+                  <p>{{request.user}} {{comment.user.username}}</p>
                   {% if request.user == comment.user.username %}
                   <li>
                     <a href="#" class="block px-4 py-2 hover:bg-gray-100"
@@ -347,8 +351,7 @@
               </div>
             </div>
           </div>
-          {% endif %} 
-          {% endfor %}
+          {% endif %} {% endfor %}
         </div>
       </div>
     </div>

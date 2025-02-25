@@ -39,6 +39,7 @@ urlpatterns = [
     path('comment_like/<int:pk>/',views.comment_like,name="comment_like"),
     path('comment_dislike/<int:pk>/',views.comment_dislike,name="comment_dislike"),
     path('answer/',views.answer,name="answer"),
+    path('categories/<str:tag>/',views.CategoryView,name="categories"),
     
     
     # path('comment_dislike/<int:pk>/',views.comment_dislike,name="comment_dislike"),

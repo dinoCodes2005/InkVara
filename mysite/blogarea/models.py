@@ -13,13 +13,6 @@ from django.utils.html import strip_tags
 from phonenumber_field.modelfields import PhoneNumberField
 from requests import post
 
-
-# Create your models here.
-# class Hashtag(models.Model):
-#     name = models.CharField(max_length=50,unique=True)
-    
-#     def __str__(self):
-#          return '#'+self.name
 class Category(models.Model):
     name = models.CharField(max_length=255,default="Uncategorized")
     
@@ -39,10 +32,12 @@ class Post(models.Model):
     title = models.CharField(max_length=255)
     author = models.ForeignKey(User,on_delete=models.CASCADE,null=True,blank=True)
     post_date = models.DateField(auto_now_add=True)
+    hashtags = models.TextField(max_length=200,null=True)
     category = models.CharField(choices=choices,max_length=255,default="Uncategorized")
-    articleSnippet = models.CharField(max_length=50,default="Default Article Snippet")
+    articleSnippet = models.CharField(max_length=50)
     thumbnail = models.ImageField(upload_to='thumbnail/',null=True,blank=True, default='thumbnail/thumbnail.jpg')
     like = models.ManyToManyField(User,related_name='blog_posts',null=True,blank=True)
+    tags = models.ManyToManyField("Hashtag",related_name="posts",null=True,blank=True)
     body = RichTextField(blank=True,null=True)
     
     def total_likes(self):
@@ -111,5 +106,17 @@ class Reply(models.Model):
     
     def total_dislikes(self):
         return self.dislikes.count()
+    
+class Hashtag(models.Model):
+    tag = models.CharField(max_length = 20,null=True,blank=True)
+    post = models.ManyToManyField(Post,null=True,related_name='hashtag_posts')
+    
+    def __str__(self):
+        return self.tag
+    
+    def get_posts(self):
+        return self.post.all()
+    
+    
     
     
