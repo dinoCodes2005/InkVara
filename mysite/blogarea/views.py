@@ -12,7 +12,7 @@ from requests import post
 from .models import Comment, Hashtag, Post, Profile
 from django.urls import reverse_lazy,reverse
 from django.http import HttpResponseRedirect , StreamingHttpResponse
-from django.db.models import Count
+from django.db.models import Count,Q
 from blogarea.models import Profile
 from django.core import serializers
 from django.http import HttpResponse, JsonResponse
@@ -365,18 +365,14 @@ def search(request):
         if not data:
             return random_post(request)
         
-        posts=[]
-        for post in Post.objects.all():
-            posts.append({"title":post.title,"link":post.get_absolute_url(),"id":post.id})
+        posts = list(Post.objects.filter(Q(title__icontains = data))[:5].values("title","id","author__username"))
         return JsonResponse({"posts":posts})
     else:   
         return JsonResponse({"error":"Not a GET request"})
     
 def random_post(request):
     if request.method == "GET":
-        posts = []
-        for post in Post.objects.order_by("?")[:5]:
-            posts += {"title":post.title,"link":post.get_absolute_url(),"id":post.id}
+        posts = list(Post.objects.order_by("-like")[:5].values("title","id","author__username"))
         return JsonResponse({"posts":posts})
     else:   
         return JsonResponse({"error":"Not a GET request"})
