@@ -37,19 +37,26 @@
   var search_btn = document.getElementById("search-btn");
   document.addEventListener("DOMContentLoaded", function () {
     var titles = [];
+    var ids = [];
+    var links = [];
     fetch("/random-post/")
       .then((response) => response.json())
       .then((data) => {
-        titles = data.title;
-      });
+        data.posts.forEach((post) => {
+          titles.push(post.title);
+          ids.push(post.id);
+          links.push(post.link);
+        });
+      })
+      .catch((error) => console.error("Error fetching posts:", error));
 
     search_btn.addEventListener("click", function () {
       if (search_btn.value === "") {
         search_box.innerHTML = "";
-        titles.forEach((title) => {
+        titles.forEach((title, index) => {
           search_box.insertAdjacentHTML(
             "beforeend",
-            `<a href="#" class="w-full h-[40px] search-items pl-3 pt-3">${title}</a>`
+            `<a href="/article/${ids[index]}/" class="w-full h-[40px] search-items pl-3 pt-3">${title}</a>`
           );
         });
       } else {

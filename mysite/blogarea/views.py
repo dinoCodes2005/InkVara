@@ -364,19 +364,20 @@ def search(request):
         data = request.GET.get("title","")
         if not data:
             return random_post(request)
-        titles = Post.objects.values_list('title',flat=True)
-        title_list = {"title":[]}
-        for title in titles:
-            if data in title:
-                title_list["title"].append(title)
-        return JsonResponse(title_list)
+        
+        posts=[]
+        for post in Post.objects.all():
+            posts.append({"title":post.title,"link":post.get_absolute_url(),"id":post.id})
+        return JsonResponse({"posts":posts})
     else:   
         return JsonResponse({"error":"Not a GET request"})
     
 def random_post(request):
     if request.method == "GET":
-        titles = Post.objects.order_by("?").values_list("title",flat=True)[:5]    
-        return JsonResponse({"title":[title for title in titles]})
+        posts = []
+        for post in Post.objects.order_by("?")[:5]:
+            posts += {"title":post.title,"link":post.get_absolute_url(),"id":post.id}
+        return JsonResponse({"posts":posts})
     else:   
         return JsonResponse({"error":"Not a GET request"})
             
