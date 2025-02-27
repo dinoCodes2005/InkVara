@@ -25,6 +25,7 @@ module.exports = {
         extend: {
             screens:{
                 'ml':'900px',
+                'xm':'480px',
             }
         },
     },

@@ -5,6 +5,7 @@
     rel="stylesheet"
   />
   {% load static %}
+  <style></style>
 </head>
 <nav class="bg-gray-900" x-data="{ open: true, dropdown_open:false }">
   {%load static%}
@@ -130,9 +131,15 @@
             />
           </svg>
         </button> -->
-        <form action="" class="hidden ml:inline-block mx-5">
-          {% include 'search.html'%}
+
+        <!-- large screen search -->
+        <form action="">
+          <div class="hidden ml:inline-block mx-5 relative">
+            {% include 'search.html'%}
+          </div>
         </form>
+
+        <!-- small screen search -->
         <form action="">
           <button
             type="button"

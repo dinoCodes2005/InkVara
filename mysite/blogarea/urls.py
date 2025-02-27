@@ -40,6 +40,8 @@ urlpatterns = [
     path('comment_dislike/<int:pk>/',views.comment_dislike,name="comment_dislike"),
     path('answer/',views.answer,name="answer"),
     path('categories/<str:tag>/',views.CategoryView,name="categories"),
+    path('search/',views.search,name="search"),
+    path('random-post/',views.random_post,name="random-post"),
     
     
     # path('comment_dislike/<int:pk>/',views.comment_dislike,name="comment_dislike"),

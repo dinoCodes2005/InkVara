@@ -1,4 +1,5 @@
 from multiprocessing import context
+import random
 from sre_constants import SUCCESS
 from unicodedata import category
 from urllib import request, response
@@ -349,7 +350,7 @@ def generate_response(prompt):
     return StreamingHttpResponse(stream_data(), content_type="text/plain")
 
 @csrf_exempt
-def answer(request):
+def answer(request):   
     if request.method == "POST":
         try:
             data = json.loads(request.body)
@@ -357,3 +358,27 @@ def answer(request):
             return generate_response(prompt) 
         except Exception as e:
             return JsonResponse({"error": str(e)}, status=500)
+        
+def search(request):
+    if request.method == "GET":
+        data = request.GET.get("title","")
+        if not data:
+            return random_post(request)
+        titles = Post.objects.values_list('title',flat=True)
+        title_list = {"title":[]}
+        for title in titles:
+            if data in title:
+                title_list["title"].append(title)
+        return JsonResponse(title_list)
+    else:   
+        return JsonResponse({"error":"Not a GET request"})
+    
+def random_post(request):
+    if request.method == "GET":
+        titles = Post.objects.order_by("?").values_list("title",flat=True)[:5]    
+        return JsonResponse({"title":[title for title in titles]})
+    else:   
+        return JsonResponse({"error":"Not a GET request"})
+            
+        
+        
