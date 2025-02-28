@@ -9,6 +9,7 @@
       href="https://cdnjs.cloudflare.com/ajax/libs/flowbite/1.6.5/flowbite.min.css"
       rel="stylesheet"
     />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
     {% tailwind_css %}
     <link
       href="https://fonts.googleapis.com/css2?family=Bitter:ital,wght@0,100..900;1,100..900&family=Exo+2:ital,wght@0,500;1,500&display=swap"
@@ -28,17 +29,19 @@
           <div class="flex flex-col row-span-1">
             <div class="flex justify-between">
               <div
-                class="px-0 py-10 sm:px-10 font-semibold text-5xl sm:text-6xl w-3/5"
+                class="px-0 py-10 sm:px-10 font-semibold text-5xl sm:text-6xl w-2/5 sm:w-3/5"
                 style="font-family: Bitter"
               >
                 Blogs
               </div>
-              <div class="px-0 py-10 sm:px-10 sm:p-10 w-2/5 text-sm sm:text-lg">
+              <div
+                class="pl-2 py-10 sm:px-10 sm:p-10 w-3/5 sm:w-2/5 text-xs sm:text-lg"
+              >
                 Stay informed with the latest updates, events, and announcements
                 shaping the InkVara.com community and beyond
               </div>
             </div>
-            <hr class="border-1 border-gray-300" />
+            <hr class="border-1 border-gray-300 mb-5" />
             <h1
               class="text-blue-600 font-roboto font-bold text-2xl mb-2 mt-0 lg:mt-6"
             >
@@ -64,69 +67,16 @@
           </div>
           <div
             id="cardContainer"
-            class="grid grid-cols-1 md:grid-cols-3 sm:grid-cols-2 gap-8 w-full pb-10 "
+            class="grid grid-cols-1 md:grid-cols-3 sm:grid-cols-2 gap-8 w-full pb-10"
           >
-            {% for post in posts%}
-            <div class="blog-cards hover:scale-[1.05] transition-transform duration-300">
-              <a href="{% url 'ArticleDetailView' post.id%}">
-                <div
-                  class="relative flex flex-col my-1 bg-white shadow-sm border border-slate-200 rounded-lg w-full"
-                >
-                  <div
-                    class="relative h-1/2 overflow-hidden text-white rounded-md"
-                  >
-                    <img
-                      src="{% if post.thumbnail %}
-                  {{ post.thumbnail.url }}
-                  {% else %}/media/thumbnail/thumbnail.jpg
-                  {% endif %}"
-                      alt="card-image"
-                    />
-                  </div>
-                  <div class="p-4">
-                    <div
-                      class="mb-4 rounded-full bg-cyan-600 py-0.5 px-2.5 border border-transparent text-xs text-white transition-all shadow-sm w-20 text-center"
-                    >
-                      POPULAR
-                    </div>
-                    <h6 class="mb-2 text-slate-800 text-xl font-semibold">
-                      {{post.title}}
-                    </h6>
-                    <p class="text-slate-600 leading-normal font-light text-ellipsis">
-                      {{post.articleSnippet}}
-                    </p>
-                  </div>
-              </a>
-                  <div class="flex items-center justify-between p-4">
-                    <div class="flex items-center">
-                      <a href="{% url 'show_profile_page' post.author.profile.id%}" class="flex ">
-                      <img
-                        alt="Tania Andrew"
-                        src="{% if post.author.profile.profileImage %}
-                {{ post.author.profile.profileImage.url }}
-                {% else %}/media/thumbnail/thumbnail.jpg
-                {% endif %}"
-                        class="relative inline-block h-8 w-8 rounded-full"
-                      />
-                      <div class="flex flex-col ml-3 text-sm">
-                        <span class="text-slate-800 font-semibold"
-                          >{{post.author}}</span
-                        >
-                        <span class="text-slate-600"> {{post.post_date}} </span>
-                      </div></a>
-                    </div>
-                  </div>
-                </div>
-            </div>
-            {% endfor %}
+            {% for post in posts%} {% include 'cards.html'%} {% endfor %}
           </div>
         </div>
 
         <button
           id="load-more"
           type="button"
-                    class="text-white bg-gradient-to-r from-cyan-500 to-blue-500 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-cyan-300 p-5 w-[150px] my-10 rounded-xl"
-
+          class="text-white bg-gradient-to-r from-cyan-500 to-blue-500 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-cyan-300 p-5 w-[150px] my-10 rounded-xl"
         >
           Load More
         </button>
@@ -135,7 +85,6 @@
     {% include 'newsletter.html'%} {% load static %}
     <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/1.6.5/flowbite.min.js"></script>
 
-    {% include 'load-more.html'%}
-    {% include 'footerCode.html' %}
+    {% include 'load-more.html'%} {% include 'footerCode.html' %}
   </body>
 </html>

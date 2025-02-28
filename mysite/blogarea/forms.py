@@ -25,7 +25,7 @@ class CommentForm(forms.ModelForm):
 
 
 class PostForm(forms.ModelForm):
-    body = forms.CharField(widget=CKEditorWidget())  # Explicitly define CKEditor widget
+    body = forms.CharField(widget=CKEditorWidget())  
 
     class Meta:
         model = Post

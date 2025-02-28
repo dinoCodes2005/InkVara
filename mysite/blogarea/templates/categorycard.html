@@ -1,0 +1,55 @@
+<div
+  class="flex flex-col bg-white shadow-sm border border-slate-200 rounded-lg my-6 w-44 sm:w-48 lg:w-96 hover:scale-[1.04] transition-all duration-400 ease-in-out category-card"
+>
+  <div
+    class="m-2.5 overflow-hidden rounded-md h-32 sm:h-40 lg:h-80 flex justify-center items-center relative"
+  >
+    <img
+      class="w-full h-full object-cover"
+      src="{{category.image.url}}"
+      alt="profile-picture"
+    />
+    <p
+      class="absolute text-wrap p-4 paragraph text-white font-semibold text-md justify-normal"
+      style="font-family: 'Lato', sans-serif"
+    >
+      {{category.about}}
+    </p>
+  </div>
+  <div class="p-6 text-center">
+    <h4
+      class="mb-1 text-lg sm:text-xl md:text-2xl font-semibold text-slate-800"
+    >
+      {{category.name}}
+    </h4>
+    <p class="text-slate-800 text-xs inline-block lg:hidden">
+      {{category.about}}
+    </p>
+  </div>
+  <div class="flex justify-center p-6 pt-2 gap-7">
+    <a href="{% url 'categories_detail' category.name %}"
+      ><button
+        class="min-w-32 rounded-md bg-slate-800 py-2 px-4 border border-transparent text-center text-sm sm:text-base md:text-lg text-white transition-all shadow-md hover:shadow-lg focus:bg-slate-700 focus:shadow-none active:bg-slate-700 hover:bg-slate-700 active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
+        type="button"
+      >
+        <i class="bx bx-up-arrow-alt text-white"></i>
+        Explore
+      </button></a
+    >
+  </div>
+</div>
+
+<style>
+  .paragraph {
+    transform: scale(0);
+    transition: transform 0.2s ease-in-out;
+  }
+
+  .category-card:hover .paragraph {
+    transform: scale(1);
+  }
+
+  .category-card:hover img {
+    filter: blur(5px) brightness(50%) contrast(120%) saturate(140%);
+  }
+</style>

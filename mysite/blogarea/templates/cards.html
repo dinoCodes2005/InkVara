@@ -1,43 +1,49 @@
-<a href="javascript:void(0)">
+<div
+  class="max-w-sm w-full shadow-md hover:scale-[1.05] transition-transform duration-300 flex flex-col"
+>
+  <!-- Image Section -->
   <div
-    class="relative flex flex-col my-6 bg-white shadow-sm border border-slate-200 rounded-lg w-96"
+    class="h-48 bg-cover rounded-t text-center overflow-hidden"
+    style="background-image: url('{% if post.thumbnail %}{{ post.thumbnail.url }}{% else %}/media/thumbnail/thumbnail.jpg{% endif %}')"
+    title="{{ post.title }}"
+  ></div>
+
+  <!-- Content Section -->
+  <div
+    class="blog-cards border border-gray-300 bg-white rounded-b p-4 flex flex-col justify-between flex-grow"
   >
-    <div class="relative h-56 m-2.5 overflow-hidden text-white rounded-md">
-      <img
-        src="{% if post.thumbnail %}
-                {{ post.thumbnail.url }}
-                {% else %}/media/thumbnail/thumbnail.jpg
-                {% endif %}"
-        alt="card-image"
-      />
-    </div>
-    <div class="p-4">
-      <div
-        class="mb-4 rounded-full bg-cyan-600 py-0.5 px-2.5 border border-transparent text-xs text-white transition-all shadow-sm w-20 text-center"
-      >
-        POPULAR
-      </div>
-      <h6 class="mb-2 text-slate-800 text-xl font-semibold">{{post.title}}</h6>
-      <p class="text-slate-600 leading-normal font-light">
-        {{post.articleSnippet}}
+    <div class="mb-4">
+      <a href="{% url 'ArticleDetailView' post.id %}">
+        <h3 class="text-gray-900 font-bold text-xl hover:text-cyan-600">
+          {{ post.title }}
+        </h3>
+      </a>
+      <p class="text-sm text-blue-600 font-semibold flex items-center mb-2">
+        <!-- prettier-ignore -->
+        {% for tag in post.tags.all|slice:":3" %} #{{tag.tag}}&nbsp;
+                {% endfor %}
+      </p>
+      <p class="text-gray-700 text-sm line-clamp-3">
+        {{ post.articleSnippet }}
       </p>
     </div>
 
-    <div class="flex items-center justify-between p-4">
-      <div class="flex items-center">
+    <!-- Author Section -->
+    <div class="flex items-center">
+      <a
+        href="{% url 'show_profile_page' post.author.profile.id %}"
+        class="flex items-center"
+      >
         <img
-          alt="Tania Andrew"
-          src="{% if post.author.profile.profileImage %}
-                {{ post.author.profile.profileImage.url }}
-                {% else %}/media/thumbnail/thumbnail.jpg
-                {% endif %}"
-          class="relative inline-block h-8 w-8 rounded-full"
+          class="w-10 h-10 rounded-full mr-3"
+          src="{% if post.author.profile.profileImage %}{{ post.author.profile.profileImage.url }}{% else %}/media/thumbnail/thumbnail.jpg{% endif %}"
+          alt="Author Image"
         />
-        <div class="flex flex-col ml-3 text-sm">
-          <span class="text-slate-800 font-semibold">{{post.author}}</span>
-          <span class="text-slate-600"> {{post.post_date}} </span>
+        <div class="text-sm">
+          <p class="text-gray-900 font-semibold">{{ post.author }}</p>
+          <p class="text-gray-600">{{ post.post_date }}</p>
         </div>
-      </div>
+      </a>
     </div>
   </div>
-</a>
+</div>

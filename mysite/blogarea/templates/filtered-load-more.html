@@ -1,83 +1,80 @@
 <script>
-  $(document).ready(function () {
-    $("#load-more").on("click", function () {
-      var _currentResult = $(".blog-cards").length;
-      console.log("Current Result : " + _currentResult);
-      $.ajax({
-        url: "{% url 'filtered_load_more' %}",
-        type: "POST",
-        data: {
-          offset: _currentResult,
-          filter: {{page_user.user.id}},
-          csrfmiddlewaretoken: "{{csrf_token}}",
-        },
-        dataType: "json",
-        beforeSend: function () {
-          $("#load-more").addClass("disabled").text("Loading.....");
-        },
-        success: function (res) {
-          var _html = "";
-          var json_data = res["posts"];
-          $.each(json_data, function (index, data) {
-            _html += `
-                      <div class="blog-cards hover:scale-[1.05] transition-transform duration-300">
-              <a href="/blogarea/article/${data.id}/">
-                <div
-                  class="relative flex flex-col my-1 bg-white shadow-sm border border-slate-200 rounded-lg w-full"
-                >
-                  <div
-                    class="relative h-1/2 overflow-hidden text-white rounded-md"
-                  >
-                    <img
-                      src="${data.thumbnail}"
-                      alt="card-image"
-                    />
-                  </div>
-                  <div class="p-4">
-                    <div
-                      class="mb-4 rounded-full bg-cyan-600 py-0.5 px-2.5 border border-transparent text-xs text-white transition-all shadow-sm w-20 text-center"
-                    >
-                      POPULAR
-                    </div>
-                    <h6 class="mb-2 text-slate-800 text-xl font-semibold">
-                      ${data.title}
-                    </h6>
-                    <p class="text-slate-600 leading-normal font-light">
-                    ${data.articleSnippet}
+    $(document).ready(function () {
+      $("#load-more").on("click", function () {
+        var _currentResult = $(".blog-cards").length;
+        console.log("Current Result : " + _currentResult);
+        $.ajax({
+          url: "{% url 'filtered_load_more' %}",
+          type: "POST",
+          data: {
+            offset: _currentResult,
+            filter: {{page_user.user.id}},
+            csrfmiddlewaretoken: "{{csrf_token}}",
+          },
+          dataType: "json",
+          beforeSend: function () {
+            $("#load-more").addClass("disabled").text("Loading.....");
+          },
+          success: function (res) {
+            var _html = "";
+            var json_data = res["posts"];
+            $.each(json_data, function (index, data) {
+             _html += `<div class="max-w-sm w-full shadow-md hover:scale-[1.05] transition-transform duration-300 flex flex-col">
+    <!-- Image Section -->
+    <div
+      class="h-48 bg-cover rounded-t text-center overflow-hidden"
+      style="background-image: url('${data.thumbnail}')"
+      title="${data.title}"
+    ></div>
 
-                    </p>
-                  </div>
-              </a>
-                  <div class="flex items-center justify-between p-4">
-                    <div class="flex items-center">
-                      <a href="/show_profile_page/${data.author.profile["profile-id"]}/" class="flex ">
-                      <img
-                        alt="Tania Andrew"
-                        src="${data.author.profile["profileImage"]}"
-                        class="relative inline-block h-8 w-8 rounded-full"
-                      />
-                      <div class="flex flex-col ml-3 text-sm">
-                        <span class="text-slate-800 font-semibold"
-                          >${data.author.username}</span
-                        >
-                        <span class="text-slate-600"> ${data.post_date} </span>
-                      </div></a>
-                    </div>
-                  </div>
-                </div>
-            </div>`;
-          });
-          $("#cardContainer").append(_html);
-          $("#cardContainer").hide().fadeIn("fast");
-          var _countTotal = $(".blog-cards").length;
-          console.log("Count Total : " + _countTotal);
-          if (_countTotal == res.totalResult) {
-            $("#load-more").remove();
-          } else {
-            $("#load-more").removeClass("disabled").text("Load More");
-          }
-        },
+    <!-- Content Section -->
+    <div
+      class="blog-cards border border-gray-300 bg-white rounded-b p-4 flex flex-col justify-between flex-grow"
+    >
+      <div class="mb-4">
+        <a href="/blogarea/article/${data.id}/">
+          <h3 class="text-gray-900 font-bold text-xl hover:text-cyan-600">
+            ${data.title}
+          </h3>
+        </a>
+        <p class="text-sm text-blue-600 font-semibold flex items-center mb-2">
+          <!-- Display up to 3 tags -->
+          ${data.tags ? data.tags.slice(0, 3).map(tag => `#${tag.tag}`).join(' ') : ''}
+        </p>
+        <p class="text-gray-700 text-sm line-clamp-3">
+          ${data.articleSnippet}
+        </p>
+      </div>
+
+      <!-- Author Section -->
+      <div class="flex items-center">
+        <a href="/show_profile_page/${data.author.profile?.profileId || data.author.profile?.["profile-id"] || ''}/" class="flex items-center">
+          <img
+            class="w-10 h-10 rounded-full mr-3"
+            src="${data.author.profile?.profileImage || '/media/thumbnail/thumbnail.jpg'}"
+            alt="Author Image"
+          />
+          <div class="text-sm">
+            <p class="text-gray-900 font-semibold">${data.author.username}</p>
+            <p class="text-gray-600">${data.post_date}</p>
+          </div>
+        </a>
+      </div>
+    </div>
+  </div>`;
+
+            });
+            $("#cardContainer").append(_html);
+            $("#cardContainer").hide().fadeIn("fast");
+            var _countTotal = $(".blog-cards").length;
+            console.log("Count Total : " + _countTotal);
+            if (_countTotal == res.totalResult) {
+              $("#load-more").remove();
+            } else {
+              $("#load-more").removeClass("disabled").text("Load More");
+            }
+          },
+        });
       });
     });
-  });
 </script>

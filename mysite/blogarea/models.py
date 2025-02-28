@@ -15,7 +15,8 @@ from requests import post
 
 class Category(models.Model):
     name = models.CharField(max_length=255,default="Uncategorized")
-    
+    about = models.CharField(max_length=255,default="Lorem ipsum dolor sit amet consectetur adipisicing elit.!")
+    image = models.ImageField(upload_to='category/',null=True,blank=True, default='thumbnail/thumbnail.jpg')
     def __str__(self):
         return self.name
     

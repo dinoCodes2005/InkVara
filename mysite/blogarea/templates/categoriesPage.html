@@ -10,27 +10,28 @@
       href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&display=swap"
       rel="stylesheet"
     />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-
+    <link
+      href="https://fonts.googleapis.com/css2?family=Bitter:ital,wght@0,100..900;1,100..900&family=Exo+2:ital,wght@0,500;1,500&display=swap"
+      rel="stylesheet"
+    />
     <link
       href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css"
       rel="stylesheet"
     />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
   </head>
   <body class="min-h-screen flex flex-col">
     {% include 'nav.html'%}
     <div class="flex-1 px-5 md:px-32 py-10">
       <div>
-        <h1 class="text-2xl font-semibold" style="font-family: lato">
-          Showing Posts related to
-          <span class="italic font-normal"> {{category}}</span>
+        <h1 class="font-semibold text-5xl" style="font-family: bitter">
+          Categories
         </h1>
+        <hr class="border-1 border-slate-300 my-10" />
       </div>
-      <div
-        id="cardContainer"
-        class="w-full grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6"
-      >
-        {% for post in posts%} {% include 'cards.html'%} {% endfor %}
+      <div id="cardContainer" class="flex flex-wrap gap-8">
+        <!-- prettier-ignore  -->
+        {% for category in categories%} {% include 'categorycard.html'%} {% endfor %}
       </div>
     </div>
 

@@ -9,7 +9,7 @@ from django.contrib.auth import logout,authenticate
 from django.contrib import messages
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 from requests import post
-from .models import Comment, Hashtag, Post, Profile
+from .models import Category, Comment, Hashtag, Post, Profile
 from django.urls import reverse_lazy,reverse
 from django.http import HttpResponseRedirect , StreamingHttpResponse
 from django.db.models import Count,Q
@@ -71,7 +71,7 @@ class ArticleDetailView(DetailView,FormMixin):
         context['comments'] =  list(comments.filter(user=self.request.user)) + list(comments.exclude(user=self.request.user).order_by('-comment_date')) if self.request.user.is_authenticated else list(comments)
         context['form'] = self.get_form()
         context['has_liked'] = has_liked
-        context['related_posts'] = related_posts
+        context['related_posts'] = related_posts[:4]
         context['posts'] = posts
         context['total_likes'] = total_likes
         context['total_words'] = total_words
@@ -137,9 +137,19 @@ class AddPostView(CreateView):
         return reverse_lazy('ArticleDetailView', kwargs={'pk': self.object.pk})
 
 def CategoryView(request,tag):
-    category_posts = Post.objects.filter(tags__tag = tag)
-    return render(request,'categories.html',{'posts':category_posts})
+    category_posts = Post.objects.filter(Q(tags__tag = tag) | Q(category = tag)).distinct()
+    return render(request,'categories.html',{'posts':category_posts,'category':tag})
 
+class CategoriesView(ListView):
+    model = Hashtag
+    template_name = "categoriesPage.html"
+    context_object_name = "categories"
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["posts"] = Post.objects.all()
+        context["categories"] = Category.objects.all()
+        return context
     
 class UpdatePostView(UpdateView):
     model = Post
@@ -188,7 +198,7 @@ def load_more(request):
     
     totalData=Post.objects.count()
     return JsonResponse(data={
-        'posts':post_list,
+        'posts':post_list[:3],
         'totalResult':totalData,
 
     })
@@ -359,13 +369,33 @@ def answer(request):
         except Exception as e:
             return JsonResponse({"error": str(e)}, status=500)
         
+def searchresult(request):
+    if request.method == "GET":
+        data = request.GET.get("q","")
+        
+        posts = Post.objects.filter(Q(title__icontains=data) | 
+                    Q(tags__tag__icontains=data) | 
+                    Q(author__username__icontains=data)).distinct()
+        if not posts:
+            return render(request,"searchresult.html",{"posts":Post.objects.all()[:5],"found":0,"values":str(data)})
+
+        return render(request,"searchresult.html",{"posts":posts,"values":str(data),"found":1})
+    else:   
+        return JsonResponse({"error":"Not a GET request"})
+
+
 def search(request):
     if request.method == "GET":
         data = request.GET.get("title","")
         if not data:
             return random_post(request)
         
-        posts = list(Post.objects.filter(Q(title__icontains = data))[:5].values("title","id","author__username"))
+        posts = list(Post.objects.filter(
+                    Q(title__icontains=data) | 
+                    Q(tags__tag__icontains=data) | 
+                    Q(author__username__icontains=data))
+                    .values("title", "id", "author__username").distinct()[:5])
+
         return JsonResponse({"posts":posts})
     else:   
         return JsonResponse({"error":"Not a GET request"})
