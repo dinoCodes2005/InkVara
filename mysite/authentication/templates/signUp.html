@@ -26,7 +26,8 @@
           >Username</label
         >
         <div class="mt-2">
-          <input
+          {{form.username}}
+          <!-- <input
             type="text"
             name="username"
             id="username"
@@ -34,7 +35,7 @@
             autocomplete="username"
             required
             class="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"
-          />
+          /> -->
         </div>
       </div>
 
@@ -45,15 +46,7 @@
           >
         </div>
         <div class="mt-2">
-          <input
-            type="email"
-            name="email"
-            id="email"
-            placeholder="E-Mail"
-            autocomplete="email"
-            required
-            class="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"
-          />
+          {{form.email}}
         </div>
       </div>
       <div>
@@ -65,15 +58,7 @@
           >
         </div>
         <div class="mt-2">
-          <input
-            type="text"
-            name="first-name"
-            id="first-name"
-            placeholder="First Name"
-            autocomplete="first-name"
-            required
-            class="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"
-          />
+          {{form.first_name}}
         </div>
       </div>
       <div>
@@ -85,15 +70,7 @@
           >
         </div>
         <div class="mt-2">
-          <input
-            type="text"
-            name="last-name"
-            id="last-name"
-            placeholder="Last Name"
-            autocomplete="last-name"
-            required
-            class="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"
-          />
+          {{form.last_name}}
         </div>
       </div>
 
@@ -106,15 +83,7 @@
           >
         </div>
         <div class="mt-2">
-          <input
-            type="password"
-            name="password-1"
-            id="password-1"
-            placeholder="Password"
-            autocomplete="password"
-            required
-            class="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"
-          />
+          {{form.password1}}
         </div>
       </div>
 
@@ -127,19 +96,11 @@
           >
         </div>
         <div class="mt-2">
-          <input
-            type="password"
-            name="verify-password"
-            id="verify-password"
-            placeholder="Retype Password"
-            autocomplete="verify-password"
-            required
-            class="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6 mb-10"
-          />
+          {{form.password2}}
         </div><div>
         <button
           type="submit"
-          class="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm/6 font-semibold text-white shadow-xs hover:bg-indigo-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+          class="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm/6 font-semibold text-white shadow-xs hover:bg-indigo-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 mt-5"
         > Sign Up
         </button>
       </div>

@@ -4,14 +4,15 @@ from django import forms
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm,UserChangeForm
 from django.core.exceptions import ValidationError
+from numpy import require
 
 class UserRegisterForm(UserCreationForm):
-	username = forms.CharField(max_length=20,label="USERNAME ")
-	email = forms.EmailField(label="EMAIL")
-	first_name = forms.CharField(max_length = 20,label="FIRST NAME")
-	last_name = forms.CharField(max_length = 20,label="SECOND NAME")
-	password1 = forms.CharField(label="ENTER PASSWORD", widget=forms.PasswordInput())
-	password2 = forms.CharField(label="CONFIRM PASSWORD", widget=forms.PasswordInput())
+	username = forms.CharField(max_length=20,label="USERNAME ", required = True,  widget=forms.TextInput(attrs={'class': 'block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6'}))
+	email = forms.EmailField(label="EMAIL", required=True,widget=forms.TextInput(attrs={'class': 'block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6'}))
+	first_name = forms.CharField(max_length = 20,label="FIRST NAME",widget=forms.TextInput(attrs={'class': 'block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6'}))
+	last_name = forms.CharField(max_length = 20,label="SECOND NAME",widget=forms.TextInput(attrs={'class': 'block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6'}))
+	password1 = forms.CharField(label="ENTER PASSWORD", widget=forms.PasswordInput(attrs={'class': 'block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6'}))
+	password2 = forms.CharField(label="CONFIRM PASSWORD", widget=forms.PasswordInput(attrs={'class': 'block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6 mb-5'}))
 
 	def clean(self):
 		cleaned_data = super().clean()

@@ -1,5 +1,5 @@
 <div
-  class="relative text-gray-600 w-[160px] focus-within:text-gray-400 search-area-off"
+  class="relative text-gray-600 w-[160px] focus-within:text-gray-400 search-area-off z-50"
 >
   {% csrf_token%}
   <span class="absolute inset-y-0 left-0 flex items-center pl-2">
@@ -32,7 +32,7 @@
 
   <div
     id="search-box"
-    class="suggestion absolute z-50 translate-y-2 flex flex-col rounded-md overflow-hidden w-[200%] translate-x-[-20%] h-auto transition-[height] duration-200 ease-in-out text-slate-100 bg-slate-800 backdrop-blur-lg"
+    class="suggestion absolute z-[50000] translate-y-2 flex flex-col rounded-md overflow-hidden w-[200%] translate-x-[-20%] h-auto transition-[height] duration-200 ease-in-out text-slate-100 bg-slate-800 backdrop-blur-lg"
   ></div>
 </div>
 
@@ -49,7 +49,7 @@
           data.posts.forEach((post) => {
             search_box.insertAdjacentHTML(
               "beforeend",
-              `<a href="/article/${post.id}/" class="w-full h-[60px] search-items p-2 flex"
+              `<a href="/article/${post.id}/" class="w-full min-h-[60px] search-items p-2 flex"
       ><i class="bx bxs-hot mr-2 translate-y-[12.5%]"></i>
       
       <div class="flex flex-col">
@@ -80,7 +80,7 @@
           data.posts.forEach((post) => {
             search_box.insertAdjacentHTML(
               "beforeend",
-              `<a href="/article/${post.id}/" class="w-full h-[60px] search-items p-2 flex">
+              `<a href="/article/${post.id}/" class="w-full min-h-[60px] search-items p-2 flex">
               <i class='bx bx-search mr-2 translate-y-[12.5%]'></i>
               <div class="flex flex-col">
                 <span>${post.title}</span>
@@ -100,7 +100,7 @@
   function adjustHeight(clicked, element) {
     const items = document.querySelectorAll("#search-box>.search-items").length;
     document.getElementById("search-box").style.height = clicked
-      ? `${items * 60}px`
+      ? `${items * 70}px`
       : `0px`;
   }
 </script>

@@ -1,6 +1,6 @@
 {% load static tailwind_tags %}
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="w-full">
   <head>
     <link rel="icon" href="{% static 'inkpot.png' %}" type="image/x-icon" />
     <link
@@ -16,10 +16,22 @@
       rel="stylesheet"
     />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-
     {% tailwind_css %} {% load static %}
+    <style>
+      #comment-text {
+        width: 80%;
+        height: 150px;
+      }
+      @media (max-width: 640px) {
+        #comment-text {
+          height: 45px;
+          width: 90%;
+          border-radius: 20px;
+        }
+      }
+    </style>
   </head>
-  <body class="min-h-screen flex flex-col overflow-x-hidden">
+  <body class="min-h-screen w-full flex flex-col overflow-x-hidden">
     {% include 'nav.html' %}
     <div class="flex-grow grid grid-rows-[400px_auto] min-h-[800px]">
       <div
@@ -45,9 +57,9 @@
         </div>
       </div>
       <div
-        class="grid grid-rows-[1fr_auto] ml:grid-cols-[2fr_1fr] w-full px-7 ml:px-0"
+        class="grid grid-rows-[1fr_auto] ml:grid-cols-[2fr_1fr] w-full ml:px-0"
       >
-        <div class="w-full py-10 ml:px-20">
+        <div class="w-full py-10 px-7 ml:px-20">
           <h1
             style="font-family: lato"
             class="text-4xl font-bold mb-3"
@@ -161,7 +173,7 @@
             ></a>
           </p>
         </div>
-        <div class="py-10 bg-slate-800 px-7 flex flex-col rounded-b-xl">
+        <div class="py-10 px-5 bg-slate-800 flex flex-col sm:rounded-b-xl">
           <button
             onclick="fetchResponse()"
             class="w-[250px] h-[50px] mb-5 flex rounded-2xl text-cyan-400 font-semibold bg-slate-700 hover:bg-slate-600 mt-10 left-1/2 relative translate-x-[-50%]"
@@ -197,83 +209,35 @@
           <div
             class="border-2 border-slate-600 border-solid rounded-2xl h-full p-4"
           >
-            <h1 class="text-xl text-gray-100 mb-4">
+            <h1 class="text-md sm:text-xl text-gray-100 mb-4">
               Busy to Read the entire Article ? Summarise the entire article
               with Gemini !!
             </h1>
             <hr class="border-1 border-slate-600 border-solid" />
-            <h1 id="response" class="text-slate-300 text-md mt-4"></h1>
+            <h1
+              id="response"
+              class="text-slate-300 text-sm mt-4 min-h-[200px]"
+            ></h1>
           </div>
         </div>
       </div>
       <hr
         class="mt-10 border-1 border-slate-300 w-[90%] ml-[50%] translate-x-[-50%]"
       />
-      <div class="ml-7 sm:ml-20 w-full">
-        <h1 style="font-family: lato" class="my-10 font-bold text-4xl">
+      <div
+        class="ml-0 sm:ml-10 w-full flex justify-center flex-col items-center"
+      >
+        <h1 style="font-family: lato" class="my-10 ml-5 font-bold text-4xl">
           Related Posts
         </h1>
-        <div class="w-full flex flex-wrap gap-4">
-          {% for post in related_posts%}
-          <div
-            class="blog-cards w-full sm:w-[20%] hover:scale-[1.05] h-full transition-transform duration-300 mx-1"
-          >
-            <a href="{% url 'ArticleDetailView' post.id%}">
-              <div
-                class="relative flex flex-col my-1 bg-white shadow-sm border border-slate-200 rounded-lg w-full"
-              >
-                <div
-                  class="relative h-1/2 overflow-hidden text-white rounded-md"
-                >
-                  <img
-                    src="{% if post.thumbnail %}
-            {{ post.thumbnail.url }}
-            {% else %}/media/thumbnail/thumbnail.jpg
-            {% endif %}"
-                    alt="card-image"
-                  />
-                </div>
-                <div class="p-4">
-                  <div
-                    class="mb-4 rounded-full bg-cyan-600 py-0.5 px-2.5 border border-transparent text-xs text-white transition-all shadow-sm w-20 text-center"
-                  >
-                    POPULAR
-                  </div>
-                  <h6 class="mb-2 text-slate-800 text-xl font-semibold">
-                    {{post.title}}
-                  </h6>
-                  <p
-                    class="text-slate-600 leading-normal font-light line-clamp-3"
-                  >
-                    {{post.articleSnippet}}
-                  </p>
-                </div>
-
-                <div class="flex items-center justify-between p-4">
-                  <div class="flex items-center">
-                    <img
-                      alt="Tania Andrew"
-                      src="{% if post.author.profile.profileImage %}
-          {{ post.author.profile.profileImage.url }}
-          {% else %}/media/thumbnail/thumbnail.jpg
-          {% endif %}"
-                      class="relative inline-block h-8 w-8 rounded-full"
-                    />
-                    <div class="flex flex-col ml-3 text-sm">
-                      <span class="text-slate-800 font-semibold"
-                        >{{post.author}}</span
-                      >
-                      <span class="text-slate-600"> {{post.date}} </span>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </a>
-          </div>
-          {% endfor %}
+        <div
+          id="cardContainer"
+          class="grid grid-cols-1 md:grid-cols-4 sm:grid-cols-3 gap-8 w-full pb-10 px-5"
+        >
+          {% for post in related_posts%} {% include 'cards.html'%} {% endfor %}
         </div>
         <button
-          class="text-white bg-gradient-to-r from-cyan-500 to-blue-500 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-cyan-300 p-5 w-[150px] my-10 rounded-xl ml-[40%]"
+          class="text-white bg-gradient-to-r from-cyan-500 to-blue-500 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-cyan-300 p-5 w-[150px] my-10 rounded-xl"
         >
           Browse More
         </button>
@@ -282,10 +246,10 @@
     <div class="flex-grow flex flex-col">
       <!-- for each comment logic here  -->
       <hr class="mx-10 my-10" />
-      <h1 class="text-4xl text-blue-700 pl-10 font-semibold mb-5 ml:pl-[100px]">
+      <h1 class="text-4xl text-blue-700 pl-4 font-semibold mb-5 ml:pl-[100px]">
         {{comments_number}}&nbsp;Comments
       </h1>
-      <div class="pl-10 ml:pl-[100px] relative">
+      <div class="pl-4 ml:pl-[100px] relative">
         {% if request.user.is_authenticated %}
         <form method="POST" id="comment-form">
           <div class="flex flex-col">
@@ -309,6 +273,7 @@
           </div>
         </form>
         {% endif %}
+        <hr class="mx-10 mt-10" />
         <br />
         <div class="mt-10" id="comments">
           {% for comment in comments %} {% if comment.post == current_post %}
