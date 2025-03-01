@@ -12,118 +12,59 @@
       success: function (response) {
         if (response.success) {
           var comment = `
-            <div class="grid grid-cols-[80px_auto_80px] mb-5">
-              <div class="w-full">
-                <a href="${response.comment.profile_url}">
-                  <img
-                    class="size-10 rounded-full border-[1px] border-solid border-blue-950"
-                    src="${response.comment.profile_image}"
-                    alt=""
-                  />
-                </a>
-              </div>
-              <div class="flex flex-col gap-2">
-                <div>
-                  @
-                  <a href="${response.comment.profile_url}">
-                    ${response.comment.user}
-                  </a>
-                  - ${response.comment.comment_date}
-                </div>
-                ${response.comment.body}
-                <div class="flex">
-                  <!-- Like Logic -->
-                  <form
-                    method="POST"
-                    class="comment-like-form"
-                    data-comment-id="${response.comment.id}"
-                    data-url="/comment_like/${response.comment.id}/"
-                  >
-                    {% csrf_token %}
-                    <button type="submit">
-                      <i
-                        class="bx bx-like mr-5 comment-like-button text-black bg-white p-1 rounded-md"
-                        data-comment-id="${response.comment.id}"
-                      ></i>
-                      <span
-                        class="comment-like-number"
-                        data-comment-id="${response.comment.id}"
-                      >
-                        ${response.comment.comment_likes}
-                      </span>
-                    </button>
-                  </form>
-  
-                  <!-- Dislike Logic -->
-                  <form
-                    method="POST"
-                    class="comment-dislike-form"
-                    data-comment-id="${response.comment.id}"
-                    data-url="/comment_dislike/${response.comment.id}/"
-                  >
-                    {% csrf_token %}
-                    <button type="submit">
-                      <i
-                        class="bx bx-dislike mr-5 comment-dislike-button text-black bg-white p-1 rounded-md"
-                        data-comment-id="${response.comment.id}"
-                      ></i>
-                      <span
-                        class="comment-dislike-number"
-                        data-comment-id="${response.comment.id}"
-                      >
-                        ${response.comment.comment_dislikes}
-                      </span>
-                    </button>
-                  </form>
-                </div>
-              </div>
-  
-              <div class="items-center flex">
-                <button
-                  id="dropdownMenuIconButton"
-                  data-dropdown-toggle="dropdownDots"
-                  class="inline-flex items-center p-2 text-sm font-medium text-center text-gray-900 bg-white"
-                  type="button"
-                >
-                  <svg
-                    class="w-5 h-5"
-                    aria-hidden="true"
-                    xmlns="http://www.w3.org/2000/svg"
-                    fill="currentColor"
-                    viewBox="0 0 4 15"
-                  >
-                    <path
-                      d="M3.5 1.5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0Zm0 6.041a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0Zm0 5.959a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0Z"
-                    />
-                  </svg>
-                </button>
-  
-                <!-- Dropdown Menu -->
-                <div
-                  id="dropdownDots"
-                  class="z-10 hidden bg-white divide-y divide-gray-100 rounded-lg shadow-sm w-44"
-                >
-                  <ul
-                    class="py-2 text-sm text-gray-800 bg-gray-200 rounded-md"
-                    aria-labelledby="dropdownMenuIconButton"
-                  >
-                    ${response.comment.is_owner ? `
-                      <li>
-                        <a href="#" class="block px-4 py-2 hover:bg-gray-100">Edit</a>
-                      </li>
-                      <li>
-                        <a href="#" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Delete</a>
-                      </li>
-                    ` : `
-                      <li>
-                        <a href="#" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Report</a>
-                      </li>
-                    `}
-                  </ul>
-                </div>
-              </div>
-            </div>
-          `;
+<div class="flex items-center space-x-2 md:space-x-4">
+  <div class="flex flex-shrink-0 self-start cursor-pointer">
+    <a href="${response.comment.profile_url}"><img
+      src="${response.comment.profile_image}"
+      alt=""
+      class="h-8 w-8 md:h-12 md:w-12 object-cover rounded-full"
+    /></a>
+    
+  </div>
+
+  <div class="flex items-center justify-center space-x-2 md:space-x-3">
+    <div class="block">
+      <div class="bg-gray-100 w-auto rounded-xl px-2 py-2 md:px-4 md:py-3">
+        <div class="font-medium text-sm md:text-lg">
+          <a href="${response.comment.profile_url}" class="hover:underline">
+            <small>${response.comment.user}</small>
+          </a>
+        </div>
+        <div class="text-xs md:text-base">${response.comment.body}</div>
+      </div>
+      <div class="flex justify-start items-center text-xs md:text-sm w-full mt-1">
+        <div class="font-semibold text-gray-700 px-2 md:px-3 flex items-center space-x-1 md:space-x-2">
+          <a href="#" class="hover:underline">
+            <strong><i class="bx bx-like"></i> Like - ${response.comment.comment_likes}</strong>
+          </a>
+          <a href="#" class="hover:underline">
+            <strong><i class='bx bx-dislike' ></i> Dislike - ${response.comment.comment_dislikes}</strong>
+          </a>
+          <span class="self-center">·</span>
+          <a href="#" class="hover:underline">
+            <strong>💬 Reply</strong>
+          </a>
+          <span class="self-center">·</span>
+          <a href="#" class="hover:underline">
+            <strong>${response.comment.comment_date}</strong>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="self-stretch flex justify-center items-center transform transition-opacity duration-200 opacity-0 hover:opacity-100">
+    <a href="#">
+      <div class="text-xs md:text-sm cursor-pointer flex h-6 w-6 md:h-8 md:w-8 transform transition-colors duration-200 hover:bg-gray-200 rounded-full items-center justify-center">
+        <svg class="w-4 h-4 md:w-6 md:h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 12h.01M12 12h.01M19 12h.01M6 12a1 1 0 11-2 0 1 1 0 012 0zm7 0a1 1 0 11-2 0 1 1 0 012 0zm7 0a1 1 0 11-2 0 1 1 0 012 0z"></path>
+        </svg>
+      </div>
+    </a>
+  </div>
+</div>
+`;
+
           $("#comments").append(comment);
           $("#id_body").val(""); // Clear the comment input field
         } else {

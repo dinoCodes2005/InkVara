@@ -2,6 +2,7 @@ from profile import Profile
 from django.shortcuts import render, redirect
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.decorators import login_required
 from django.urls import reverse_lazy
 from .forms import ProfileEditForm, UserRegisterForm
 from blogarea.models import Profile
@@ -10,77 +11,54 @@ from django.contrib.auth.models import User
 from django.views import generic
 from django.contrib.auth.forms import UserCreationForm,UserChangeForm
 from blogarea.models import Profile
+from django.contrib.auth.views import LoginView,LogoutView
 from .models import *\
 
-# Create your views here.
-class UserRegisterView(generic.CreateView):
-    form_class = UserRegisterForm
-    template_name = 'signUp.html'
-    success_url = reverse_lazy('login')
-    
-class EditProfileView(generic.UpdateView):
-    model = User
-    form_class = ProfileEditForm
-    template_name = 'registration/editProfile.html'
-    success_url = reverse_lazy('blogarea') 
 
-    def get_object(self):
-        return self.request.user
-    
-    def form_valid(self, form):
-        response = super().form_valid(form)
-        
-        #this part is handling the profile data entered by the user during editing the profile 
-        #it creates space in the form for further actions
-        profile,created = Profile.objects.get_or_create(user=self.request.user)
-        profile.profileBackground = form.cleaned_data.get('profileBackground')
-        profile.bio = form.cleaned_data.get('bio')
-        profile.location = form.cleaned_data.get('location')
-        profile.occupation = form.cleaned_data.get('occupation')
-        profile.industry = form.cleaned_data.get('industry')
-        profile.profileImage = form.cleaned_data.get('profileImage')
-        profile.twitter_link = form.cleaned_data.get('twitter_link')
-        profile.instagram_link = form.cleaned_data.get('instagram_link')
-        profile.youtube_link = form.cleaned_data.get('youtube_link')
-        profile.save()
-        return response
-    
+
+#redirecting to login page
 def login_home(request):#
     return render(request,'registration/login.html')
 
-def loginUser(request):
-    if request.method == "POST":
-        username = request.POST.get('username')
-        password = request.POST.get('password')
-
-        if not User.objects.filter(username=username).exists():
-            messages.error(request,'Your Username is incorrect or this account doesn\'t exist. ')
-            return render(request,'login.html',{'hasFailedAuthentication':True})
-
-        user = authenticate(username=username,password=password)
-
-        if user is None:
-            messages.error(request,"Your Password is incorrect or this account doesn\'t exist. ")
-            return render(request,'login.html',{'hasFailedAuthentication':True})
-        else:
-            login(request,user)
-            return redirect('blogarea')
-    else:
-        return render(request, 'login.html',{'hasFailedAuthentication':False})
-
-def signUp_user(request):
+#registering user
+def register_view(request):
     if request.method == 'POST':
         form = UserRegisterForm(request.POST)
         if form.is_valid():
-            form.save()
-            username = form.cleaned_data.get('username')
-            email = form.cleaned_data.get('email')
-            
-            messages.success(request, f'Your account has been created ! You are now able to log in')
-            return render(request,'login.html',{'hasFailedAuthentication':False})
+            form.save()  
+            messages.success(request, "Registration successful! You can now log in.")
+            return redirect('login')
     else:
         form = UserRegisterForm()
-    return render(request,'signUp.html',{'form':form})
+    
+    return render(request, 'signUp.html', {'form': form})
+    
+@login_required
+def edit_profile_view(request):
+    profile, created = Profile.objects.get_or_create(user=request.user)  # Get or create profile instance
+
+    if request.method == "POST":
+        form = ProfileEditForm(request.POST, instance=profile)
+        if form.is_valid():
+            form.save()
+            messages.success(request, "Your profile has been updated successfully!")
+            return redirect('blogarea')  # Redirect to the profile page or another relevant page
+    else:
+        form = ProfileEditForm(instance=profile)
+
+    return render(request, 'registration/editProfile.html', {'form': form})
+    
+
+class CustomLoginView(LoginView):
+    def form_valid(self, form):
+        messages.success(self.request,"Login successful !! Welcome Back")
+        return super().form_valid(form)
+    
+class CustomLogoutView(LogoutView):
+    def dispatch(self, request, *args, **kwargs):
+        messages.success(request,"You have been logged out successfully !!")
+        return super().dispatch(request, *args, **kwargs)
+
 
 def blogarea(request):
     return render(request,'blogHome.html')

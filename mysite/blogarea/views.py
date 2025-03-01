@@ -6,6 +6,7 @@ from urllib import request, response
 from wsgiref.util import request_uri
 from django.shortcuts import get_object_or_404, render,redirect
 from django.contrib.auth import logout,authenticate
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib import messages
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 from requests import post
@@ -22,6 +23,7 @@ from django.views.generic.edit import FormMixin
 from openai import OpenAI
 import google.generativeai as genai
 import json
+from django.contrib.auth.decorators import login_required
 # Create your views here.
 class BlogHome(ListView):
     model = Post
@@ -30,6 +32,7 @@ class BlogHome(ListView):
     
     def get_context_data(self, **kwargs):
         context = super(BlogHome, self).get_context_data(**kwargs)
+        #annotate is used to add extra field to each object without saving it to databse just for sorting or calculation purposes
         posts = Post.objects.annotate(like_count=Count('like')).order_by('-like_count')
         post_with_highest_likes = posts.first()  # The post with the highest likes
         post_with_second_highest_likes = posts[1] if len(posts) > 1 else None  # The second post, if it exists
@@ -59,7 +62,7 @@ class ArticleDetailView(DetailView,FormMixin):
         context = super(ArticleDetailView, self).get_context_data(*args, **kwargs)
         posts = Post.objects.annotate(like_count=Count('like')).order_by('-like_count')
         current_post = get_object_or_404(Post,id=self.kwargs['pk'])
-        related_posts = posts.filter(category=current_post.category).exclude(id=current_post.id)
+        related_posts = posts.filter(Q(category=current_post.category) | Q(tags__tag__in=current_post.tags.all()) ).exclude(id=current_post.id)
         total_words = current_post.word_count()
         total_likes = current_post.total_likes()
         has_liked = self.request.user in current_post.like.all() if self.request.user.is_authenticated else False 
@@ -113,11 +116,12 @@ class ShowProfileView(DetailView):
         context['total_likes'] = total_likes
         
         return context    
-        
-class AddPostView(CreateView):
+
+class AddPostView(LoginRequiredMixin,CreateView):
     model = Post
     template_name = 'writeBlog.html'
     form_class = PostForm
+    login_url = reverse_lazy('loginHome')
 
     def form_valid(self, form):
         form.instance.author = self.request.user
@@ -151,15 +155,51 @@ class CategoriesView(ListView):
         context["categories"] = Category.objects.all()
         return context
     
-class UpdatePostView(UpdateView):
-    model = Post
-    template_name = 'updateBlog.html'
-    fields = ['title','articleSnippet','category','thumbnail','body']
+from django.contrib.auth.decorators import login_required
+from django.shortcuts import render, get_object_or_404, redirect
+from django.contrib import messages
+from django.urls import reverse
+from .models import Post, Hashtag
+from .forms import PostForm
 
-class DeletePostView(DeleteView):
-    model = Post
-    template_name = 'deleteBlog.html'
-    success_url = reverse_lazy('blogarea')
+@login_required
+def UpdatePostView(request, pk):
+    post = get_object_or_404(Post, id=pk)
+
+    if request.method == "POST":
+        form = PostForm(request.POST, instance=post)
+        if form.is_valid():
+            #creating the object temporarily for manipulation
+            post = form.save(commit=False) 
+            post.tags.clear()
+            
+            if post.hashtags:
+                tags_list = [tag.strip().lstrip('#') for tag in post.hashtags.split(',') if tag.strip()]
+                for tag in tags_list:
+                    hashtag, created = Hashtag.objects.get_or_create(tag=tag)
+                    hashtag.post.add(post)
+                    post.tags.add(hashtag)
+                    
+            #saving the object to DB after doing the manipulation
+            post.save()
+            messages.success(request, "Post has been updated successfully!")
+            return redirect(reverse('ArticleDetailView', kwargs={'pk': post.pk}))
+        else:
+            messages.error(request, "There was an error in saving the post!")
+
+    else:
+        form = PostForm(instance=post)
+
+    return render(request, 'updateBlog.html', {'form': form})
+
+@login_required
+def deleteBlog(request,pk):
+    post = Post.objects.get(id=pk)
+    if request.method == "POST":
+        post.delete()
+        messages.success(request,"Post has been deleted successfully !!")
+        return redirect("blogarea")
+    return redirect(reverse_lazy("blogarea"))
 
 def logout_user(request):
     logout(request)
@@ -238,7 +278,8 @@ def filtered_load_more(request):
         'posts':post_list,
         'totalResult':totalData,
     })
-    
+
+@login_required   
 def submit_comment(request):
     if request.method == 'POST':
         body = request.POST.get('body')
@@ -271,7 +312,8 @@ def submit_comment(request):
         'success':False,
         'error':'Invalid Request Method'
     })
-    
+
+@login_required
 def LikeView(request,pk):
     if request.method == "POST":
         post_id = request.POST.get('post_id',False)
@@ -292,56 +334,9 @@ def LikeView(request,pk):
         return JsonResponse(data={
             'success':False,
         })
-           
-def comment_like(request, pk):
-    if request.method == "POST":
-        comment = get_object_or_404(Comment, id=pk)  
-        liked = False
-        removeDisliked = False
-        if request.user.is_authenticated:
-            if request.user in comment.likes.all():
-                comment.likes.remove(request.user)           #unlike system                   
-            else:
-                comment.likes.add(request.user)                 #liking
-                if request.user in comment.dislikes.all():
-                    comment.dislikes.remove(request.user)
-                    removeDisliked = True                       #if liked remove from dislike
-                liked = True
 
-            return JsonResponse({
-                "success": True,
-                "liked": liked,
-                "removeDisliked":removeDisliked,
-                "likes": comment.likes.count(),  
-                "dislikes":comment.dislikes.count(),
-            })
 
-    return JsonResponse({"success": False})
 
-def comment_dislike(request, pk):
-    if request.method == "POST":
-        comment = get_object_or_404(Comment, id=pk)  
-        disliked = False
-        removeLiked = False
-        if request.user.is_authenticated:
-            if request.user in comment.dislikes.all():
-                comment.dislikes.remove(request.user)       #removing dislike
-            else:
-                comment.dislikes.add(request.user)          #disliking
-                if request.user in comment.likes.all():
-                    comment.likes.remove(request.user)      #if disliked remove from liked 
-                    removeLiked = True
-                disliked = True
-
-            return JsonResponse({
-                "success": True,
-                "disliked": disliked,
-                "removeLiked":removeLiked,
-                "dislikes": comment.dislikes.count(),  # Directly count likes
-                "likes":comment.likes.count(),
-            })
-
-    return JsonResponse({"success": False})
 
 genai.configure(api_key="AIzaSyBw54sbgCFjRGqnGF2V91FyBfj0ZB2Oip4")
           

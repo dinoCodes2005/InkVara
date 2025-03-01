@@ -1,0 +1,83 @@
+<div class="flex items-center space-x-2 md:space-x-4">
+  <div class="flex flex-shrink-0 self-start cursor-pointer">
+    <img
+      src="{{comment.user.profile.profileImage.url}}"
+      alt=""
+      class="h-8 w-8 md:h-12 md:w-12 object-cover rounded-full"
+    />
+  </div>
+
+  <div class="flex items-center justify-center space-x-2 md:space-x-3">
+    <div class="block">
+      <div class="bg-gray-100 w-auto rounded-xl px-2 py-2 md:px-4 md:py-3">
+        <div class="font-medium text-sm md:text-lg">
+          <a href="#" class="hover:underline">
+            <small>{{comment.user.username}}</small>
+          </a>
+        </div>
+        <div class="text-xs md:text-base">{{comment.body}}</div>
+      </div>
+      <div
+        class="flex justify-start items-center text-xs md:text-sm w-full mt-1"
+      >
+        <div
+          class="font-semibold text-gray-700 px-2 md:px-3 flex items-center space-x-1 md:space-x-2"
+        >
+          <!-- like button  -->
+          <button class="like-btn" data-id="{{comment.id}}">
+            <i
+              class="bx bx-like hover:text-white hover:bg-blue-600 p-1 rounded-md"
+            ></i>
+            Like -
+            <span id="like-count-{{comment.id}}"
+              >{{ comment.total_likes }}</span
+            >
+          </button>
+
+          <!-- dislike button  -->
+          <button class="dislike-btn" data-id="{{comment.id}}">
+            <i
+              class="bx bx-dislike hover:text-white hover:bg-red-600 p-1 rounded-md"
+            ></i>
+            Dislike -
+            <span id="dislike-count-{{comment.id}}"
+              >{{ comment.total_dislikes }}</span
+            >
+          </button>
+
+          <span class="self-center">·</span>
+          <a href="#" class="hover:underline"><strong>💬 Reply</strong></a>
+          <span class="self-center">·</span>
+          <a href="#" class="hover:underline"
+            ><strong>{{ comment.comment_date }}</strong></a
+          >
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div
+    class="self-stretch flex justify-center items-center transform transition-opacity duration-200 opacity-0 hover:opacity-100"
+  >
+    <a href="#">
+      <div
+        class="text-xs md:text-sm cursor-pointer flex h-6 w-6 md:h-8 md:w-8 transform transition-colors duration-200 hover:bg-gray-200 rounded-full items-center justify-center"
+      >
+        <svg
+          class="w-4 h-4 md:w-6 md:h-6"
+          fill="none"
+          stroke="currentColor"
+          viewBox="0 0 24 24"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M5 12h.01M12 12h.01M19 12h.01M6 12a1 1 0 11-2 0 1 1 0 012 0zm7 0a1 1 0 11-2 0 1 1 0 012 0zm7 0a1 1 0 11-2 0 1 1 0 012 0z"
+          ></path>
+        </svg>
+      </div>
+    </a>
+  </div>
+</div>

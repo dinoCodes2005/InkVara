@@ -57,13 +57,10 @@ class Post(models.Model):
 
 class Profile(models.Model):
     user = models.OneToOneField(User,null=True,on_delete=models.CASCADE)
+    profileImage = models.ImageField(upload_to='profile_pics',null=True,blank=True,default="profile_pics/default_profile_pic.jpg")
+    profileBackground = models.ImageField(upload_to='profile_background',null=True,blank=True)
     bio = models.TextField()
     blogcaption = models.CharField(max_length=150,null=True,blank=True,default="Former Adventurer turned full-time Dad moonlighting as an author")
-    profileImage = models.ImageField(upload_to='profile_pics',null=True,blank=True)
-    profileBackground = models.ImageField(upload_to='profile_background',null=True,blank=True)
-    twitter_link = models.URLField(max_length=200,null=True,blank=True,default="https://x.com/")
-    instagram_link = models.URLField(max_length=200,null=True,blank=True,default="https://instagram.com/")
-    youtube_link = models.URLField(max_length=200,null=True,blank=True,default="https://youtube.com/")
     contact = PhoneNumberField(blank=True, null=True)
     location = models.CharField(max_length=150,null=True,blank=True,default="Earth")
     occupation = models.CharField(max_length=50,null=True,blank=True,default="Occupation")
@@ -71,6 +68,9 @@ class Profile(models.Model):
     position = models.CharField(max_length=50,null=True,blank=True,default="position")
     skills = models.TextField(null=True,blank=True,help_text="Enter your skills separated by commas")
     education = models.TextField(null=True,blank=True)
+    twitter_link = models.URLField(max_length=200,null=True,blank=True,default="https://x.com/")
+    instagram_link = models.URLField(max_length=200,null=True,blank=True,default="https://instagram.com/")
+    youtube_link = models.URLField(max_length=200,null=True,blank=True,default="https://youtube.com/")
 
     def __str__(self):
         return str(self.user)

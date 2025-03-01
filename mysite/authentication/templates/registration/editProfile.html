@@ -1,92 +1,148 @@
+{% load static tailwind_tags %}
+
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
+  <head>
+    <meta charset="UTF-8" />
     <title>Title</title>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
+    {% tailwind_css %} {% load static %}
+    <link
+      href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css"
+      rel="stylesheet"
+    />
+    <style>
+      input[type="text"] {
+        width: 100%;
+      }
+      textarea {
+        width: 100%;
+        height: 100px;
+        resize: none;
+      }
+    </style>
+  </head>
+  <body class="min-h-screen w-full flex flex-col overflow-x-hidden">
+    {% include 'nav.html'%}
+    <div class="mainContainer flex justify-center">
+      <div
+        class="innerContainer"
+        style="display: flex; align-items: center; flex-direction: column"
+      >
+        <div
+          style="
+            display: flex;
+            align-items: center;
+            flex-direction: column;
+            font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman',
+              serif;
+            padding-top: 50px;
+          "
+        >
+          <i class="bx bxs-edit text-blue-950 text-4xl sm:text-6xl mt-5"></i>
+          <h1
+            style="margin-top: 10px; color: #122459; margin-bottom: 0"
+            class="font-lato text-3xl font-semibold my-5"
+          >
+            Edit Your Profile
+          </h1>
+          <h4
+            style="margin-top: 5px; color: #122459; opacity: 0.8"
+            class="font-lato text-xl font-semibold my-5"
+          >
+            Use the form below to Edit your Profile
+          </h4>
+          <a
+            style="
+              all: unset;
+              color: #122e59;
+              cursor: pointer;
+              margin-bottom: 20px;
+            "
+            class="font-lato"
+            href="{% url 'blogarea'%}"
+            ><i class="bx bx-chevron-left translate-y-[25%]"></i>Go back to Home
+            Page</a
+          >
+        </div>
+        <div class="container px-8 sm:px-5 w-full md:w-3/5">
+          <form method="POST" enctype="multipart/form-data">
+            <div class="flex flex-col gap-5 overflow-hidden rounded-lg">
+              <!-- prettier-ignore  -->
+              {% csrf_token %}
+              <div class="relative mb-24 sm:mb-32">
+                <label for="id_profileBackground"
+                  ><img
+                    src="{% if user.profile.profileBackground %}{{ user.profile.profileBackground.url }}{% else %}/media/profile_background/293172-ultrawide-landscape-nature-photography-The_Witcher-The_Witcher_aa4qCc0.jpg{% endif %}"
+                    alt=""
+                    class="rounded-lg hover:scale-[1.04] hover:contrast-125 hover:saturate-125 transition-all duration-300 ease-in-out" /><input
+                    type="file"
+                    name="profileBackground"
+                    id="id_profileBackground"
+                    class="hidden"
+                    accept="image/*"
+                /></label>
 
-  {% load static %}
-  <link rel="stylesheet" href="{% static 'editProfile.css' %}">
-</head>
-<body>
-  
-  {% include 'header.html'%}
-  <div class="mainContainer">
-      <div class="innerContainer"style="display: flex;align-items: center;flex-direction:column">
-          <div style="display: flex;align-items: center;       flex-direction: column;        font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;padding-top: 50px;">
-              <img style="width: 35px;height: 35px;"  src="{% static 'icons8-pencil-48.png'%}" alt="">
-              <h1 style="margin-top: 10px;color: #122459;margin-bottom: 0;">Edit Your Profile</h1>
-              <h4 style="margin-top: 5px;color: #122459;">Use the form below to Edit your Profile</h4>
-              <a style="all: unset;color: #122e59;cursor: pointer;margin-bottom: 20px;"   href="{% url 'blogarea'%}">Go back to Home Page</a>
-          </div>
-          <div class="container">
-              <form method="POST" enctype="multipart/form-data">
-                  {% csrf_token %}
-                  <div class="form-group imageSelection" >
-                    <input type="file" id="profileImage" name="profileImage" class="file-input">
-  
-      <label for="profileImage" class="file-input-label"
-          style="background-image: url('{% if user.profile.profileImage %}{{ user.profile.profileImage.url }}{% else %}/media/thumbnail/thumbnail.jpg{% endif %}')">
-      </label>
+                <div
+                  class="absolute left-1/2 translate-x-[-50%] translate-y-[-50%]"
+                >
+                  <div class="flex flex-col items-center space-y-3">
+                    <label
+                      for="id_profileImage"
+                      class="relative cursor-pointer rounded-full overflow-hidden"
+                    >
+                      <!-- Display profile image -->
+                      <img
+                        id="profileImagePreview"
+                        src="{{ user.profile.profileImage.url }}"
+                        class="w-32 sm:w-64 rounded-full cursor-pointer hover:contrast-125 hover:saturate-125 hover:scale-[1.1] transition-all duration-300 ease-in-out"
+                        alt="Profile Image"
+                      />
+                      <!-- Hidden file input -->
+                      <input
+                        type="file"
+                        name="profileImage"
+                        id="id_profileImage"
+                        class="hidden"
+                        accept="image/*"
+                      />
+                    </label>
+                    <p class="text-sm text-gray-600">
+                      Click to update the image
+                    </p>
                   </div>
-                  <p>{{ form.username.label_tag}}</p>
-                  <p>{{ form.username}}</p>
-                  <p>{{ form.email.label_tag}}</p>
-                  <p>{{ form.email}}</p>
-                  <p>{{ form.first_name.label_tag}}</p>
-                  <p>{{ form.first_name}}</p>
-                  <p>{{ form.last_name.label_tag}}</p>
-                  <p>{{ form.last_name}}</p>
-                  <p>{{ form.password1.label_tag}}</p>
-                  <p>{{ form.password1}}</p>
-                  <p>{{ form.password2.label_tag}}</p>
-                  <p>{{ form.password2}}</p>
-  
-                  <div class="form-group" >
-                    <label for="profileBackground" >Profile Background:</label>
-                    <input type="file" id="profileBackground" name="profileBackground">
-  
-                  </div>
-                  <div class="form-group">
-                      <label for="bio">Bio</label>
-                      <textarea id="bio" name="bio" class="form-control" rows="5" cols="30">{{ user.profile.bio }}</textarea>
-                    </div>
-                  
-                    <div class="form-group">
-                      <label for="occupation">Occupation</label>
-                      <input type="text" id="occupation" name="occupation" class="form-control"></textarea>
-                    </div>
-                    <div class="form-group">
-                      <label for="industry">Industry</label>
-                      <input type="text" id="industry" name="industry" class="form-control"></textarea>
-                    </div>
-                    <div class="form-group">
-                      <label for="Location">Location</label>
-                      <input type="text" id="Location" name="Location" class="form-control"></textarea>
-                    </div>
-                  
-                    <!-- Social media links -->
-                    <div class="form-group" style="margin-bottom:10px ;">
-                      <label for="twitter_link">Twitter Link</label>
-                      <input type="url" id="twitter_link" name="twitter_link" value="{{ user.profile.twitter_link }}" class="form-control">
-                    </div>
-                  
-                    <div class="form-group">
-                      <label for="instagram_link">Instagram Link</label>
-                      <input type="url" id="instagram_link" name="instagram_link" value="{{ user.profile.instagram_link }}" class="form-control">
-                    </div>
-                  
-                    <div class="form-group">
-                      <label for="youtube_link">YouTube Link</label>
-                      <input type="url" id="youtube_link" name="youtube_link" value="{{ user.profile.youtube_link }}" class="form-control">
-                    </div>
-                  <div style="display: flex;justify-content: center;">
-                      <button class="Post" type="submit">Save Changes</button>
-                  </div>
-              </form>
-          </div>
+                </div>
+              </div>
+
+              <!-- prettier-ignore  -->
+              {% for field in form %} {% if field.name != "profileImage" and field.name != "profileBackground" %}
+              <div class="mb-4">
+                <label class="text-gray-700 font-semibold"
+                  >{{ field.label }}</label
+                >
+                {{ field }} {% if field.errors %}
+                <p class="text-red-500 text-sm mt-1">{{ field.errors.0 }}</p>
+                {% endif %}
+              </div>
+              {% endif %}{% endfor %}
+              <div style="display: flex; justify-content: center">
+                <button
+                  id="load-more"
+                  type="submit"
+                  class="text-white bg-gradient-to-r from-cyan-500 to-blue-500 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-cyan-300 p-5 w-[150px] my-10 rounded-xl"
+                >
+                  Save Changes
+                </button>
+              </div>
+            </div>
+          </form>
+        </div>
       </div>
-  </div>
-  {% include 'footer.html'%}
-</body>
+    </div>
+    {% include 'footerCode.html'%}
+  </body>
 </html>

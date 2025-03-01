@@ -59,19 +59,17 @@
       <div
         class="grid grid-rows-[1fr_auto] ml:grid-cols-[2fr_1fr] w-full ml:px-0"
       >
-        <div class="w-full py-10 px-7 ml:px-20">
+        <div class="w-full py-10 pl-3 px-7 ml:pr-20 ml:pl-16">
           <h1
             style="font-family: lato"
-            class="text-4xl font-bold mb-3"
+            class="text-4xl font-bold mb-3 relative"
             id="title"
           >
             {{post.title}}
             <!-- prettier-ignore  -->
             {% if request.user.id == post.author.id %}
-            <a href="{% url 'updateBlog' post.id %}"
-              ><i
-                class="bx bx-edit text-slate-600 mx-10 translate-y-[12.5%]"
-              ></i
+            <a href="{% url 'updateBlog' post.id %}" class="absolute"
+              ><i class="bx bx-edit text-blue-600 mx-3 translate-y-[12.5%]"></i
             ></a>
             {% endif %}
           </h1>
@@ -103,6 +101,19 @@
           <h1 class="text-slate-500 sm:text-lg text-md" id="body">
             {{post.body|safe}}
           </h1>
+          <!-- prettier-ignore  -->
+          {% if user.is_authenticated and request.user.id == post.author.id %}
+          <form action="{% url 'deleteBlog' post.id %}" method="POST">
+            {% csrf_token %}
+            <button type="submit">
+              <i
+                class="bx bxs-trash mt-5 text-2xl text-red-600 border-2 border-red-600 hover:text-white p-1 hover:bg-red-600 rounded-lg mr-2"
+              ></i
+              >Delete
+            </button>
+          </form>
+          {% endif %}
+
           <h1 class="text-3xl font-bold mt-10 mb-10s">Stay Connected</h1>
           <h1 class="text-xl font-semibold" style="font-family: lato">
             Follow me:&nbsp;<a
@@ -127,7 +138,7 @@
               {% if not has_liked %}
               <i
                 id="like-icon"
-                class="bx bx-like text-2xl translate-y-1/4 text-black bg-white px-2 py-1 rounded-md"
+                class="bx bx-like text-2xl translate-y-1/4 text-blue-600 bg-white border-2 border-blue-600 px-2 py-1 hover:text-white hover:bg-blue-600 rounded-md"
               ></i>
               {%else%}
               <i
@@ -237,15 +248,15 @@
           {% for post in related_posts%} {% include 'cards.html'%} {% endfor %}
         </div>
         <button
-          class="text-white bg-gradient-to-r from-cyan-500 to-blue-500 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-cyan-300 p-5 w-[150px] my-10 rounded-xl"
+          class="text-white bg-gradient-to-r from-cyan-500 to-blue-500 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-cyan-300 p-5 w-[150px] my-5 rounded-xl"
         >
           Browse More
         </button>
       </div>
     </div>
-    <div class="flex-grow flex flex-col">
+    <div class="flex-grow flex flex-col pb-5">
       <!-- for each comment logic here  -->
-      <hr class="mx-10 my-10" />
+      <hr class="mx-10 mb-5" />
       <h1 class="text-4xl text-blue-700 pl-4 font-semibold mb-5 ml:pl-[100px]">
         {{comments_number}}&nbsp;Comments
       </h1>
@@ -275,132 +286,14 @@
         {% endif %}
         <hr class="mx-10 mt-10" />
         <br />
-        <div class="mt-10" id="comments">
-          {% for comment in comments %} {% if comment.post == current_post %}
-          <div class="grid grid-cols-[80px_auto_80px] mb-5">
-            <div class="w-full">
-              <a href="{% url 'show_profile_page' comment.user.profile.id %}">
-                <img
-                  class="size-10 rounded-full border-[1px] border-solid border-blue-950"
-                  src="{% if comment.user.profile.profileImage %}{{ comment.user.profile.profileImage.url }}{% else %}/media/thumbnail/thumbnail.jpg{% endif %}"
-                  alt=""
-                />
-              </a>
-            </div>
-            <div class="flex flex-col gap-2">
-              <div>
-                @
-                <a href="{% url 'show_profile_page' comment.user.id %}"
-                  >{{ comment.user }}</a
-                >
-                - {{ comment.comment_date }}
-              </div>
-              {{ comment.body }}
-              <div class="flex">
-                <!-- like Logic  -->
-                <form
-                  method="POST"
-                  class="comment-like-form"
-                  data-comment-id="{{ comment.id }}"
-                  data-url="{% url 'comment_like' comment.id %}"
-                >
-                  {% csrf_token %}
-                  <button type="submit">
-                    <i
-                      class="bx bx-like mr-5 comment-like-button {% if user in comment.likes.all %} text-white bg-blue-600 {% else %} text-black bg-white {% endif %} p-1 rounded-md"
-                      data-comment-id="{{ comment.id }}"
-                    >
-                    </i>
-                    <span
-                      class="comment-like-number"
-                      data-comment-id="{{ comment.id }}"
-                    >
-                      {{ comment.likes.count }}
-                    </span>
-                  </button>
-                </form>
+        <div class="mt-10 gap-5 flex flex-col" id="comments">
+          <!-- prettier-ignore  -->
+          {% for comment in comments %}
+          <!-- prettier-ignore  -->
 
-                <!-- dislike logic -->
-                <form
-                  method="POST"
-                  class="comment-dislike-form"
-                  data-comment-id="{{ comment.id }}"
-                  data-url="{% url 'comment_dislike' comment.id %}"
-                >
-                  {% csrf_token %}
-                  <button type="submit">
-                    <i
-                      class="bx bx-dislike mr-5 comment-dislike-button {% if user in comment.dislikes.all %} text-white bg-red-600 {% else %} text-black bg-white {% endif %} p-1 rounded-md"
-                      data-comment-id="{{ comment.id }}"
-                    >
-                    </i>
-                    <span
-                      class="comment-dislike-number"
-                      data-comment-id="{{ comment.id }}"
-                    >
-                      {{ comment.dislikes.count }}
-                    </span>
-                  </button>
-                </form>
-              </div>
-            </div>
-
-            <div class="items-center flex">
-              <button
-                id="dropdownMenuIconButton"
-                data-dropdown-toggle="dropdownDots"
-                class="inline-flex items-center p-2 text-sm font-medium text-center text-gray-900 bg-white"
-                type="button"
-              >
-                <svg
-                  class="w-5 h-5"
-                  aria-hidden="true"
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="currentColor"
-                  viewBox="0 0 4 15"
-                >
-                  <path
-                    d="M3.5 1.5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0Zm0 6.041a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0Zm0 5.959a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0Z"
-                  />
-                </svg>
-              </button>
-
-              <!-- Dropdown menu -->
-              <div
-                id="dropdownDots"
-                class="z-10 hidden bg-white divide-y divide-gray-100 rounded-lg shadow-sm w-44"
-              >
-                <ul
-                  class="py-2 text-sm text-gray-800 bg-gray-200 rounded-md"
-                  aria-labelledby="dropdownMenuIconButton"
-                >
-                  <p>{{request.user}} {{comment.user.username}}</p>
-                  {% if request.user == comment.user.username %}
-                  <li>
-                    <a href="#" class="block px-4 py-2 hover:bg-gray-100"
-                      >Edit</a
-                    >
-                  </li>
-                  <li>
-                    <a
-                      href="#"
-                      class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
-                      >Delete</a
-                    >
-                  </li>
-                  {% else %}
-                  <li>
-                    <a
-                      href="#"
-                      class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
-                      >Report</a
-                    >
-                  </li>
-                  {% endif %}
-                </ul>
-              </div>
-            </div>
-          </div>
+          {% if comment.post == current_post %}
+          {% include 'comment_bubble.html'%}
+          
           {% endif %} {% endfor %}
         </div>
       </div>
@@ -466,98 +359,6 @@
                   .addClass("text-black bg-white");
                 $("#like-number").text(response.likes);
               }
-            }
-          },
-        });
-      });
-    </script>
-
-    <!-- like comment -->
-    <script>
-      $(document).on("submit", ".comment-like-form", function (e) {
-        e.preventDefault();
-
-        var form = $(this);
-        var url = form.data("url");
-
-        $.ajax({
-          url: url,
-          type: "POST",
-          data: {
-            csrfmiddlewaretoken: "{{ csrf_token }}",
-          },
-          success: function (response) {
-            if (response.success) {
-              var likeButton = form.find(".comment-like-button");
-              var likeNumber = form.find(".comment-like-number");
-              var dislikeForm = form.siblings(".comment-dislike-form");
-              var dislikeButton = dislikeForm.find(".comment-dislike-button");
-              var dislikeNumber = dislikeForm.find(".comment-dislike-number");
-
-              if (response.liked) {
-                likeButton
-                  .addClass("text-white bg-blue-600")
-                  .removeClass("text-black bg-white");
-              } else {
-                likeButton
-                  .addClass("text-black bg-white")
-                  .removeClass("text-white bg-blue-600");
-              }
-
-              if (response.removeDisliked) {
-                dislikeButton
-                  .addClass("text-black bg-white")
-                  .removeClass("text-white bg-red-600");
-              }
-
-              likeNumber.text(response.likes);
-              dislikeNumber.text(response.dislikes);
-            }
-          },
-        });
-      });
-    </script>
-
-    <!-- dislike comment -->
-    <script>
-      $(document).on("submit", ".comment-dislike-form", function (e) {
-        e.preventDefault();
-
-        var form = $(this);
-        var url = form.data("url");
-
-        $.ajax({
-          url: url,
-          type: "POST",
-          data: {
-            csrfmiddlewaretoken: "{{ csrf_token }}",
-          },
-          success: function (response) {
-            if (response.success) {
-              var dislikeButton = form.find(".comment-dislike-button");
-              var dislikeNumber = form.find(".comment-dislike-number");
-              var likeForm = form.siblings(".comment-like-form");
-              var likeButton = likeForm.find(".comment-like-button");
-              var likeNumber = likeForm.find(".comment-like-number");
-
-              if (response.disliked) {
-                dislikeButton
-                  .addClass("text-white bg-red-600")
-                  .removeClass("text-black bg-white");
-              } else {
-                dislikeButton
-                  .addClass("text-black bg-white")
-                  .removeClass("text-white bg-red-600");
-              }
-
-              if (response.removeLiked) {
-                likeButton
-                  .addClass("text-black bg-white")
-                  .removeClass("text-white bg-blue-600");
-              }
-
-              dislikeNumber.text(response.dislikes);
-              likeNumber.text(response.likes);
             }
           },
         });

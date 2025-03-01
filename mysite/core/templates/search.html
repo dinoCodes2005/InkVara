@@ -1,5 +1,5 @@
 <div
-  class="relative text-gray-600 w-[160px] focus-within:text-gray-400 search-area-off z-50"
+  class="relative text-gray-600 w-[180px] focus-within:text-gray-400 search-area-off z-50"
 >
   {% csrf_token%}
   <span class="absolute inset-y-0 left-0 flex items-center pl-2">
@@ -42,14 +42,18 @@
 
   search_btn.addEventListener("click", function () {
     if (search_btn.value.trim() === "") {
-      fetch("/random-post/")
+      fetch("{% url 'random-post'%}")
         .then((response) => response.json())
         .then((data) => {
           search_box.innerHTML = ""; // Clear before adding new results
           data.posts.forEach((post) => {
+            const articleUrl = `{% url 'ArticleDetailView' 0 %}`.replace(
+              "0",
+              post.id
+            );
             search_box.insertAdjacentHTML(
               "beforeend",
-              `<a href="/article/${post.id}/" class="w-full min-h-[60px] search-items p-2 flex"
+              `<a href="${articleUrl}" class="w-full min-h-[60px] search-items p-2 flex"
       ><i class="bx bxs-hot mr-2 translate-y-[12.5%]"></i>
       
       <div class="flex flex-col">
@@ -71,16 +75,21 @@
     if (window.searchTimeout) clearTimeout(window.searchTimeout);
 
     window.searchTimeout = setTimeout(() => {
-      fetch(`/search/?title=${encodeURIComponent(element.value)}`)
+      fetch(`{% url "search" %}?title=${encodeURIComponent(element.value)}`)
         .then((response) => response.json())
         .then((data) => {
           search_box.innerHTML = "";
           if (data.posts.length === 0) return;
 
           data.posts.forEach((post) => {
+            //smart way of building URL to pass into innerHTML
+            const articleUrl = `{% url 'ArticleDetailView' 0 %}`.replace(
+              "0",
+              post.id
+            );
             search_box.insertAdjacentHTML(
               "beforeend",
-              `<a href="/article/${post.id}/" class="w-full min-h-[60px] search-items p-2 flex">
+              `<a href="${articleUrl}" class="w-full min-h-[60px] search-items p-2 flex">
               <i class='bx bx-search mr-2 translate-y-[12.5%]'></i>
               <div class="flex flex-col">
                 <span>${post.title}</span>

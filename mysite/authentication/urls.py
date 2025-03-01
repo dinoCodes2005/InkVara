@@ -17,14 +17,13 @@ Including another URLconf
 from tkinter.font import names
 from django.urls import path,include
 from . import views
-from .views import EditProfileView, UserRegisterView
+from django.contrib.auth import views as authentication_views
+from .views import register_view,edit_profile_view,CustomLoginView,CustomLogoutView
 
 urlpatterns = [
-    path('loginHome/',views.login_home,name="loginHome"),
-    path('signUp/',UserRegisterView.as_view(),name='signUp'),
-    path('loginUser/',views.loginUser,name='loginUser'),
-    path('blogarea/', views.blogarea, name='blogarea'),
-    path('register/',UserRegisterView.as_view(),name='register'),
+    path('login/',CustomLoginView.as_view(),name="login"),
+    path('logout/',CustomLogoutView.as_view(template_name= 'blogHome.html'),name="logout"),
+    path('register/',views.register_view,name='register'),
     path('accounts/', include('allauth.urls')),
-    path('editProfile/',EditProfileView.as_view(),name='editProfile'),
+    path('editProfile/',views.edit_profile_view,name='editProfile'),
 ]

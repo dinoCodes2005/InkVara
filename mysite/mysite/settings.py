@@ -136,6 +136,7 @@ SITE_ID = 1
 
 NPM_BIN_PATH = "C:\\Program Files\\nodejs\\npm.cmd"
 # Redirect URL after login
+LOGIN_URL = reverse_lazy('loginHome')
 LOGIN_REDIRECT_URL = reverse_lazy('blogarea') 
 LOGOUT_REDIRECT_URL = reverse_lazy('home')# Change this to your desired redirect URL after successful login
 
