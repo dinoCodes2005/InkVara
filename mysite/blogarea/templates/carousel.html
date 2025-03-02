@@ -26,9 +26,7 @@
         class="w-full sm:w-2/5 h-full bg-gray-100 p-8 flex items-center relative z-1"
       >
         <div>
-          <a
-            href="{% url 'ArticleDetailView' post_with_highest_likes.author.profile.id%}"
-          >
+          <a href="{% url 'ArticleDetailView' post_with_highest_likes.id%}">
             <h2 class="text-lg sm:text-2xl font-bold">
               {{ post_with_highest_likes.title}}
             </h2>

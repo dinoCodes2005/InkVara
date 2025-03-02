@@ -247,19 +247,24 @@
         >
           {% for post in related_posts%} {% include 'cards.html'%} {% endfor %}
         </div>
+        {% if comments_number %}
         <button
+          id="load-more"
           class="text-white bg-gradient-to-r from-cyan-500 to-blue-500 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-cyan-300 p-5 w-[150px] my-5 rounded-xl"
         >
-          Browse More
+          Load More
         </button>
+        {% include 'load-more.html'%} {% endif %}
       </div>
     </div>
     <div class="flex-grow flex flex-col pb-5">
       <!-- for each comment logic here  -->
       <hr class="mx-10 mb-5" />
+      {% if comments_number %}
       <h1 class="text-4xl text-blue-700 pl-4 font-semibold mb-5 ml:pl-[100px]">
         {{comments_number}}&nbsp;Comments
       </h1>
+      {% endif %}
       <div class="pl-4 ml:pl-[100px] relative">
         {% if request.user.is_authenticated %}
         <form method="POST" id="comment-form">
@@ -311,8 +316,7 @@
         const prompt = `Summarise the given Blog : \n Title :${title} \n Body:${body}\n`;
         var responseElement = document.getElementById("response");
         responseElement.innerHTML = "";
-
-        fetch("/answer/", {
+        fetch("{% url 'answer'%}", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",

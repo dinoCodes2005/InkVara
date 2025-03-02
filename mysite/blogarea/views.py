@@ -121,7 +121,7 @@ class AddPostView(LoginRequiredMixin,CreateView):
     model = Post
     template_name = 'writeBlog.html'
     form_class = PostForm
-    login_url = reverse_lazy('loginHome')
+    login_url = reverse_lazy('login')
 
     def form_valid(self, form):
         form.instance.author = self.request.user

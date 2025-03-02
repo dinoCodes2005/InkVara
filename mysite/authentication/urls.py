@@ -18,7 +18,7 @@ from tkinter.font import names
 from django.urls import path,include
 from . import views
 from django.contrib.auth import views as authentication_views
-from .views import register_view,edit_profile_view,CustomLoginView,CustomLogoutView
+from .views import register_view,edit_profile_view,CustomLoginView,CustomLogoutView,CustomPasswordChangeView
 
 urlpatterns = [
     path('login/',CustomLoginView.as_view(),name="login"),
@@ -26,4 +26,12 @@ urlpatterns = [
     path('register/',views.register_view,name='register'),
     path('accounts/', include('allauth.urls')),
     path('editProfile/',views.edit_profile_view,name='editProfile'),
+    path('settings/<int:id>/',views.settings,name='settings'),
+    path('password_change/',CustomPasswordChangeView.as_view(template_name = "password_change.html"),name='password_change'),
+    path('password_change/done/', authentication_views.PasswordChangeDoneView.as_view(template_name="registration/login.html"), name='password_change_done'),
+    path('password_reset/', authentication_views.PasswordResetView.as_view(template_name='password_reset.html'), name='password_reset'),
+    path('password_reset/done/', authentication_views.PasswordResetDoneView.as_view(template_name='password_reset_done.html'), name='password_reset_done'),
+    path('reset/<uidb64>/<token>/', authentication_views.PasswordResetConfirmView.as_view(template_name='password_reset_confirm.html'), name='password_reset_confirm'),
+    path('reset/done/', authentication_views.PasswordResetCompleteView.as_view(template_name='password_reset_complete.html'), name='password_reset_complete'),
+    
 ]

@@ -136,7 +136,7 @@ SITE_ID = 1
 
 NPM_BIN_PATH = "C:\\Program Files\\nodejs\\npm.cmd"
 # Redirect URL after login
-LOGIN_URL = reverse_lazy('loginHome')
+LOGIN_URL = reverse_lazy('login')
 LOGIN_REDIRECT_URL = reverse_lazy('blogarea') 
 LOGOUT_REDIRECT_URL = reverse_lazy('home')# Change this to your desired redirect URL after successful login
 
@@ -175,5 +175,6 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
 # URL for serving media files

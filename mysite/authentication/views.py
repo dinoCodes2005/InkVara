@@ -2,9 +2,11 @@ from profile import Profile
 from django.shortcuts import render, redirect
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.views import PasswordChangeView
+
 from django.contrib.auth.decorators import login_required
-from django.urls import reverse_lazy
-from .forms import ProfileEditForm, UserRegisterForm
+from django.urls import reverse_lazy,reverse
+from .forms import ProfileEditForm, UserRegisterForm,UserEditForm
 from blogarea.models import Profile
 from .forms import ProfileEditForm
 from django.contrib.auth.models import User
@@ -38,7 +40,7 @@ def edit_profile_view(request):
     profile, created = Profile.objects.get_or_create(user=request.user)  # Get or create profile instance
 
     if request.method == "POST":
-        form = ProfileEditForm(request.POST, instance=profile)
+        form = ProfileEditForm(request.POST, request.FILES, instance=profile)
         if form.is_valid():
             form.save()
             messages.success(request, "Your profile has been updated successfully!")
@@ -64,6 +66,23 @@ def blogarea(request):
     return render(request,'blogHome.html')
 
 
-    
+@login_required   
+def settings(request,id):
+    profile = Profile.objects.get(id=id)
+    if request.method == "POST":
+        user = request.user
+        form = UserEditForm(request.POST,instance = user)
+        if form.is_valid():
+            form.save()
+            messages.success(request,"Your Credentials have been updated successfully !! ")
+            return redirect(reverse('blogarea'))
+    else:
+        form = UserEditForm(instance = request.user)
+    return render(request,'settings.html',{'form':form})
 
-
+class CustomPasswordChangeView(PasswordChangeView):
+    def form_valid(self, form):
+        response = super().form_valid(form)
+        messages.success(self.request, "Your password has been changed successfully. Please log in again.")
+        logout(self.request) 
+        return redirect(reverse('login'))     

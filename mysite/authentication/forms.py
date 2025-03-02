@@ -1,12 +1,16 @@
+from ast import Pass
 from cProfile import label
+from dataclasses import field
 # from profile import Profile
 from blogarea.models import Profile
 from pyexpat import model
 from django import forms
 from django.contrib.auth.models import User
-from django.contrib.auth.forms import UserCreationForm,UserChangeForm
+from django.contrib.auth.forms import UserCreationForm,UserChangeForm,PasswordChangeForm
 from django.core.exceptions import ValidationError
 from numpy import require
+from django.contrib.auth import login,logout
+from django.shortcuts import redirect
 
 class UserRegisterForm(UserCreationForm):
 	username = forms.CharField(max_length=20,label="USERNAME ", required = True,  widget=forms.TextInput(attrs={'class': 'block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6'}))
@@ -51,6 +55,42 @@ class ProfileEditForm(forms.ModelForm):
         }
 
         
-    
+class UserEditForm(UserChangeForm):
+    class Meta:
+        model = User
+        fields = ['username','email','first_name','last_name']
+        widgets = {'username': forms.TextInput(attrs={'class':'block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6'}),
+                   'email': forms.TextInput(attrs={'class':'block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6'}),
+                   'first_name': forms.TextInput(attrs={'class':'block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6'}),
+                   'last_name': forms.TextInput(attrs={'class':'block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6'})}
+        
+
+
+
+# class CustomPasswordEditForm(PasswordChangeForm):
+#     old_password = forms.CharField(
+#         widget=forms.PasswordInput(attrs={
+#             'class': 'block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 '
+#                      'outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 '
+#                      'focus:outline-indigo-600 sm:text-sm/6',
+#             'placeholder': 'Old Password'
+#         })
+#     )
+#     new_password1 = forms.CharField(
+#         widget=forms.PasswordInput(attrs={
+#             'class': 'block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 '
+#                      'outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 '
+#                      'focus:outline-indigo-600 sm:text-sm/6',
+#             'placeholder': 'New Password'
+#         })
+#     )
+#     new_password2 = forms.CharField(
+#         widget=forms.PasswordInput(attrs={
+#             'class': 'block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 '
+#                      'outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 '
+#                      'focus:outline-indigo-600 sm:text-sm/6',
+#             'placeholder': 'Confirm New Password'
+#         })
+#     )
 
     

@@ -8,7 +8,7 @@
 </head>
 
 <nav
-  class="bg-gray-900 z-[1000000]"
+  class="bg-gray-900 z-[1000000] w-full"
   x-data="{ open: false, dropdown_open:false }"
 >
   <div class="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8">
@@ -133,7 +133,7 @@
           >
             <img
               class="size-8 rounded-full"
-              src=" {{ user.profile.profileImage.url |default:'/media/profile_pics/default_profile_pic.jpg'}}"
+              src=" {% if user.profile.profileImage %}{{ user.profile.profileImage.url }}{% else %}/media/profile_pics/default_profile_pic.jpg{% endif %}"
               alt="Profile"
             />
           </button>
@@ -148,7 +148,9 @@
               class="block px-4 py-2 text-sm text-gray-700"
               >Your Profile</a
             >
-            <a href="#" class="block px-4 py-2 text-sm text-gray-700"
+            <a
+              href="{% url 'settings' user.profile.id %}"
+              class="block px-4 py-2 text-sm text-gray-700"
               >Settings</a
             >
             <a
