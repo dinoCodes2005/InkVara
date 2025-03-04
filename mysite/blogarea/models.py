@@ -53,6 +53,8 @@ class Post(models.Model):
 
     def get_absolute_url(self):
             return reverse('ArticleDetailView', args=[self.id])
+        
+
 
 
 class Profile(models.Model):
@@ -75,6 +77,8 @@ class Profile(models.Model):
     def __str__(self):
         return str(self.user)
 
+    def total_posts(self):
+        return self.user.post_set.count()
 class Comment(models.Model):
     post = models.ForeignKey(Post,null=True,on_delete=models.CASCADE,related_name='comments')
     user = models.ForeignKey(User,null=True,on_delete=models.CASCADE)

@@ -5,7 +5,8 @@ from unicodedata import category
 from urllib import request, response
 from wsgiref.util import request_uri
 from django.shortcuts import get_object_or_404, render,redirect
-from django.contrib.auth import logout,authenticate
+from django.contrib.auth import logout,authenticate 
+from django.contrib.auth.models import User
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib import messages
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
@@ -34,6 +35,7 @@ class BlogHome(ListView):
         context = super(BlogHome, self).get_context_data(**kwargs)
         #annotate is used to add extra field to each object without saving it to databse just for sorting or calculation purposes
         posts = Post.objects.annotate(like_count=Count('like')).order_by('-like_count')
+        
         post_with_highest_likes = posts.first()  # The post with the highest likes
         post_with_second_highest_likes = posts[1] if len(posts) > 1 else None  # The second post, if it exists
         post_with_third_highest_likes = posts[2] if len(posts) > 2 else None  # The third post, if it exists
