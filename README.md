@@ -26,7 +26,7 @@ python manage.py migrate
 python manage.py runserver  
 Open 127.0.0.1:8000 to run on localhost.
 
-🔗 Contributing
+🔗
 You are welcome for any contributions! Feel free to fork this repo, create a branch, and submit a pull request.
 
 📬 Contact
