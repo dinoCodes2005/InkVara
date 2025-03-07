@@ -31,4 +31,4 @@ You are welcome for any contributions! Feel free to fork this repo, create a bra
 
 📬 Contact
 📧 Email: rc12082005@gmail.com
-🔗 GitHub: github.com/dinoCodes2005
+🔗 GitHub: [github.com/dinoCodes2005](https://github.com/dinoCodes2005)
