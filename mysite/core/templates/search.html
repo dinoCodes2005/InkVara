@@ -25,7 +25,7 @@
     autocomplete="off"
     onkeyup="searchFunction(this)"
     onclick="adjustHeight(true,this)"
-    onblur="adjustHeight(false)"
+    onblur="setTimeout(()=>adjustHeight(false,this),200)"
     id="search-btn"
     data-color="white"
   />

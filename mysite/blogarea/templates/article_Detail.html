@@ -316,7 +316,7 @@
         const prompt = `Summarise the given Blog : \n Title :${title} \n Body:${body}\n`;
         var responseElement = document.getElementById("response");
         responseElement.innerHTML = "";
-        fetch("{% url 'answer'%}", {
+        fetch("{% url 'answer' %}", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",

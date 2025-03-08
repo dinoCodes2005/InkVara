@@ -25,6 +25,12 @@ from openai import OpenAI
 import google.generativeai as genai
 import json
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.decorators import login_required
+from django.shortcuts import render, get_object_or_404, redirect
+from django.contrib import messages
+from django.urls import reverse
+from .models import Post, Hashtag
+from .forms import PostForm
 # Create your views here.
 class BlogHome(ListView):
     model = Post
@@ -157,12 +163,7 @@ class CategoriesView(ListView):
         context["categories"] = Category.objects.all()
         return context
     
-from django.contrib.auth.decorators import login_required
-from django.shortcuts import render, get_object_or_404, redirect
-from django.contrib import messages
-from django.urls import reverse
-from .models import Post, Hashtag
-from .forms import PostForm
+
 
 @login_required
 def UpdatePostView(request, pk):

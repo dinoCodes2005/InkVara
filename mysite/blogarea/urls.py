@@ -40,9 +40,7 @@ urlpatterns = [
     path('search/',views.search,name="search"),
     path('searchresult/',views.searchresult,name="searchresult"),
     path('random-post/',views.random_post,name="random-post"),
-    
-    
-    # path('comment_dislike/<int:pk>/',views.comment_dislike,name="comment_dislike"),
+
 
 ]
 

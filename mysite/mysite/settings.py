@@ -178,3 +178,5 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
 # URL for serving media files
+
+GEMINI_API_KEY = os.getenv("GEMINI_API_KEY")

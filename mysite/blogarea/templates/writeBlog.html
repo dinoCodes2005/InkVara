@@ -140,7 +140,7 @@
     {% include 'footerCode.html'%}
     <script>
       function fetchResponse() {
-        const title = document.getElementById("id_title").value;
+        const title = document.getElementById("title").value;
         const body = CKEDITOR.instances["id_body"].getData();
         const prompt = `
         Response should be plain text, use only tags available in html except paragraph tag , no asterisks for formatting.
@@ -170,7 +170,7 @@ If you want to improve your productivity, focus on smart work rather than hard w
           "[name=csrfmiddlewaretoken]"
         ).value;
 
-        fetch("/answer/", {
+        fetch("{% url 'answer'%}", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",

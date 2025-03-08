@@ -148,11 +148,20 @@
               class="block px-4 py-2 text-sm text-gray-700"
               >Your Profile</a
             >
+            {% if user.profile and user.profile.id %}
             <a
               href="{% url 'settings' user.profile.id %}"
               class="block px-4 py-2 text-sm text-gray-700"
               >Settings</a
             >
+            {% else %}
+            <a
+              href="#"
+              class="block px-4 py-2 text-sm text-gray-400 cursor-not-allowed"
+              >Settings</a
+            >
+            {% endif %}
+
             <a
               href="#"
               onclick="event.preventDefault(); document.getElementById('logout-form').submit();"
