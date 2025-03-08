@@ -1,1 +1,3 @@
 mysite/node_modules/
+mysite/.env
+mysite/db.sqlite3
