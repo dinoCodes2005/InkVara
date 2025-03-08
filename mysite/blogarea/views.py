@@ -31,6 +31,7 @@ from django.contrib import messages
 from django.urls import reverse
 from .models import Post, Hashtag
 from .forms import PostForm
+from django.conf import settings
 # Create your views here.
 class BlogHome(ListView):
     model = Post
@@ -341,7 +342,7 @@ def LikeView(request,pk):
 
 
 
-genai.configure(api_key="AIzaSyBw54sbgCFjRGqnGF2V91FyBfj0ZB2Oip4")
+genai.configure(api_key= settings.GEMINI_API_KEY)
           
 def generate_response(prompt):
     model = genai.GenerativeModel("gemini-1.5-flash")
