@@ -1,5 +1,7 @@
 InkVara - Ink Your Ideas in Your Ways !! 🖋️
 
+
+
 ✅ Features
 
 User Authentication – Secure sign-up/login system using Django authentication system
@@ -21,10 +23,13 @@ AJAX / Fetch API
 git clone https://github.com/dinoCodes2005/InkVara.git  
 cd into folder containing manage.py  
 pip install -r requirements.txt  
+Head to Google Developer Tools and get your Gemini API key
+create .env folder at the root directory
+Type : GEMINI_API_KEY = <your-api-key-without-quotes>
 python manage.py makemigrations  
 python manage.py migrate  
-python manage.py runserver  
-Open 127.0.0.1:8000 to run on localhost.
+python manage.py runserver 127.0.0.1:8000  
+Open 127.0.0.1:8000 on your browser to run on localhost.
 
 🔗
 You are welcome for any contributions! Feel free to fork this repo, create a branch, and submit a pull request.
