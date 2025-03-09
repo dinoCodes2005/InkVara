@@ -1,5 +1,6 @@
 InkVara - Ink Your Ideas in Your Ways !! 🖋️
 
+![image alt](https://github.com/dinoCodes2005/InkVara/blob/2b314a4e39a65dcc9ddf1a898b8cffdfbf9b91ae/HomePage.png)
 
 ✅ Features
 
