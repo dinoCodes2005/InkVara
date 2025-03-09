@@ -232,6 +232,7 @@
           </div>
         </div>
       </div>
+
       <hr
         class="mt-10 border-1 border-slate-300 w-[90%] ml-[50%] translate-x-[-50%]"
       />
@@ -304,16 +305,22 @@
       </div>
     </div>
     <!-- prettier-ignore -->
+    <!-- <select name="" id="">
+      <option value="horror">Horror</option>
+      <option value="comedy">Comedy</option>
+      <option value="scifi">Scifi</option>
+      <option value="thriller">Thriller</option>
+    </select> -->
     {% include 'footerCode.html' %} {% include 'comment.html'%}
-
     <!-- like post -->
     <script>
       function fetchResponse() {
         console.log("fetch response run");
         const title = document.getElementById("title").innerHTML;
         const body = document.getElementById("body").innerHTML;
+        const select = document.querySelector("select").value;
 
-        const prompt = `Summarise the given Blog : \n Title :${title} \n Body:${body}\n`;
+        const prompt = `Summarise the given Blog : \n Title :${title} \n Body:${body}\n Category : ${select}`;
         var responseElement = document.getElementById("response");
         responseElement.innerHTML = "";
         fetch("{% url 'answer' %}", {

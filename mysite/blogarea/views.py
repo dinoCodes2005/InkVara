@@ -164,8 +164,6 @@ class CategoriesView(ListView):
         context["categories"] = Category.objects.all()
         return context
     
-
-
 @login_required
 def UpdatePostView(request, pk):
     post = get_object_or_404(Post, id=pk)
@@ -339,13 +337,10 @@ def LikeView(request,pk):
             'success':False,
         })
 
-
-
-
 genai.configure(api_key= settings.GEMINI_API_KEY)
           
 def generate_response(prompt):
-    model = genai.GenerativeModel("gemini-1.5-flash")
+    model = genai.GenerativeModel("gemini-2.0-flash")
     response = model.generate_content(prompt, stream=True)  
 
     def stream_data():
