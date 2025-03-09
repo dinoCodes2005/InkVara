@@ -1,6 +1,5 @@
 InkVara - Ink Your Ideas in Your Ways !! 🖋️
 
-![Uploading Screenshot 2025-03-07 193325.png…]()
 
 
 ✅ Features
